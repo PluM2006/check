@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CheckRunner {
 	
+	//***
+	
 	public static void main(String[] args) throws StreamReadException, DatabindException, IOException {
 		 InputStream inJson = Product[].class.getResourceAsStream("/product.json");
 		 List<Product> participantJsonList = new ObjectMapper().readValue(inJson, new TypeReference<List<Product>>(){});
