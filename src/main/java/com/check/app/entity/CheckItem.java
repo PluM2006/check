@@ -17,6 +17,10 @@ public class CheckItem {
 		this.discontItem = discontItem;
 	}
 
+	public CheckItem() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Product getProduct() {
 		return product;
 	}

@@ -3,10 +3,16 @@ package com.check.app.entity;
 public class Card {
 	
 	private Long id;
-	private Long numbercard;
+	private String numbercard;
 	private Long discount;
 	
-	public Card(Long id, Long numbercard, Long discount) {
+	
+	public Card() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Card(Long id, String numbercard, Long discount) {
 		super();
 		this.id = id;
 		this.numbercard = numbercard;
@@ -21,11 +27,11 @@ public class Card {
 		this.id = id;
 	}
 
-	public Long getNumbercard() {
+	public String getNumbercard() {
 		return numbercard;
 	}
 
-	public void setNumbercard(Long numbercard) {
+	public void setNumbercard(String numbercard) {
 		this.numbercard = numbercard;
 	}
 
