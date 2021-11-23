@@ -1,25 +1,25 @@
 package com.check.app.entity;
 
+import java.math.BigDecimal;
+
 public class Product {
 	
 	private Long id;
 	private String name;
-	private Long price;
-	private Integer discount;
-	
-	
-	
+	private BigDecimal price;
+	private Boolean promotion;
+
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(Long id, String name, Long price, Integer discount) {
+	public Product(Long id, String name, BigDecimal price, Boolean promotion) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.discount = discount;
+		this.promotion = promotion;
 	}
 
 	public Long getId() {
@@ -38,21 +38,21 @@ public class Product {
 		this.name = name;
 	}
 
-	public Long getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
-	public Integer getDiscount() {
-		return discount;
+	public Boolean getPromotion() {
+		return promotion;
 	}
 
-	public void setDiscount(Integer discount) {
-		this.discount = discount;
+	public void setPromotion(Boolean promotion) {
+		this.promotion = promotion;
 	}
-
+	
 	
 }

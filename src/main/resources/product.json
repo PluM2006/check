@@ -1,1 +1,1 @@
-[{"id":2,"name":"Молоко","price":30,"discount":0},{"id":3,"name":"Хлеб","price":20,"discount":0},{"id":5,"name":"Мука","price":50,"discount":0}]
+[{"id":2,"name":"Молоко","price":30,"promotion":true},{"id":3,"name":"Хлеб","price":20,"promotion":false},{"id":5,"name":"Мука","price":50,"promotion":false}]
