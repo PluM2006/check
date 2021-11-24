@@ -7,19 +7,19 @@ public class Product {
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private Boolean promotion;
+	private Boolean sale;
 
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(Long id, String name, BigDecimal price, Boolean promotion) {
+	public Product(Long id, String name, BigDecimal price, Boolean sale) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.promotion = promotion;
+		this.sale = sale;
 	}
 
 	public Long getId() {
@@ -46,12 +46,12 @@ public class Product {
 		this.price = price;
 	}
 
-	public Boolean getPromotion() {
-		return promotion;
+	public Boolean getSale() {
+		return sale;
 	}
 
-	public void setPromotion(Boolean promotion) {
-		this.promotion = promotion;
+	public void setSale(Boolean sale) {
+		this.sale = sale;
 	}
 	
 	

@@ -5,20 +5,20 @@ import java.math.BigDecimal;
 public class CheckItem {
 	
 	private Product product;
-	private Integer number;
-	private BigDecimal summItem;
-	private BigDecimal discontItem;
+	private Integer qty;
+	private BigDecimal summ;
+	private BigDecimal discont;
 	
-	public CheckItem(Product product, Integer number, BigDecimal summItem, BigDecimal discontItem) {
-		super();
-		this.product = product;
-		this.number = number;
-		this.summItem = summItem;
-		this.discontItem = discontItem;
-	}
-
 	public CheckItem() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public CheckItem(Product product, Integer qty, BigDecimal summ, BigDecimal discont) {
+		super();
+		this.product = product;
+		this.qty = qty;
+		this.summ = summ;
+		this.discont = discont;
 	}
 
 	public Product getProduct() {
@@ -29,31 +29,29 @@ public class CheckItem {
 		this.product = product;
 	}
 
-	public Integer getNumber() {
-		return number;
+	public Integer getQty() {
+		return qty;
 	}
 
-	public void setNumber(Integer number) {
-		this.number = number;
+	public void setQty(Integer qty) {
+		this.qty = qty;
 	}
 
-	public BigDecimal getSummItem() {
-		return summItem;
+	public BigDecimal getSumm() {
+		return summ;
 	}
 
-	public void setSummItem(BigDecimal summItem) {
-		this.summItem = summItem;
+	public void setSumm(BigDecimal summ) {
+		this.summ = summ;
 	}
 
-	public BigDecimal getDiscontItem() {
-		return discontItem;
+	public BigDecimal getDiscont() {
+		return discont;
 	}
 
-	public void setDiscontItem(BigDecimal discontItem) {
-		this.discontItem = discontItem;
+	public void setDiscont(BigDecimal discont) {
+		this.discont = discont;
 	}
-	
-	
 	
 
 }
