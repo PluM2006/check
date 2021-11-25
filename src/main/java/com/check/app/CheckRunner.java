@@ -16,6 +16,8 @@ import com.check.app.entity.Card;
 import com.check.app.entity.Check;
 import com.check.app.entity.CheckItem;
 import com.check.app.entity.Product;
+import com.check.app.service.CheckImpl;
+import com.check.app.service.ReaderImpl;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -23,46 +25,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CheckRunner {
 	
+	
 	public static void main(String[] args) throws FileNotFoundException {
-		 final BigDecimal discountp = new BigDecimal(10); 
-		 InputStream isProduct = Product.class.getResourceAsStream("/product.json");
-		 InputStream isCard = Card.class.getResourceAsStream("/card.json");
-		 List<Card> allCard = new ArrayList<Card>();
-		try {
-			allCard = new ObjectMapper().readValue(isCard, new TypeReference<List<Card>>(){});
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		 List<Product> listProduct = new ArrayList<Product>();
+		 final BigDecimal discountp = new BigDecimal(10);
 		 
-			/*
-			 * try { listProduct = new ObjectMapper().readValue(isProduct, new
-			 * TypeReference<List<Product>>(){}); } catch (IOException e1) { // TODO
-			 * Auto-generated catch block e1.printStackTrace(); }
-			 */
-		 try (Scanner scanner = new Scanner(new File("src/main/resources/product.csv"), "UTF-8");) {
-		     while (scanner.hasNextLine()) {
-		    	 listProduct.add(getProductFromLine(scanner.nextLine()));
-		     }
-		 }
+		 
+
+		 //****Формируем чек
+		 CheckImpl checkImpl = new CheckImpl();
+		 checkImpl.getCheck(args);
+				 
+		 
+		 
 		 
 		 List<CheckItem> listcheckitem = new ArrayList<CheckItem>();
 		 Card card = null;
+		 
 		 Check check = new Check(); 
 		 //**************************Входной массив (продукты карточки)
-		 for (int i = 0; i < args.length; i++) {
-			String[] a = args[i].split("-");
-			if (!a[0].contains("card")) {
-				Product prod = listProduct.stream().filter(p -> p.getId()==Integer.parseInt(a[0])).findAny().orElse(null);
-				CheckItem item = new CheckItem(prod, Integer.parseInt(a[1]), prod.getPrice().multiply(new BigDecimal(a[1])), new BigDecimal(0));
-				listcheckitem.add(item);
-			} else {
-				card = allCard.stream().filter(e -> e.getNumbercard().contains(a[1])).findAny().orElse(null);
-				
-			}
-			
-		}
+		 
 
 		for (CheckItem ci: listcheckitem) {
 			//Расчет скидки на товар Если >5 акция скидка 10% 
@@ -104,7 +85,7 @@ public class CheckRunner {
 			
 			totalsummdis = totalsummdis.add(cItem.getDiscont());
 			if (cItem.getDiscont().compareTo(BigDecimal.ZERO)==0) {
-				if (card.getId()!=null) {
+				if (card!=null) {
 					totalsummdis = totalsummdis.add(cItem.getSumm()
 							.subtract(new BigDecimal(card.getDiscount())
 									.multiply(cItem.getSumm().divide(new BigDecimal(100)))));
@@ -132,6 +113,7 @@ public class CheckRunner {
 		System.out.println(String.format("%39s", " ").replace(" ", "-"));
 		System.out.println("Итого по чеку: "+totalsumm+"$");
 		System.out.println("Итого по чеку: "+check.getSummTotal()+"$");
+//		System.out.println("Дисконтная карта: "+card.getNumbercard()+" "+card.getDiscount()+"%");
 		System.out.println("Скидка по чеку:! "+check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN)+"$");
 		System.out.println("Итого по чеку со скидкой:! "+check.getSummTotal().subtract(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN)));
 		System.out.println("Итого по чеку со скидкой: "+totalsummdis.setScale(2, RoundingMode.HALF_DOWN));
@@ -153,15 +135,7 @@ public class CheckRunner {
 
 	}
 	
-	public static Product getProductFromLine(String line) {
-		Product values = new Product();
-		String[] row = line.split(";"); 
-		values.setId(Long.parseLong(row[0]));
-		values.setName(row[1]);
-		values.setPrice(new BigDecimal(row[2].replaceAll(",", ".")));
-		values.setSale(Boolean.parseBoolean(row[3]));
-	    return values;
-	}
+
 	
 
 }
