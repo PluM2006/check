@@ -3,7 +3,7 @@ package com.check.app.entity;
 public class Cashier {
 	
 	private String name = "Luk";
-	private String number = "255566";
+	private String number = "123456";
 	public Cashier() {
 		super();
 		// TODO Auto-generated constructor stub

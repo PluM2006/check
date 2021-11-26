@@ -18,21 +18,24 @@ public class CheckToString  {
 				String.format("%"+(lengthChek-check.getCashier().getNumber().length()-9)+"s", "DATE: "+check.getDate())+"\n"+
 				String.format("%"+(lengthChek-2)+"s", "TIME: "+check.getTime())+"\n"+
 				String.format("%50s", " ").replace(" ", "-")+"\n"+
-			 	String.format("%-3s","QTY ")+
-				String.format("%-30s", "DESCRIPION ")+
+			 	String.format("%-4s","QTY")+
+				String.format("%-30s", "DESCRIPION")+
 				String.format("%-9s", "PRICE")+
-				String.format("%s", "TOTAL")+"\n";
+				String.format("%5s", "TOTAL")+"\n";
 		
 		for (CheckItem	ci : check.getCheckItem()) {
 			result  = result+
-					String.format("%-3s", ci.getQty())+" "+
+					String.format("%-4s", ci.getQty())+
 					String.format("%-30s", ci.getProduct().getName())+
 					String.format("%-9s", ci.getProduct().getPrice()+"$")+
-					String.format("%s", ci.getSumm()+"$")+"\n";
+					String.format("%7s", ci.getSumm()+"$")+"\n";
 			if (ci.getPromDiscount()) {
 				result  = result+
-						String.format("%8s", " ")+
-						String.format("%-35s", "акция скидка:")+
+						String.format("%6s", " ")+
+						String.format("%-37s", "скидка 10%:")+
+						String.format("%s", "-"+ci.getDiscount()+"$"+"\n")+
+						String.format("%6s", " ")+
+						String.format("%-37s", "цена со скидкой:")+
 						String.format("%s", ci.getSumm().subtract(ci.getDiscount())+"$"+"\n")
 						;
 			}

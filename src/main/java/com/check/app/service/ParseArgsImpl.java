@@ -22,7 +22,8 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		List<CheckItem> list = new ArrayList<CheckItem>();
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
-			if (a[0].matches("-?\\d+(\\.\\d+)?")) {
+			Long qty = toLong(a[1]);
+			if (a[0].matches("-?\\d+(\\.\\d+)?") && qty!=0L) {
 				Product product =allProduct.stream().filter(p->p.getId()==Integer.parseInt(a[0])).findAny().orElse(null); 
 				CheckItem checkItem = new CheckItem(
 						product, 
@@ -50,7 +51,7 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		return card;
 	}
 	public Long toLong(String st) {
-		Long i = null;
+		Long i = 0L;
 		try {
 			i = Long.parseLong(st);
 		} catch (Exception e) {

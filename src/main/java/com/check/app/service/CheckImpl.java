@@ -34,7 +34,7 @@ public class CheckImpl implements CheckInteface {
 					.filter(p -> p.getProduct().getId()==checkItem.getProduct().getId())
 					.map(x -> x.getQty())
 					.reduce(0, Integer::sum);
-			if (checkItem.getProduct().getSale() && q>5) {
+			if (checkItem.getProduct().getSale() && q>=5) {
 					checkItem.setDiscount(getDiscount(checkItem.getSumm(), allDiscount));
 					checkItem.setPromDiscount(true);
 			} else {
