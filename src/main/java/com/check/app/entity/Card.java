@@ -1,10 +1,12 @@
 package com.check.app.entity;
 
+import java.math.BigDecimal;
+
 public class Card {
 	
 	private Long id;
 	private String numbercard;
-	private Long discount;
+	private BigDecimal discount;
 	
 	
 	public Card() {
@@ -12,7 +14,7 @@ public class Card {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Card(Long id, String numbercard, Long discount) {
+	public Card(Long id, String numbercard, BigDecimal discount) {
 		super();
 		this.id = id;
 		this.numbercard = numbercard;
@@ -35,11 +37,11 @@ public class Card {
 		this.numbercard = numbercard;
 	}
 
-	public Long getDiscount() {
+	public BigDecimal getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(Long discount) {
+	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
 	}
 	

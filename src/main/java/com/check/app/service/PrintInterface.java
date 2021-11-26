@@ -2,8 +2,8 @@ package com.check.app.service;
 
 import com.check.app.entity.Check;
 
-public interface CheckInteface {
+public interface PrintInterface {
 	
-	public Check getCheck(String[] args); 
+	void print(Check check);
 
 }

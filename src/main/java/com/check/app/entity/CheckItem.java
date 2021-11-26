@@ -6,19 +6,21 @@ public class CheckItem {
 	
 	private Product product;
 	private Integer qty;
-	private BigDecimal summ;
-	private BigDecimal discont;
+	private BigDecimal summ = BigDecimal.ZERO;
+	private BigDecimal discount = BigDecimal.ZERO;
+	private Boolean promDiscount = false;
 	
 	public CheckItem() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CheckItem(Product product, Integer qty, BigDecimal summ, BigDecimal discont) {
+	public CheckItem(Product product, Integer qty, BigDecimal summ, BigDecimal discount, Boolean promDiscount) {
 		super();
 		this.product = product;
 		this.qty = qty;
 		this.summ = summ;
-		this.discont = discont;
+		this.discount = discount;
+		this.promDiscount = promDiscount;
 	}
 
 	public Product getProduct() {
@@ -45,12 +47,20 @@ public class CheckItem {
 		this.summ = summ;
 	}
 
-	public BigDecimal getDiscont() {
-		return discont;
+	public BigDecimal getDiscount() {
+		return discount;
 	}
 
-	public void setDiscont(BigDecimal discont) {
-		this.discont = discont;
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
+
+	public Boolean getPromDiscount() {
+		return promDiscount;
+	}
+
+	public void setPromDiscount(Boolean promDiscount) {
+		this.promDiscount = promDiscount;
 	}
 	
 

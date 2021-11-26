@@ -2,7 +2,6 @@ package com.check.app.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.check.app.entity.Card;
@@ -11,12 +10,15 @@ import com.check.app.entity.Product;
 
 public class ParseArgsImpl implements ParseArgsInterface{
 
-	public static String fpath= "src/main/resources/";
+	public static String productFile= "productFile";
+	public static String cardFile= "cardFile";
+	public static String pathFile= "product.csv";
+	public static String pathCard= "card.csv";
 
 	@Override
 	public List<CheckItem> getCheckItem(String[] args) {
 		ReaderInterface reader = new ReaderImpl();
-		List<Product> allProduct = reader.getAllProduct(getPath(args, "fileProduction"));
+		List<Product> allProduct = reader.getAllProduct(getPath(args, productFile));
 		List<CheckItem> list = new ArrayList<CheckItem>();
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
@@ -26,7 +28,7 @@ public class ParseArgsImpl implements ParseArgsInterface{
 						product, 
 						Integer.parseInt(a[1]), 
 						product.getPrice().multiply(new BigDecimal(a[1])), 
-						null);
+						BigDecimal.ZERO, false);
 				list.add(checkItem);
 			}
 		}
@@ -34,19 +36,29 @@ public class ParseArgsImpl implements ParseArgsInterface{
 	}
 
 	@Override
-	public String getCard(String[] args, String name) {
+	public Card getCard(String[] args, String name) {
 		ReaderInterface reader = new ReaderImpl();
-		List<Card> allCard = reader.getAllCard(getPath(args, "fileCard"));
-		String card = null;
+		List<Card> allCard = reader.getAllCard(getPath(args, cardFile));
+		Card card = null;
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
 			if (a[0].contains(name)) {
-				card = a[1];
+				Long id = toLong(a[1]);
+				card = allCard.stream().filter(c -> c.getNumbercard().contains(a[1]) || c.getId()==id).findAny().orElse(card);
 			} 
 		}
 		return card;
 	}
-
+	public Long toLong(String st) {
+		Long i = null;
+		try {
+			i = Long.parseLong(st);
+		} catch (Exception e) {
+			// TODO: handle exception
+			i = 0L;
+		}
+		return i;
+	}
 	
 	public String getPath(String[] args, String name) {
 		String path = null;
@@ -57,10 +69,10 @@ public class ParseArgsImpl implements ParseArgsInterface{
 			} 
 		}
 		if (path==null) {
-			if (name.contains("fileProduction"))
-				path = fpath+"product.csv";
+			if (name.contains("product"))
+				path = pathFile;
 			else 
-				path = fpath+"card.csv";
+				path = pathCard;
 		}
 		return path;
 	}

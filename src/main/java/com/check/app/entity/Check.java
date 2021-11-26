@@ -1,47 +1,41 @@
 package com.check.app.entity;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import javax.xml.crypto.Data;
 
 public class Check {
 	
-	private List<CheckItem> check;
+	private List<CheckItem> checkItem;
 	private Card card;
 	private BigDecimal summTotal = BigDecimal.ZERO ;
 	private BigDecimal discountTotal = BigDecimal.ZERO;
 	private String name = "Krama";
 	private String adress = "3rd Stroiteley Street, 25";
-	private String dates;
+	private String date;
 	private String time;
-	private Calendar date;
 	
 	public Check() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Check(List<CheckItem> check, Card card, BigDecimal summTotal, BigDecimal discountTotal, String name, String adress,
-			String dates, String time, Calendar date) {
+	public Check(List<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, String name, String adress,
+			String date, String time) {
 		super();
-		this.check = check;
+		this.checkItem = checkItem;
 		this.card = card;
 		this.summTotal = summTotal;
 		this.discountTotal = discountTotal;
 		this.name = name;
 		this.adress = adress;
-		this.dates = dates;
-		this.time = time;
 		this.date = date;
+		this.time = time;
 	}
-	public List<CheckItem> getCheck() {
-		return check;
+	public List<CheckItem> getCheckItem() {
+		return checkItem;
 	}
-	public void setCheck(List<CheckItem> check) {
-		this.check = check;
+	public void setCheckItem(List<CheckItem> checkItem) {
+		this.checkItem = checkItem;
 	}
 	public Card getCard() {
 		return card;
@@ -73,11 +67,11 @@ public class Check {
 	public void setAdress(String adress) {
 		this.adress = adress;
 	}
-	public String getDates() {
-		return dates;
+	public String getDate() {
+		return date;
 	}
-	public void setDates(String dates) {
-		this.dates = dates;
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public String getTime() {
 		return time;
@@ -85,13 +79,5 @@ public class Check {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public Calendar getDate() {
-		return date;
-	}
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-	
-	
 
 }

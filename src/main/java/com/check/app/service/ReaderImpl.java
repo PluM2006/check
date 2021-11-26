@@ -54,7 +54,7 @@ public class ReaderImpl implements ReaderInterface{
 		String[] row = line.split(";"); 
 		values.setId(Long.parseLong(row[0]));
 		values.setNumbercard(row[1]);
-		values.setDiscount(Long.parseLong(row[2]));
+		values.setDiscount(new BigDecimal(row[2]));
 		return values;
 	}
 
