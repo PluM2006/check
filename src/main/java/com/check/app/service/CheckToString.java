@@ -31,8 +31,8 @@ public class CheckToString  {
 					String.format("%s", ci.getSumm()+"$")+"\n";
 			if (ci.getPromDiscount()) {
 				result  = result+
-						String.format("%4s", " ")+
-						String.format("%-39s", "акция скидка:")+
+						String.format("%8s", " ")+
+						String.format("%-35s", "акция скидка:")+
 						String.format("%s", ci.getSumm().subtract(ci.getDiscount())+"$"+"\n")
 						;
 			}
