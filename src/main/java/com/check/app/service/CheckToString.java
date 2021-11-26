@@ -10,6 +10,7 @@ public class CheckToString  {
 	final int lengthChek = 50;
 	public String result (Check check) {
 		
+		
 		String result = "";
 		result = result + 
 				String.format("%" + center(check.getShop().getName().length()) + "s",check.getShop().getName())+"\n"+
