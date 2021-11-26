@@ -18,6 +18,7 @@ public class CheckRunner {
 		PrintInterface cons = new PrintToConsole();
 		cons.print(check);
 		file.print(check);
+		
 	}
 }
 

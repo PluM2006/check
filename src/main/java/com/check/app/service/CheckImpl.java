@@ -9,8 +9,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.check.app.entity.Card;
+import com.check.app.entity.Cashier;
 import com.check.app.entity.Check;
 import com.check.app.entity.CheckItem;
+import com.check.app.entity.Shop;
 
 public class CheckImpl implements CheckInteface {
 	
@@ -23,6 +25,8 @@ public class CheckImpl implements CheckInteface {
 		Card card = pa.getCard(args, "card");
 		List<CheckItem> checkItems = pa.getCheckItem(args);
 		Check check = new Check();
+		check.setShop(new Shop());
+		check.setCashier(new Cashier());
 		//Расчет скидок
 		for (CheckItem checkItem : checkItems) {
 			//Скидка 10% если товара больше 5

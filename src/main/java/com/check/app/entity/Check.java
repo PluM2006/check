@@ -9,8 +9,8 @@ public class Check {
 	private Card card;
 	private BigDecimal summTotal = BigDecimal.ZERO ;
 	private BigDecimal discountTotal = BigDecimal.ZERO;
-	private String name = "Krama";
-	private String adress = "3rd Stroiteley Street, 25";
+	private Shop shop;
+	private Cashier cashier;
 	private String date;
 	private String time;
 	
@@ -19,15 +19,15 @@ public class Check {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Check(List<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, String name, String adress,
+	public Check(List<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, Shop shop, Cashier cashier,
 			String date, String time) {
 		super();
 		this.checkItem = checkItem;
 		this.card = card;
 		this.summTotal = summTotal;
 		this.discountTotal = discountTotal;
-		this.name = name;
-		this.adress = adress;
+		this.shop = shop;
+		this.cashier = cashier;
 		this.date = date;
 		this.time = time;
 	}
@@ -55,17 +55,17 @@ public class Check {
 	public void setDiscountTotal(BigDecimal discountTotal) {
 		this.discountTotal = discountTotal;
 	}
-	public String getName() {
-		return name;
+	public Shop getShop() {
+		return shop;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setShop(Shop shop) {
+		this.shop = shop;
 	}
-	public String getAdress() {
-		return adress;
+	public Cashier getCashier() {
+		return cashier;
 	}
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setCashier(Cashier cashier) {
+		this.cashier = cashier;
 	}
 	public String getDate() {
 		return date;
