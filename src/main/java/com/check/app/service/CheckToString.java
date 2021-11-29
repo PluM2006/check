@@ -11,7 +11,7 @@ public class CheckToString  {
 	final int lengthChek = 50;
 	public String result (Check check) {
 		String result = "";
-		if (check.getCheckItem().size()>0) {
+		if (check.getCheckItem().stream().filter(p -> p.getProduct().getName()==null).count() < check.getCheckItem().size()) {
 			result = result + 
 					String.format("%50s", " ").replace(" ", "-")+"\n"+
 					String.format("%" + center(check.getShop().getName().length()) + "s",check.getShop().getName())+"\n"+
@@ -61,7 +61,12 @@ public class CheckToString  {
 			}
 		} else {
 			result = "Чек не сформирован"+"\n"+
-					"Нет продуктов, лио не правильный путь к файлу продуктов";
+					"Не указаны продукты, либо не правильный путь к файлу продуктов";
+			for (CheckItem	ci : check.getCheckItem()) {
+				if (ci.getProduct().getName()==null) {
+					result = "нет продукта с id: "+ci.getProduct().getId()+"\n"+result;
+				}
+			}
 		}
 		return result;
 	}

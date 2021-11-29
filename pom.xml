@@ -3,13 +3,14 @@
   <groupId>com.check.app</groupId>
   <artifactId>check</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
-  <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-<dependencies>
-<dependency>
-    <groupId>com.opencsv</groupId>
-    <artifactId>opencsv</artifactId>
-    <version>4.1</version>
-</dependency>
-</dependencies>
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+    		<groupId>com.opencsv</groupId>
+    		<artifactId>opencsv</artifactId>
+    		<version>4.1</version>
+		</dependency>
+	</dependencies>
 </project>
