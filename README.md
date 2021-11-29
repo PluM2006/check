@@ -28,6 +28,8 @@ id; наименование; цена; товар на акции или нет
 
 2;Яйца;97,61;false
 
+[product.csv](https://github.com/PluM2006/check/blob/master/src/main/resources/product.csv)
+
 ### **структура файла card.csv**
 
 id; номер карты ; скидка (сколько процентов)
@@ -37,6 +39,8 @@ id; номер карты ; скидка (сколько процентов)
 1;1111 1111 1111 1111;7
 
 2;2222 2222 2222 2222;5
+
+[card.csv](https://github.com/PluM2006/check/blob/master/src/main/resources/card.csv)
 
 Файлы product.csv и card.csv можно поместить в папку с программой и не указывать в параметрах
 
