@@ -13,6 +13,7 @@ public class Check {
 	private Cashier cashier;
 	private String date;
 	private String time;
+	private int printTo;
 	
 	public Check() {
 		super();
@@ -20,7 +21,7 @@ public class Check {
 	}
 	
 	public Check(List<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, Shop shop, Cashier cashier,
-			String date, String time) {
+			String date, String time, int printTo) {
 		super();
 		this.checkItem = checkItem;
 		this.card = card;
@@ -30,6 +31,7 @@ public class Check {
 		this.cashier = cashier;
 		this.date = date;
 		this.time = time;
+		this.printTo = printTo;
 	}
 	public List<CheckItem> getCheckItem() {
 		return checkItem;
@@ -78,6 +80,12 @@ public class Check {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+	public int getPrintTo() {
+		return printTo;
+	}
+	public void setPrintTo(int printTo) {
+		this.printTo = printTo;
 	}
 
 }

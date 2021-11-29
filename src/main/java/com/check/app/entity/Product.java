@@ -6,8 +6,8 @@ public class Product {
 	
 	private Long id;
 	private String name;
-	private BigDecimal price;
-	private Boolean sale;
+	private BigDecimal price = BigDecimal.ZERO;
+	private Boolean sale = false;
 
 	public Product() {
 		super();

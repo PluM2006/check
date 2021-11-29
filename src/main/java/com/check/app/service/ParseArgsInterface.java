@@ -9,6 +9,7 @@ public interface ParseArgsInterface {
 	
 	List<CheckItem> getCheckItem(String[] args);
 	Card getCard(String[] args, String name);
+	int getPrintTo(String[] args, String name);
 	
 	
 

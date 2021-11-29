@@ -27,6 +27,7 @@ public class CheckImpl implements CheckInteface {
 		Check check = new Check();
 		check.setShop(new Shop());
 		check.setCashier(new Cashier());
+		check.setPrintTo(pa.getPrintTo(args, "printTo"));
 		//Расчет скидок
 		for (CheckItem checkItem : checkItems) {
 			//Скидка 10% если товара больше 5

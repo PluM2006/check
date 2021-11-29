@@ -1,5 +1,6 @@
 package com.check.app.service;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +24,16 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
 			Long qty = toLong(a[1]);
-			if (a[0].matches("-?\\d+(\\.\\d+)?") && qty!=0L) {
-				Product product =allProduct.stream().filter(p->p.getId()==Integer.parseInt(a[0])).findAny().orElse(null); 
+			if (a[0].matches("-?\\d+(\\.\\d+)?") && qty>0L) {
+				Product product =allProduct.stream().filter(p->p.getId()==Integer.parseInt(a[0])).findAny().orElse(
+						new Product(toLong(a[0]), null, BigDecimal.ZERO, false));
 				CheckItem checkItem = new CheckItem(
 						product, 
 						Integer.parseInt(a[1]), 
 						product.getPrice().multiply(new BigDecimal(a[1])), 
 						BigDecimal.ZERO, false);
-				list.add(checkItem);
+				
+					list.add(checkItem);
 			}
 		}
 		return list;
@@ -50,6 +53,19 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		}
 		return card;
 	}
+	
+	@Override
+	public int getPrintTo(String[] args, String name) {
+		int printTo = 0;
+		for (int i = 0; i < args.length; i++) {
+			String[] a = args[i].split("-");
+			if (a[0].contains(name)) {
+				printTo = toInt(a[1]);
+			}
+		}
+		return printTo;
+	}
+	
 	public Long toLong(String st) {
 		Long i = 0L;
 		try {
@@ -61,22 +77,37 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		return i;
 	}
 	
+	public int toInt(String st) {
+		int i = 0;
+		try {
+			i = Integer.parseInt(st);
+		} catch (Exception e) {
+			// TODO: handle exception
+			i = 0;
+		}
+		return i;
+	}
+	
 	public String getPath(String[] args, String name) {
 		String path = null;
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
 			if (a[0].contains(name)) {
 				path = a[1];
-			} 
+			}
 		}
-		if (path==null) {
+		if (path==null || !new File(path).isFile()) {
 			if (name.contains("product"))
 				path = pathFile;
 			else 
 				path = pathCard;
 		}
+		
+		
 		return path;
 	}
+
+
 
 	
 	

@@ -1,8 +1,8 @@
 package com.check.app.entity;
 
 public class Shop {
-	private String name = "Krama N153";
-	private String adress = "3rd Stroiteley Street, 25";
+	private String name = "Krama N646";
+	private String adress = "3-я ул. Строителей, 25";
 	public Shop(String name, String adress) {
 		super();
 		this.name = name;
