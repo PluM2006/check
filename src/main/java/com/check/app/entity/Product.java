@@ -10,12 +10,9 @@ public class Product {
 	private Boolean sale = false;
 
 	public Product() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Product(Long id, String name, BigDecimal price, Boolean sale) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;

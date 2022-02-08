@@ -5,11 +5,8 @@ public class Cashier {
 	private String name = "Luke Skywalker";
 	private String number = "000002";
 	public Cashier() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+			}
 	public Cashier(String name, String number) {
-		super();
 		this.name = name;
 		this.number = number;
 	}

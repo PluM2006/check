@@ -16,17 +16,20 @@ import com.check.app.entity.Shop;
 
 public class CheckImpl implements CheckInteface {
 	
-	public final BigDecimal allDiscount = new BigDecimal(10);
+	private final BigDecimal allDiscount = new BigDecimal(10);
 	
 	@Override
 	public Check getCheck(String[] args) {
 		
 		ParseArgsInterface pa = new ParseArgsImpl();
+		//Дисконтная карта
 		Card card = pa.getCard(args, "card");
+		//Продукты
 		List<CheckItem> checkItems = pa.getCheckItem(args);
 		Check check = new Check();
 		check.setShop(new Shop());
 		check.setCashier(new Cashier());
+		
 		check.setPrintTo(pa.getPrintTo(args, "printTo"));
 		//Расчет скидок
 		for (CheckItem checkItem : checkItems) {
@@ -54,13 +57,13 @@ public class CheckImpl implements CheckInteface {
 		return check;
 	}
 	
-	public  BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
+	private  BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
 		BigDecimal discont = BigDecimal.ZERO;
 		discont = percent.multiply(summ)
 	 			.divide(new BigDecimal(100)).setScale(2, RoundingMode.HALF_DOWN);
 		return discont;
 	}
-	public String getDateTime(Calendar cal, String format) {
+	private String getDateTime(Calendar cal, String format) {
 		DateFormat df = new SimpleDateFormat(format);
 		return df.format(cal.getTime());
 	}

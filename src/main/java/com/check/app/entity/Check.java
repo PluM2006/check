@@ -16,13 +16,10 @@ public class Check {
 	private int printTo;
 	
 	public Check() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Check(List<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, Shop shop, Cashier cashier,
 			String date, String time, int printTo) {
-		super();
 		this.checkItem = checkItem;
 		this.card = card;
 		this.summTotal = summTotal;

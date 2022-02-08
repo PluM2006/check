@@ -13,8 +13,8 @@ public class PrintToFile implements PrintInterface {
 	
 		CheckToString cts = new CheckToString();
 		try {
-		      File myObj = new File("check.txt");
-		      FileWriter myWriter = new FileWriter(myObj);
+		      File file = new File("check.txt");
+		      FileWriter myWriter = new FileWriter(file);
 		      myWriter.write(cts.result(check));	
 		      myWriter.close();
 		    } catch (IOException e) {

@@ -11,11 +11,9 @@ public class CheckItem {
 	private Boolean promDiscount = false;
 	
 	public CheckItem() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public CheckItem(Product product, Integer qty, BigDecimal summ, BigDecimal discount, Boolean promDiscount) {
-		super();
 		this.product = product;
 		this.qty = qty;
 		this.summ = summ;

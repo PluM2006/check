@@ -11,10 +11,10 @@ import com.check.app.entity.Product;
 
 public class ParseArgsImpl implements ParseArgsInterface{
 
-	public static String productFile= "productFile";
-	public static String cardFile= "cardFile";
-	public static String pathFile= "product.csv";
-	public static String pathCard= "card.csv";
+	private static String productFile= "productFile";
+	private static String cardFile= "cardFile";
+	private static String pathFile= "product.csv";
+	private static String pathCard= "card.csv";
 
 	@Override
 	public List<CheckItem> getCheckItem(String[] args) {
@@ -66,7 +66,7 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		return printTo;
 	}
 	
-	public Long toLong(String st) {
+	private Long toLong(String st) {
 		Long i = 0L;
 		try {
 			i = Long.parseLong(st);
@@ -77,7 +77,7 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		return i;
 	}
 	
-	public int toInt(String st) {
+	private int toInt(String st) {
 		int i = 0;
 		try {
 			i = Integer.parseInt(st);
@@ -88,7 +88,7 @@ public class ParseArgsImpl implements ParseArgsInterface{
 		return i;
 	}
 	
-	public String getPath(String[] args, String name) {
+	private String getPath(String[] args, String name) {
 		String path = null;
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");

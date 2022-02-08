@@ -10,12 +10,9 @@ public class Card {
 	
 	
 	public Card() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Card(Long id, String numbercard, BigDecimal discount) {
-		super();
 		this.id = id;
 		this.numbercard = numbercard;
 		this.discount = discount;
