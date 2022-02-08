@@ -30,21 +30,19 @@ public class CheckToString  {
 			
 			for (CheckItem	ci : check.getCheckItem()) {
 				if (ci.getProduct().getName()==null) {
-					result = "нет продукта с id: "+ci.getProduct().getId()+"\n"+result;
+					result.insert(0, "нет продукта с id: "+ci.getProduct().getId()+"\n");
 				}else {
-					result  = result+
-							String.format("%-4s", ci.getQty())+
-							String.format("%-30s", ci.getProduct().getName())+
-							String.format("%-9s", ci.getProduct().getPrice()+"$")+
-							String.format("%7s", ci.getSumm()+"$")+"\n";
+							result.append(String.format("%-4s", ci.getQty()));
+							result.append(String.format("%-30s", ci.getProduct().getName()));
+							result.append(String.format("%-9s", ci.getProduct().getPrice()+"$"));
+							result.append(String.format("%7s", ci.getSumm()+"$")+"\n");
 					if (ci.getPromDiscount()) {
-						result  = result+
-								String.format("%6s", " ")+
-								String.format("%-37s", "скидка 10%:")+
-								String.format("%8s", "-"+ci.getDiscount()+"$"+"\n")+
-								String.format("%6s", " ")+
-								String.format("%-37s", "цена со скидкой:")+
-								String.format("%8s", ci.getSumm().subtract(ci.getDiscount())+"$"+"\n");
+								result.append(String.format("%6s", " "));
+								result.append(String.format("%-37s", "скидка 10%:"));
+								result.append(String.format("%8s", "-"+ci.getDiscount()+"$"+"\n"));
+								result.append(String.format("%6s", " "));
+								result.append(String.format("%-37s", "цена со скидкой:"));
+								result.append(String.format("%8s", ci.getSumm().subtract(ci.getDiscount())+"$"+"\n"));
 					}
 				}
 			}
