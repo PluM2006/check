@@ -40,7 +40,7 @@ public class ReaderImpl implements ReaderInterface{
 
 		return allCard;
 	}
-	public static Product getProductFromLine(String line) {
+	private Product getProductFromLine(String line) {
 		Product values = new Product();
 		String[] row = line.split(";"); 
 		values.setId(Long.parseLong(row[0]));
@@ -49,7 +49,7 @@ public class ReaderImpl implements ReaderInterface{
 		values.setSale(Boolean.parseBoolean(row[3]));
 	    return values;
 	}
-	public static Card getCardFromLine(String line) {
+	private Card getCardFromLine(String line) {
 		Card values = new Card();
 		String[] row = line.split(";"); 
 		values.setId(Long.parseLong(row[0]));

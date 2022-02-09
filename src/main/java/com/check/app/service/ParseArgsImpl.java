@@ -102,8 +102,6 @@ public class ParseArgsImpl implements ParseArgsInterface{
 			else 
 				path = pathCard;
 		}
-		
-		
 		return path;
 	}
 
