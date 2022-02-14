@@ -1,4 +1,4 @@
-package com.check.app.service;
+package com.check.app.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import com.check.app.entity.Card;
 import com.check.app.entity.Product;
+import com.check.app.service.ReaderInterface;
 
 public class ReaderImpl implements ReaderInterface{
 
@@ -20,7 +21,6 @@ public class ReaderImpl implements ReaderInterface{
 		    	 allProduct.add(getProductFromLine(scanner.nextLine()));
 		     }
 		 } catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return allProduct;
@@ -34,7 +34,6 @@ public class ReaderImpl implements ReaderInterface{
 		    	 allCard.add(getCardFromLine(scanner.nextLine()));
 		     }
 		 } catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

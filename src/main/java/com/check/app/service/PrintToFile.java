@@ -10,16 +10,15 @@ public class PrintToFile implements PrintInterface {
 
 	@Override
 	public void print(Check check) {
-	
+
 		CheckToString cts = new CheckToString();
-		try {
-		      File file = new File("check.txt");
-		      FileWriter myWriter = new FileWriter(file);
-		      myWriter.write(cts.result(check));	
-		      myWriter.close();
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
+		File file = new File("check.txt");
+		try (FileWriter myWriter = new FileWriter(file);) {
+			myWriter.write(cts.result(check));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

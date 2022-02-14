@@ -1,4 +1,4 @@
-package com.check.app.service;
+package com.check.app.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,34 +13,34 @@ import com.check.app.entity.Cashier;
 import com.check.app.entity.Check;
 import com.check.app.entity.CheckItem;
 import com.check.app.entity.Shop;
+import com.check.app.service.CheckInteface;
+import com.check.app.service.ParseArgsInterface;
 
 public class CheckImpl implements CheckInteface {
-	
+
 	private final BigDecimal allDiscount = new BigDecimal(10);
-	
+
 	@Override
 	public Check getCheck(String[] args) {
-		
-		ParseArgsInterface pa = new ParseArgsImpl();
-		//Дисконтная карта
-		Card card = pa.getCard(args, "card");
-		//Продукты
-		List<CheckItem> checkItems = pa.getCheckItem(args);
+
+		ParseArgsInterface parseArgs = new ParseArgsImpl();
+		// Дисконтная карта
+		Card card = parseArgs.getCard(args, "card");
+		// Продукты
+		List<CheckItem> checkItems = parseArgs.getCheckItem(args);
 		Check check = new Check();
-		check.setShop(new Shop());
-		check.setCashier(new Cashier());
-		
-		check.setPrintTo(pa.getPrintTo(args, "printTo"));
-		//Расчет скидок
+		check.setShop(new Shop("Krama N646", "3-я ул. Строителей, 25"));
+		check.setCashier(new Cashier("Luke Skywalker", "007"));
+		// куда вывод
+		check.setPrintTo(parseArgs.getPrintTo(args, "printTo"));
+		// Расчет скидок
 		for (CheckItem checkItem : checkItems) {
-			//Скидка 10% если товара больше 5
-			Integer q = checkItems.stream()
-					.filter(p -> p.getProduct().getId()==checkItem.getProduct().getId())
-					.map(x -> x.getQty())
-					.reduce(0, Integer::sum);
-			if (checkItem.getProduct().getSale() && q>=5) {
-					checkItem.setDiscount(getDiscount(checkItem.getSumm(), allDiscount));
-					checkItem.setPromDiscount(true);
+			// Скидка 10% если товара больше 5
+			Integer quantity = checkItems.stream().filter(p -> p.getProduct().getId() == checkItem.getProduct().getId())
+					.map(x -> x.getQty()).reduce(0, Integer::sum);
+			if (checkItem.getProduct().getSale() && quantity >= 5) {
+				checkItem.setDiscount(getDiscount(checkItem.getSumm(), allDiscount));
+				checkItem.setPromDiscount(true);
 			} else {
 				if (card != null && checkItem.getDiscount() == BigDecimal.ZERO) {
 					checkItem.setDiscount(getDiscount(checkItem.getSumm(), card.getDiscount()));
@@ -56,19 +56,16 @@ public class CheckImpl implements CheckInteface {
 		check.setTime(getDateTime(cal, "HH:mm:ss"));
 		return check;
 	}
-	
-	private  BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
+
+	private BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
 		BigDecimal discont = BigDecimal.ZERO;
-		discont = percent.multiply(summ)
-	 			.divide(new BigDecimal(100)).setScale(2, RoundingMode.HALF_DOWN);
+		discont = percent.multiply(summ).divide(new BigDecimal(100)).setScale(2, RoundingMode.HALF_DOWN);
 		return discont;
 	}
+
 	private String getDateTime(Calendar cal, String format) {
 		DateFormat df = new SimpleDateFormat(format);
 		return df.format(cal.getTime());
 	}
-	
-	
-
 
 }

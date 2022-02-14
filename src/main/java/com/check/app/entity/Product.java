@@ -3,7 +3,7 @@ package com.check.app.entity;
 import java.math.BigDecimal;
 
 public class Product {
-	
+
 	private Long id;
 	private String name;
 	private BigDecimal price = BigDecimal.ZERO;
@@ -50,6 +50,5 @@ public class Product {
 	public void setSale(Boolean sale) {
 		this.sale = sale;
 	}
-	
-	
+
 }

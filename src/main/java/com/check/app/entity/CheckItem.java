@@ -3,16 +3,16 @@ package com.check.app.entity;
 import java.math.BigDecimal;
 
 public class CheckItem {
-	
+
 	private Product product;
 	private Integer qty;
 	private BigDecimal summ = BigDecimal.ZERO;
 	private BigDecimal discount = BigDecimal.ZERO;
 	private Boolean promDiscount = false;
-	
+
 	public CheckItem() {
 	}
-	
+
 	public CheckItem(Product product, Integer qty, BigDecimal summ, BigDecimal discount, Boolean promDiscount) {
 		this.product = product;
 		this.qty = qty;
@@ -60,6 +60,5 @@ public class CheckItem {
 	public void setPromDiscount(Boolean promDiscount) {
 		this.promDiscount = promDiscount;
 	}
-	
 
 }

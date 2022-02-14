@@ -3,12 +3,11 @@ package com.check.app.entity;
 import java.math.BigDecimal;
 
 public class Card {
-	
+
 	private Long id;
 	private String numbercard;
 	private BigDecimal discount;
-	
-	
+
 	public Card() {
 	}
 
@@ -41,7 +40,5 @@ public class Card {
 	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
 	}
-	
-	
 
 }
