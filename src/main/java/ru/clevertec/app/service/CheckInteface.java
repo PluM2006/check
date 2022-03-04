@@ -1,6 +1,6 @@
-package com.check.app.service;
+package ru.clevertec.app.service;
 
-import com.check.app.entity.Check;
+import ru.clevertec.app.entity.Check;
 
 public interface CheckInteface {
 

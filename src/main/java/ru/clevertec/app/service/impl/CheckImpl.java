@@ -1,4 +1,4 @@
-package com.check.app.service.impl;
+package ru.clevertec.app.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,13 +8,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.check.app.entity.Card;
-import com.check.app.entity.Cashier;
-import com.check.app.entity.Check;
-import com.check.app.entity.CheckItem;
-import com.check.app.entity.Shop;
-import com.check.app.service.CheckInteface;
-import com.check.app.service.ParseArgsInterface;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.Cashier;
+import ru.clevertec.app.entity.Check;
+import ru.clevertec.app.entity.CheckItem;
+import ru.clevertec.app.entity.Shop;
+import ru.clevertec.app.service.CheckInteface;
+import ru.clevertec.app.service.ParseArgsInterface;
 
 public class CheckImpl implements CheckInteface {
 

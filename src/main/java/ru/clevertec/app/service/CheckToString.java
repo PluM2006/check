@@ -1,10 +1,10 @@
-package com.check.app.service;
+package ru.clevertec.app.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.check.app.entity.Check;
-import com.check.app.entity.CheckItem;
+import ru.clevertec.app.entity.Check;
+import ru.clevertec.app.entity.CheckItem;
 
 public class CheckToString {
 

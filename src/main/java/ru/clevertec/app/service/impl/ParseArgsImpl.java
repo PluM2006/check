@@ -1,15 +1,15 @@
-package com.check.app.service.impl;
+package ru.clevertec.app.service.impl;
 
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.check.app.entity.Card;
-import com.check.app.entity.CheckItem;
-import com.check.app.entity.Product;
-import com.check.app.service.ParseArgsInterface;
-import com.check.app.service.ReaderInterface;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.CheckItem;
+import ru.clevertec.app.entity.Product;
+import ru.clevertec.app.service.ParseArgsInterface;
+import ru.clevertec.app.service.ReaderInterface;
 
 public class ParseArgsImpl implements ParseArgsInterface {
 
