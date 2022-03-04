@@ -25,7 +25,9 @@ public class ParseArgsImpl implements ParseArgsInterface {
 		List<CheckItem> listCheckItem = new ArrayList<CheckItem>();
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
-			Long qty = Long.parseLong(a[1]);
+			Long qty = 0L;
+			if (a[1].matches("\\d+"))
+				qty = Long.parseLong(a[1]);
 			if (a[0].matches("-?\\d+(\\.\\d+)?") && qty > 0L) {
 				Product product = allProduct.stream().filter(p -> p.getId() == Integer.parseInt(a[0])).findAny()
 						.orElse(new Product(Long.parseLong(a[0]), null, BigDecimal.ZERO, false));
@@ -45,8 +47,8 @@ public class ParseArgsImpl implements ParseArgsInterface {
 		Card card = null;
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
-			if (a[0].contains(name)) {
-				Long id = Long.parseLong(a[1]);
+			if (a[0].equals(name)) {
+				Long id = toLong(a[1]);
 				card = allCard.stream().filter(c -> c.getNumbercard().contains(a[1]) || c.getId() == id).findAny()
 						.orElse(card);
 			}
@@ -54,6 +56,12 @@ public class ParseArgsImpl implements ParseArgsInterface {
 		return card;
 	}
 
+	private Long toLong (String s) {
+		Long l = 0L;
+		if (s.matches("\\d+"))
+			l = Long.parseLong(s);
+		return l;
+	}
 	@Override
 	public int getPrintTo(String[] args, String name) {
 		int printTo = 0;
