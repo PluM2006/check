@@ -18,7 +18,7 @@ dependencies {
     implementation 'com.opencsv:opencsv:4.1'
 }
 
-group = 'com.check.app'
+group = 'ru.clevertec.app'
 version = '0.0.1-SNAPSHOT'
 description = 'check'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -30,3 +30,31 @@ publishing {
         }
     }
 }
+
+task downloadCheck(type: DownloadFile) {
+    sourceUrl = 'https://downloader.disk.yandex.ru/preview/2d206b07f74d1cf35557badec48181cb921896a4c2810dc63de8f284e87a5128/62262e15/xcEEmTPdsT8Xo4E7kJv-OQEpMdNdKt0_L3gBYbkwCkzWkugVkF2HhvlnZU_NMwC-LjZ-6lWT72a6yDTvJbgdLg%3D%3D?uid=0&filename=check.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=2048x2048'
+    target new File('src/main/resources/check.jpg')
+}
+
+build.dependsOn downloadCheck
+
+class DownloadFile extends DefaultTask {
+
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+        try {
+            ant.get(src: sourceUrl, dest: target)
+        } catch(Exception e){
+            println e
+        }
+
+    }
+
+}
+
