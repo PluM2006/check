@@ -7,17 +7,17 @@ public class Product {
 	private Long id;
 	private String name;
 	private BigDecimal price = BigDecimal.ZERO;
-	private Integer qty;
+	private Integer count;
 	private Boolean sale = false;
 
 	public Product() {
 	}
 
-	public Product(Long id, String name, BigDecimal price, Integer qty, Boolean sale) {
+	public Product(Long id, String name, BigDecimal price, Integer count, Boolean sale) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.qty = qty;
+		this.count = count;
 		this.sale = sale;
 	}
 
@@ -52,12 +52,12 @@ public class Product {
 	public void setSale(Boolean sale) {
 		this.sale = sale;
 	}
-	
-	public Integer getQty() {
-		return qty;
+
+	public Integer getCount() {
+		return count;
 	}
-	
-	public void setQty(Integer qty) {
-		this.qty = qty;
+
+	public void setCount(Integer count) {
+		this.count = count;
 	}
 }
