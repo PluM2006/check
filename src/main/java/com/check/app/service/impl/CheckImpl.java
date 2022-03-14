@@ -24,18 +24,18 @@ public class CheckImpl implements CheckInteface {
 	public Check getCheck(String[] args) {
 
 		ParseArgsInterface parseArgs = new ParseArgsImpl();
-		// Дисконтная карта
+		// Р”РёСЃРєРѕРЅС‚РЅР°СЏ РєР°СЂС‚Р°
 		Card card = parseArgs.getCard(args, "card");
-		// Продукты
+		// РџСЂРѕРґСѓРєС‚С‹
 		List<CheckItem> checkItems = parseArgs.getCheckItem(args);
 		Check check = new Check();
-		check.setShop(new Shop("Krama N646", "3-я ул. Строителей, 25"));
+		check.setShop(new Shop("Krama N646", "3-СЏ СѓР». РЎС‚СЂРѕРёС‚РµР»РµР№, 25"));
 		check.setCashier(new Cashier("Luke Skywalker", "007"));
-		// куда вывод
+		// РєСѓРґР° РІС‹РІРѕРґ
 		check.setPrintTo(parseArgs.getPrintTo(args, "printTo"));
-		// Расчет скидок
+		// Р Р°СЃС‡РµС‚ СЃРєРёРґРѕРє
 		for (CheckItem checkItem : checkItems) {
-			// Скидка 10% если товара больше 5
+			// РЎРєРёРґРєР° 10% РµСЃР»Рё С‚РѕРІР°СЂР° Р±РѕР»СЊС€Рµ 5
 			Integer quantity = checkItems.stream().filter(p -> p.getProduct().getId() == checkItem.getProduct().getId())
 					.map(x -> x.getQty()).reduce(0, Integer::sum);
 			if (checkItem.getProduct().getSale() && quantity >= 5) {

@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import com.check.app.entity.Card;
 import com.check.app.entity.Product;
@@ -27,16 +26,16 @@ public class ReaderImpl implements ReaderInterface {
 				String line = scanner.nextLine();
 				String[] row = line.split(";");
 				if (!row[0].matches("[1-9][0-9]?|100")) {
-					listErrorMessage.add("некорректный индекс");
+					listErrorMessage.add("РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РёРЅРґРµРєСЃ");
 				}
 				if (!row[1].matches("\\p{Lu}(\\p{Ll}|\s){2,29}")) {
-					listErrorMessage.add("некорректное название");
+					listErrorMessage.add("РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ РЅР°Р·РІР°РЅРёРµ");
 				}
 				if (!row[2].matches("([1-9][0-9]?)[.,][0-9]{2}||100.00")) {
-					listErrorMessage.add("некорректная цена");
+					listErrorMessage.add("РЅРµРєРѕСЂСЂРµРєС‚РЅР°СЏ С†РµРЅР°");
 				}
 				if (!row[3].matches("[1-9]|1[0-9]?|20")) {
-					listErrorMessage.add("некорректное количество");
+					listErrorMessage.add("РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ");
 				}
 				if (listErrorMessage.size() == 0) {
 					Long id = Long.parseLong(row[0]);
