@@ -28,10 +28,10 @@ public class ReaderImpl implements ReaderInterface {
 				if (!row[0].matches("[1-9][0-9]?|100")) {
 					listErrorMessage.add("некорректный индекс");
 				}
-				if (!row[1].matches("\\p{Lu}(\\p{Ll}|\s){2,29}")) {
+				if (!row[1].matches("[A-Z]([a-z]|\\s){2,29}|[А-Я]([а-я]|\\s){2,29}")) {
 					listErrorMessage.add("некорректное название");
 				}
-				if (!row[2].matches("([1-9][0-9]?)[.,][0-9]{2}||100.00")) {
+				if (!row[2].matches("([1-9][0-9]?)[.,][0-9]{2}|100.00")) {
 					listErrorMessage.add("некорректная цена");
 				}
 				if (!row[3].matches("[1-9]|1[0-9]?|20")) {
