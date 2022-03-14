@@ -47,7 +47,7 @@ public class ReaderImpl implements ReaderInterface {
 					allProduct.add(new Product(id, name, price, count, sale));
 				} else {
 					invalidDate.append(line);
-					invalidDate.append(" ");
+					invalidDate.append(" |");
 					for (String errorMessage : listErrorMessage) {
 						invalidDate.append(errorMessage);
 						invalidDate.append("|");

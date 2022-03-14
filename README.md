@@ -20,13 +20,12 @@
 
 ### **структура файла product.csv**
 
-id; наименование; цена; товар на акции или нет (true/false)
 
 ***пример:***
 
-1;Картофель;23,55;true
+1;Картофель;23,55;10;true
 
-2;Яйца;97,61;false
+2;Яйца;97,61;5;false
 
 [product.csv](https://github.com/PluM2006/check/blob/master/src/main/resources/product.csv)
 
