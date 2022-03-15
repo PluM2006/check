@@ -7,15 +7,17 @@ public class Product {
 	private Long id;
 	private String name;
 	private BigDecimal price = BigDecimal.ZERO;
+	private Integer count;
 	private Boolean sale = false;
 
 	public Product() {
 	}
 
-	public Product(Long id, String name, BigDecimal price, Boolean sale) {
+	public Product(Long id, String name, BigDecimal price, Integer count, Boolean sale) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.count = count;
 		this.sale = sale;
 	}
 
@@ -51,4 +53,11 @@ public class Product {
 		this.sale = sale;
 	}
 
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 }

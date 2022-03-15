@@ -21,20 +21,20 @@ public class CheckToString {
 			result.append(
 					String.format("%" + center(check.getShop().getAdress().length()) + "s", check.getShop().getAdress())
 							+ "\n");
-			result.append(String.format("%-34s", "кассир: #" + check.getCashier().getNumber()));
-			result.append(String.format("%s", "Дата: " + check.getDate()) + "\n");
+			result.append(String.format("%-34s", "РєР°СЃСЃРёСЂ: #" + check.getCashier().getNumber()));
+			result.append(String.format("%s", "Р”Р°С‚Р°: " + check.getDate()) + "\n");
 			result.append(String.format("%-34s", ""));
-			result.append(String.format("Время:"));
+			result.append(String.format("Р’СЂРµРјСЏ:"));
 			result.append(String.format("%" + check.getDate().length() + "s", check.getTime()) + "\n");
 			result.append(String.format("%50s", " ").replace(" ", "-") + "\n");
-			result.append(String.format("%-4s", "кол"));
-			result.append(String.format("%-30s", "наименование"));
-			result.append(String.format("%-9s", "цена"));
-			result.append(String.format("%7s", "всего") + "\n");
+			result.append(String.format("%-4s", "РєРѕР»"));
+			result.append(String.format("%-30s", "РЅР°РёРјРµРЅРѕРІР°РЅРёРµ"));
+			result.append(String.format("%-9s", "С†РµРЅР°"));
+			result.append(String.format("%7s", "РІСЃРµРіРѕ") + "\n");
 
 			for (CheckItem ci : check.getCheckItem()) {
 				if (ci.getProduct().getName() == null) {
-					result.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
+					result.insert(0, "РЅРµС‚ РїСЂРѕРґСѓРєС‚Р° СЃ id: " + ci.getProduct().getId() + "\n");
 				} else {
 					result.append(String.format("%-4s", ci.getQty()));
 					result.append(String.format("%-30s", ci.getProduct().getName()));
@@ -42,10 +42,10 @@ public class CheckToString {
 					result.append(String.format("%7s", ci.getSumm() + "$") + "\n");
 					if (ci.getPromDiscount()) {
 						result.append(String.format("%6s", " "));
-						result.append(String.format("%-37s", "скидка 10%:"));
+						result.append(String.format("%-37s", "СЃРєРёРґРєР° 10%:"));
 						result.append(String.format("%8s", "-" + ci.getDiscount() + "$" + "\n"));
 						result.append(String.format("%6s", " "));
-						result.append(String.format("%-37s", "цена со скидкой:"));
+						result.append(String.format("%-37s", "С†РµРЅР° СЃРѕ СЃРєРёРґРєРѕР№:"));
 						result.append(String.format("%8s", ci.getSumm().subtract(ci.getDiscount()) + "$" + "\n"));
 					}
 				}
@@ -53,23 +53,23 @@ public class CheckToString {
 
 			result.append(String.format("%50s", " ").replace(" ", "-") + "\n");
 			result.append(String.format("%50s", " ").replace(" ", "-") + "\n");
-			result.append("Итого: " + check.getSummTotal() + "$" + "\n");
+			result.append("РС‚РѕРіРѕ: " + check.getSummTotal() + "$" + "\n");
 			if (check.getCard() != null) {
-				result.append("Дисконтная карта: " + check.getCard().getNumbercard() + " скидка: "
+				result.append("Р”РёСЃРєРѕРЅС‚РЅР°СЏ РєР°СЂС‚Р°: " + check.getCard().getNumbercard() + " СЃРєРёРґРєР°: "
 						+ check.getCard().getDiscount() + "%" + "\n");
 			}
 			if (check.getDiscountTotal().compareTo(BigDecimal.ZERO) != 0) {
-				result.append("Скидка: -" + check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN) + "$" + "\n");
-				result.append("Итого со скидкой: "
+				result.append("РЎРєРёРґРєР°: -" + check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN) + "$" + "\n");
+				result.append("РС‚РѕРіРѕ СЃРѕ СЃРєРёРґРєРѕР№: "
 						+ check.getSummTotal().subtract(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN))
 						+ "\n");
 			}
 		} else {
-			result.append("Чек не сформирован" + "\n");
-			result.append("Не указаны продукты, либо не правильный путь к файлу продуктов");
+			result.append("Р§РµРє РЅРµ СЃС„РѕСЂРјРёСЂРѕРІР°РЅ" + "\n");
+			result.append("РќРµ СѓРєР°Р·Р°РЅС‹ РїСЂРѕРґСѓРєС‚С‹, Р»РёР±Рѕ РЅРµ РїСЂР°РІРёР»СЊРЅС‹Р№ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ РїСЂРѕРґСѓРєС‚РѕРІ");
 			for (CheckItem ci : check.getCheckItem()) {
 				if (ci.getProduct().getName() == null) {
-					result.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
+					result.insert(0, "РЅРµС‚ РїСЂРѕРґСѓРєС‚Р° СЃ id: " + ci.getProduct().getId() + "\n");
 				}
 			}
 		}

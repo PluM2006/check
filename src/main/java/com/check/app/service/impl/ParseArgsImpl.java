@@ -28,7 +28,7 @@ public class ParseArgsImpl implements ParseArgsInterface {
 			Long qty = Long.parseLong(a[1]);
 			if (a[0].matches("-?\\d+(\\.\\d+)?") && qty > 0L) {
 				Product product = allProduct.stream().filter(p -> p.getId() == Integer.parseInt(a[0])).findAny()
-						.orElse(new Product(Long.parseLong(a[0]), null, BigDecimal.ZERO, false));
+						.orElse(new Product(Long.parseLong(a[0]), null, BigDecimal.ZERO, 0, false));
 				CheckItem checkItem = new CheckItem(product, Integer.parseInt(a[1]),
 						product.getPrice().multiply(new BigDecimal(a[1])), BigDecimal.ZERO, false);
 
