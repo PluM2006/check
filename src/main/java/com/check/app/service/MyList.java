@@ -2,7 +2,7 @@ package com.check.app.service;
 
 import java.util.Collection;
 
-public interface MyList<E> extends Collection<E>{
+public interface MyList<E>{
 	
 	MyIterator<E> getIterator();
 	
@@ -10,8 +10,8 @@ public interface MyList<E> extends Collection<E>{
 	
 	void add(E e);
 	
-	void addAll(Collection<? extends E> c);
-	
+	void addAll(MyList<? extends E> c);
+
 	E set(int index, E e);
 	
 	E remove(int index);

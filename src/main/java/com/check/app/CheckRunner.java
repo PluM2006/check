@@ -31,6 +31,8 @@ public class CheckRunner {
 		s1.add("Прівет");
 		s1.add("Прівет2");
 		s1.add("Прівет3");
+		s1.add("Прівет5");
+		s1.add("2222");
 		
 		
 //		System.out.println(s1.get(3));
@@ -66,7 +68,8 @@ public class CheckRunner {
 //				it1.addBefore();
 			}
 		}
-		System.out.println(s);
+
+		System.out.println(s.toString());
 //		List<String> s = new ArrayList<>();
 //		s.add("111");
 //		s.add("111");
@@ -76,3 +79,4 @@ public class CheckRunner {
 
 	}
 }
+
