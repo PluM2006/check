@@ -1,11 +1,12 @@
 package com.check.app.entity;
 
 import java.math.BigDecimal;
-import java.util.List;
+
+import com.check.app.service.CustomList;
 
 public class Check {
 
-	private List<CheckItem> checkItem;
+	private CustomList<CheckItem> checkItem;
 	private Card card;
 	private BigDecimal summTotal = BigDecimal.ZERO;
 	private BigDecimal discountTotal = BigDecimal.ZERO;
@@ -18,7 +19,7 @@ public class Check {
 	public Check() {
 	}
 
-	public Check(List<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, Shop shop,
+	public Check(CustomList<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, Shop shop,
 			Cashier cashier, String date, String time, int printTo) {
 		this.checkItem = checkItem;
 		this.card = card;
@@ -31,11 +32,11 @@ public class Check {
 		this.printTo = printTo;
 	}
 
-	public List<CheckItem> getCheckItem() {
+	public CustomList<CheckItem> getCheckItem() {
 		return checkItem;
 	}
 
-	public void setCheckItem(List<CheckItem> checkItem) {
+	public void setCheckItem(CustomList<CheckItem> checkItem) {
 		this.checkItem = checkItem;
 	}
 

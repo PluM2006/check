@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import com.check.app.entity.Card;
 import com.check.app.entity.Cashier;
@@ -14,6 +13,7 @@ import com.check.app.entity.Check;
 import com.check.app.entity.CheckItem;
 import com.check.app.entity.Shop;
 import com.check.app.service.CheckInteface;
+import com.check.app.service.CustomList;
 import com.check.app.service.ParseArgsInterface;
 
 public class CheckImpl implements CheckInteface {
@@ -27,7 +27,7 @@ public class CheckImpl implements CheckInteface {
 		// Дисконтная карта
 		Card card = parseArgs.getCard(args, "card");
 		// Продукты
-		List<CheckItem> checkItems = parseArgs.getCheckItem(args);
+		CustomList<CheckItem> checkItems = parseArgs.getCheckItem(args);
 		Check check = new Check();
 		check.setShop(new Shop("Krama N646", "3-я ул. Строителей, 25"));
 		check.setCashier(new Cashier("Luke Skywalker", "007"));
