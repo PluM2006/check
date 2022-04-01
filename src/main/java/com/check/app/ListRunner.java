@@ -2,8 +2,6 @@ package com.check.app;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
@@ -59,32 +57,47 @@ public class ListRunner {
 		p.add(new Product(6L, "5Graim", new BigDecimal(5), 2, false));
 		System.out.println(p.get(0));
 		p.trim();
+		s.add("Прів2ет");
 		s.add("Прівет");
-		s.add("Прівет2");
-		s.add("2Прівет");
-		s.add("Прівет");
+		s.add("Прів2ет");
+		s.add("Прів2ет");
 		s.add(null);
 		s2.add("111");
 		s2.add("222");
 		s.add(null);
 		s.addAll(s2);
 //		System.out.println(s.get(2));
+		s.set(4, "555525");
+		s.set(5, null);
 //		s.trim();
 		System.out.println(s.find(null));
-		System.out.println(s.find("222"));
+		System.out.println(s.find("555525"));
 		System.out.println(s.toString());
 		CustomIterator<String> it1 = s.getIterator();
 		while (it1.hasNext()) {
 			String string = (String) it1.next();
 			if (string != null && string.contains("2")) {
+//				System.out.println(string);
 //				it1.remove();
 //				it1.remove();
-				it1.addBefore("Gh2bdtn");
+//				it1.addBefore("Gh2bdtn");
 				it1.addAfter("11111121111");
 			}
 		}
+		System.out.println("!!! "+s.toString());
+		it1 = s.getIterator();
+		while (it1.hasNext()) {
+			String string = (String) it1.next();
+			if (string != null && string.contains("2")) {
+//				System.out.println(string);
+				it1.remove();
+//				it1.remove();
+//				it1.addBefore("Gh2bdtn");
+//				it1.addAfter("11111121111");
+			}
+		}
 
-		System.out.println(s.toString());
+		System.out.println("!!! "+s.toString());
 //		List<String> s = new ArrayList<>();
 //		s.add("111");
 //		s.add("111");

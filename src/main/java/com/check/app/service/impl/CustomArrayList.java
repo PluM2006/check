@@ -7,19 +7,19 @@ import com.check.app.service.CustomList;
 
 public class CustomArrayList<E> implements CustomList<E> {
 
-	private E[] values;
+	private E[] arrays;
 	private int size;
 	private int maxSize = Integer.MAX_VALUE;
 
 	@SuppressWarnings("unchecked")
 	public CustomArrayList() {
-		this.values = (E[]) new Object[10];
+		this.arrays = (E[]) new Object[10];
 	}
 
 	@SuppressWarnings("unchecked")
 	public CustomArrayList(int size) {
 		if (size >= 0) {
-			this.values = (E[]) new Object[size];
+			this.arrays = (E[]) new Object[size];
 		} else {
 			throw new IllegalArgumentException("Неверный аргумент " + size);
 		}
@@ -27,7 +27,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 
 	@Override
 	public CustomIterator<E> getIterator() {
-		return new CustomIteratorImpl(values);
+		return new CustomIteratorImpl();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -37,13 +37,13 @@ public class CustomArrayList<E> implements CustomList<E> {
 		maxSize = initMaxSize;
 		if (maxSize >= 0) {
 			if (maxSize >= size) {
-				E[] temp = values;
-				values = (E[]) new Object[maxSize];
-				System.arraycopy(temp, 0, values, 0, size);
+				E[] temp = arrays;
+				arrays = (E[]) new Object[maxSize];
+				System.arraycopy(temp, 0, arrays, 0, size);
 			} else {
-				E[] temp = values;
-				values = (E[]) new Object[maxSize];
-				System.arraycopy(temp, 0, values, 0, maxSize);
+				E[] temp = arrays;
+				arrays = (E[]) new Object[maxSize];
+				System.arraycopy(temp, 0, arrays, 0, maxSize);
 				size = maxSize;
 			}
 		} else {
@@ -57,10 +57,10 @@ public class CustomArrayList<E> implements CustomList<E> {
 		if (size + 1 > maxSize) {
 			System.out.println("Достигнут максимальный размер листа: " + maxSize);
 		} else {
-			E[] temp = values;
-			values = (E[]) new Object[size + 1];
-			System.arraycopy(temp, 0, values, 0, size);
-			values[size] = e;
+			E[] temp = arrays;
+			arrays = (E[]) new Object[size + 1];
+			System.arraycopy(temp, 0, arrays, 0, size);
+			arrays[size] = e;
 			size++;
 		}
 	}
@@ -70,12 +70,12 @@ public class CustomArrayList<E> implements CustomList<E> {
 		if (size + 1 > maxSize) {
 			System.out.println("Достигнут максимальный размер листа: " + maxSize);
 		} else {
-			E[] temp = values;
-			values = (E[]) new Object[temp.length + 1];
-			System.arraycopy(temp, 0, values, 0, index);
-			values[index] = e;
+			E[] temp = arrays;
+			arrays = (E[]) new Object[temp.length + 1];
+			System.arraycopy(temp, 0, arrays, 0, index);
+			arrays[index] = e;
 			int k = temp.length - index;
-			System.arraycopy(temp, index, values, index + 1, k);
+			System.arraycopy(temp, index, arrays, index + 1, k);
 			size++;
 		}
 	}
@@ -84,12 +84,12 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@Override
 	public void addAll(CustomList<? extends E> c) {
 		if (c != null) {
-			E[] temp = values;
+			E[] temp = arrays;
 			E[] array = (E[]) c.toArray();
 			int lenghValues = size + c.size();
-			values = (E[]) new Object[lenghValues];
-			System.arraycopy(temp, 0, values, 0, size);
-			System.arraycopy(array, 0, values, size, array.length);
+			arrays = (E[]) new Object[lenghValues];
+			System.arraycopy(temp, 0, arrays, 0, size);
+			System.arraycopy(array, 0, arrays, size, array.length);
 			size = size + array.length;
 		}
 	}
@@ -97,7 +97,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@Override
 	public E set(int index, E e) {
 		E oldValue = get(index);
-		values[index] = e;
+		arrays[index] = e;
 		return oldValue;
 	}
 
@@ -105,12 +105,12 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@Override
 	public E remove(int index) {
 		E removeValue = get(index);
-		E[] temp = values;
-		values = (E[]) new Object[size - 1];
-		System.arraycopy(temp, 0, values, 0, index);
+		E[] temp = arrays;
+		arrays = (E[]) new Object[size - 1];
+		System.arraycopy(temp, 0, arrays, 0, index);
 		int k = size - index - 1;
 		if (k > 0)
-			System.arraycopy(temp, index + 1, values, index, k);
+			System.arraycopy(temp, index + 1, arrays, index, k);
 		size--;
 		return removeValue;
 	}
@@ -118,7 +118,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void clear() {
-		values = (E[]) new Object[0];
+		arrays = (E[]) new Object[0];
 		size = 0;
 	}
 
@@ -126,12 +126,12 @@ public class CustomArrayList<E> implements CustomList<E> {
 	public int find(E e) {
 		if (e == null) {
 			for (int i = 1; i < size; i++) {
-				if (values[i] == null)
+				if (arrays[i] == null)
 					return i;
 			}
 		} else {
 			for (int i = 1; i < size; i++) {
-				if (e.equals(values[i]))
+				if (e.equals(arrays[i]))
 					return i;
 			}
 		}
@@ -140,14 +140,14 @@ public class CustomArrayList<E> implements CustomList<E> {
 
 	@Override
 	public E get(int index) {
-		return this.values[index];
+		return this.arrays[index];
 	}
 
 	@Override
 	public Object[] toArray() {
 		Object[] array = new Object[size];
 		for (int i = 0; i < size; i++) {
-			array[i] = values[i];
+			array[i] = arrays[i];
 		}
 		return array;
 	}
@@ -162,12 +162,11 @@ public class CustomArrayList<E> implements CustomList<E> {
 	public void trim() {
 		CustomList<E> list = new CustomArrayList<E>();
 		for (int i = 0; i < size; i++) {
-			if (values[i] != null)
-				list.add(values[i]);
-			else
-				size--;
+			if (arrays[i] != null)
+				list.add(arrays[i]);
 		}
-		values = (E[]) list.toArray();
+		arrays = (E[]) list.toArray();
+		size = arrays.length;
 
 	}
 
@@ -176,58 +175,57 @@ public class CustomArrayList<E> implements CustomList<E> {
 		sb.append("[");
 		for (int i = 0; i < size; i++) {
 			if (sb.length() > 1)
-				sb.append(", " + values[i]);
+				sb.append(", " + arrays[i]);
 			else
-				sb.append(values[i]);
+				sb.append(arrays[i]);
 		}
 		sb.append("]");
 		return sb.toString();
 	}
-
 	private class CustomIteratorImpl implements CustomIterator<E> {
-		private int index = 0;
-		private int indexDel = 0;
-		private E[] arrays;
+		private int indexPos = 0;
 
-		public CustomIteratorImpl(E[] arrays) {
-			this.arrays = arrays;
+		public CustomIteratorImpl() {
 		}
 
 		@Override
 		public E next() {
-			return (E) arrays[index++];
+			int i = indexPos;
+			indexPos++;
+			return get(i);
+			
 		}
 
 		@Override
 		public boolean hasNext() {
-			return index < arrays.length;
+			return indexPos < size;
 		}
 
 		@Override
 		public void remove() {
-			indexDel = index - arrays.length - size - 1;
-			CustomArrayList.this.remove(indexDel);
+			CustomArrayList.this.remove(indexPos-1);
+			indexPos--;
 		}
 
 		@Override
 		public void addBefore(E e) {
-			CustomArrayList.this.add(e, getAddIndex(size, arrays.length, index) - 1);
+			CustomArrayList.this.add(e, indexPos-1);
+			indexPos++;
+			
 		}
 
 		@Override
 		public void addAfter(E e) {
-			CustomArrayList.this.add(e, getAddIndex(size, arrays.length, index));
-		}
-
-		private int getAddIndex(int size, int sizeArrays, int index) {
-			return size - sizeArrays + index;
+			CustomArrayList.this.add(e, indexPos);
+			indexPos++;
+			
 		}
 
 	}
-
+	
 	@Override
 	public Iterator<E> iterator() {
-		return new CustomIteratorImpl(values);
+		return new CustomIteratorImpl();
 	}
 
 }
