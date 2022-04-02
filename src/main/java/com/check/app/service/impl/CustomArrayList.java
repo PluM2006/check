@@ -55,7 +55,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@Override
 	public void add(E e) {
 		if (size + 1 > maxSize) {
-			System.out.println("Достигнут максимальный размер листа: " + maxSize);
+			System.err.println("Достигнут максимальный размер листа: " + maxSize);
 		} else {
 			E[] temp = arrays;
 			arrays = (E[]) new Object[size + 1];
@@ -68,7 +68,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@SuppressWarnings("unchecked")
 	private void add(E e, int index) {
 		if (size + 1 > maxSize) {
-			System.out.println("Достигнут максимальный размер листа: " + maxSize);
+			System.err.println("Достигнут максимальный размер листа: " + maxSize);
 		} else {
 			E[] temp = arrays;
 			arrays = (E[]) new Object[temp.length + 1];
@@ -125,12 +125,12 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@Override
 	public int find(E e) {
 		if (e == null) {
-			for (int i = 1; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				if (arrays[i] == null)
 					return i;
 			}
 		} else {
-			for (int i = 1; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				if (e.equals(arrays[i]))
 					return i;
 			}

@@ -2,6 +2,7 @@ package com.check.app;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
@@ -23,11 +24,11 @@ public class ListRunner {
 		System.out.println(list2.size());
 
 		List<String> s1 = new ArrayList<>(20);
-		s1.add("ΠΡ€Ρ–Π²ΠµΡ‚");
-		s1.add("ΠΡ€Ρ–Π²ΠµΡ‚2");
-		s1.add("ΠΡ€Ρ–Π²ΠµΡ‚3");
+		s1.add("Οπ³βες");
+		s1.add("Οπ³βες2");
+		s1.add("Οπ³βες3");
 		s1.add("2222");
-		s1.add("ΠΡ€Ρ–Π²ΠµΡ‚5");
+		s1.add("Οπ³βες5");
 		s1.add("2222");
 		s1.add("2222");
 		s1.add("1");
@@ -39,6 +40,7 @@ public class ListRunner {
 		while (it.hasNext()) {
 			String string = (String) it.next();
 			if (string.contains("2")) {
+
 				it.remove();
 //				it.remove();
 			}
@@ -57,10 +59,10 @@ public class ListRunner {
 		p.add(new Product(6L, "5Graim", new BigDecimal(5), 2, false));
 		System.out.println(p.get(0));
 		p.trim();
-		s.add("ΠΡ€Ρ–Π²2ΠµΡ‚");
-		s.add("ΠΡ€Ρ–Π²ΠµΡ‚");
-		s.add("ΠΡ€Ρ–Π²2ΠµΡ‚");
-		s.add("ΠΡ€Ρ–Π²2ΠµΡ‚");
+		s.add("Οπ³β2ες");
+		s.add("Οπ³βες");
+		s.add("Οπ³β2ες");
+		s.add("Οπ³β2ες");
 		s.add(null);
 		s2.add("111");
 		s2.add("222");
