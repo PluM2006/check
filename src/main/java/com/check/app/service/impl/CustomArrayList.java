@@ -33,7 +33,6 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setMaxSize(int initMaxSize) {
-
 		maxSize = initMaxSize;
 		if (maxSize >= 0) {
 			if (maxSize >= size) {
@@ -182,6 +181,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 		sb.append("]");
 		return sb.toString();
 	}
+
 	private class CustomIteratorImpl implements CustomIterator<E> {
 		private int indexPos = 0;
 
@@ -193,7 +193,6 @@ public class CustomArrayList<E> implements CustomList<E> {
 			int i = indexPos;
 			indexPos++;
 			return get(i);
-			
 		}
 
 		@Override
@@ -203,26 +202,24 @@ public class CustomArrayList<E> implements CustomList<E> {
 
 		@Override
 		public void remove() {
-			CustomArrayList.this.remove(indexPos-1);
+			CustomArrayList.this.remove(indexPos - 1);
 			indexPos--;
 		}
 
 		@Override
 		public void addBefore(E e) {
-			CustomArrayList.this.add(e, indexPos-1);
+			CustomArrayList.this.add(e, indexPos - 1);
 			indexPos++;
-			
 		}
 
 		@Override
 		public void addAfter(E e) {
 			CustomArrayList.this.add(e, indexPos);
 			indexPos++;
-			
 		}
 
 	}
-	
+
 	@Override
 	public Iterator<E> iterator() {
 		return new CustomIteratorImpl();

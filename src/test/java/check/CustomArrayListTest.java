@@ -14,20 +14,24 @@ public class CustomArrayListTest {
 	private Random random;;
 	private CustomArrayList<Integer> listA;
 	private CustomArrayList<Integer> listB;
+	int sizeListA;
+	int sizeListB;
 
 	@Before
 	public void setUp() throws Exception {
 		listA = new CustomArrayList<>();
 		listB = new CustomArrayList<>();
-		random= new Random();
+		random = new Random();
+		sizeListA = random.nextInt(100) + 10;
+		sizeListB = random.nextInt(100) + 10;
+		getList(sizeListA, listA);
+		getList(sizeListB, listB);
 	}
 
 	@Test
 	public void testsetMaxSize() {
-		int sizeArray = random.nextInt(100) + 10;
-		int maxSizeL = sizeArray / 2;
-		int maxSizeM = sizeArray * 2;
-		getList(sizeArray, listA);
+		int maxSizeL = sizeListA / 2;
+		int maxSizeM = sizeListA * 2;
 		listA.setMaxSize(maxSizeL);
 		assertEquals(maxSizeL, listA.size());
 		// Дополним list до + 5
@@ -45,51 +49,47 @@ public class CustomArrayListTest {
 		assertEquals(maxSizeM, listA.size());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetMaxSizeException() {
+		int maxSize = -1;
+		listA.setMaxSize(maxSize);
+	}
+
 	@Test
 	public void testAdd() {
-		int sizeList = getList(random.nextInt(20), listA);
-		assertEquals(listA.size(), sizeList);
+		listA.add(12);
+		assertEquals(listA.size(), sizeListA + 1);
 	}
 
 	@Test
 	public void testAddAll() {
-		int sizelistA = random.nextInt(100)+10;
-		int sizelistB = random.nextInt(100)+10;
-		getList(sizelistA, listA);
-		getList(sizelistB, listB);
 		listA.addAll(listB);
-		assertEquals(listA.size(), sizelistB + sizelistA);
+		assertEquals(listA.size(), sizeListB + sizeListA);
 	}
 
 	@Test
 	public void testSet() {
-		int sizeList = random.nextInt(100)+10;
-		getList(sizeList, listA);
 		int value = random.nextInt(10);
-		int index = random.nextInt(sizeList);
+		int index = random.nextInt(sizeListA);
 		listA.set(index, value);
 		assertEquals(listA.get(index), Integer.valueOf(value));
 	}
 
 	@Test
 	public void testRemove() {
-		getList(random.nextInt(100) + 10, listA);
 		int size = listA.size();
 		listA.remove(size / 2);
 		assertEquals(size - 1, listA.size());
-
 	}
 
 	@Test
 	public void testClear() {
-		getList(random.nextInt(100) + 10, listA);
 		listA.clear();
 		assertEquals(listA.size(), 0);
 	}
 
 	@Test
 	public void findTest() {
-		getList(random.nextInt(100) + 10, listA);
 		int value = random.nextInt();
 		listA.set(random.nextInt(listA.size()), value);
 		int index = listA.find(value);
@@ -98,7 +98,6 @@ public class CustomArrayListTest {
 
 	@Test
 	public void testGet() {
-		getList(random.nextInt(100) + 10, listA);
 		int value = random.nextInt();
 		int index = random.nextInt(listA.size());
 		listA.set(index, value);
@@ -107,7 +106,6 @@ public class CustomArrayListTest {
 
 	@Test
 	public void testToArray() {
-		getList(random.nextInt(100) + 10, listA);
 		Object[] array = listA.toArray();
 		assertEquals(listA.size(), array.length);
 
@@ -115,7 +113,6 @@ public class CustomArrayListTest {
 
 	@Test
 	public void testTrim() {
-		getList(random.nextInt(100) + 10, listA);
 		int sizelist = listA.size();
 		int valueNull = 0;
 		for (int i = 0; i < listA.size(); i++) {
