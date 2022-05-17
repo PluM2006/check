@@ -7,7 +7,7 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.check.app.service.impl.CustomArrayList;
+import ru.clevertec.app.service.impl.CustomArrayList;
 
 public class CustomArrayListTest {
 

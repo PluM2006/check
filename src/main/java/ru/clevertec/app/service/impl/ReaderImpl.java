@@ -17,10 +17,10 @@ public class ReaderImpl implements ReaderInterface {
 
 	@Override
 	public CustomList<Product> getAllProduct(String path) {
-		CustomList<Product> allProduct = new CustomArrayList<Product>();
+		CustomList<Product> allProduct = new CustomArrayList<>();
 		StringBuilder invalidDate = new StringBuilder();
 		File file = new File("invalidDate.txt");
-		try (Scanner scanner = new Scanner(new File(path), "UTF-8");) {
+		try (Scanner scanner = new Scanner(new File(path), "UTF-8")) {
 			while (scanner.hasNextLine()) {
 				ArrayList<String> listErrorMessage = new ArrayList<>();
 				String line = scanner.nextLine();
@@ -54,7 +54,7 @@ public class ReaderImpl implements ReaderInterface {
 					invalidDate.append("\n");
 				}
 			}
-			try (FileWriter writer = new FileWriter(file);) {
+			try (FileWriter writer = new FileWriter(file)) {
 				writer.write(invalidDate.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -67,8 +67,8 @@ public class ReaderImpl implements ReaderInterface {
 
 	@Override
 	public CustomList<Card> getAllCard(String path) {
-		CustomList<Card> allCard = new CustomArrayList<Card>();
-		try (Scanner scanner = new Scanner(new File(path), "UTF-8");) {
+		CustomList<Card> allCard = new CustomArrayList<>();
+		try (Scanner scanner = new Scanner(new File(path), "UTF-8")) {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				Card card = new Card();
