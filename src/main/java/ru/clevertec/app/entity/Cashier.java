@@ -1,4 +1,4 @@
-package com.check.app.entity;
+package ru.clevertec.app.entity;
 
 public class Cashier {
 

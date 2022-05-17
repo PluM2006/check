@@ -1,7 +1,7 @@
-package com.check.app.service;
+package ru.clevertec.app.service;
 
-import com.check.app.entity.Card;
-import com.check.app.entity.CheckItem;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.CheckItem;
 
 public interface ParseArgsInterface {
 

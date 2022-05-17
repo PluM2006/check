@@ -1,4 +1,4 @@
-package com.check.app.service.impl;
+package ru.clevertec.app.service.impl;
 
 import java.util.Iterator;
 

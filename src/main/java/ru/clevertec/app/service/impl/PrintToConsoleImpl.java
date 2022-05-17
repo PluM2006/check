@@ -1,8 +1,8 @@
-package com.check.app.service.impl;
+package ru.clevertec.app.service.impl;
 
-import com.check.app.entity.Check;
-import com.check.app.service.CheckToString;
-import com.check.app.service.PrintInterface;
+import ru.clevertec.app.entity.Check;
+import ru.clevertec.app.service.CheckToString;
+import ru.clevertec.app.service.PrintInterface;
 
 public class PrintToConsoleImpl implements PrintInterface {
 

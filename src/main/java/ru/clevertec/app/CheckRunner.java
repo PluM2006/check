@@ -1,11 +1,11 @@
-package com.check.app;
+package ru.clevertec.app;
 
-import com.check.app.entity.Check;
-import com.check.app.service.CheckInteface;
-import com.check.app.service.PrintInterface;
-import com.check.app.service.impl.CheckImpl;
-import com.check.app.service.impl.PrintToConsoleImpl;
-import com.check.app.service.impl.PrintToFileImpl;
+import ru.clevertec.app.entity.Check;
+import ru.clevertec.app.service.CheckInteface;
+import ru.clevertec.app.service.PrintInterface;
+import ru.clevertec.app.service.impl.CheckImpl;
+import ru.clevertec.app.service.impl.PrintToConsoleImpl;
+import ru.clevertec.app.service.impl.PrintToFileImpl;
 
 public class CheckRunner {
 

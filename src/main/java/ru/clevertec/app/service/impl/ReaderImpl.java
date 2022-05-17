@@ -1,4 +1,4 @@
-package com.check.app.service.impl;
+package ru.clevertec.app.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.check.app.entity.Card;
-import com.check.app.entity.Product;
-import com.check.app.service.CustomList;
-import com.check.app.service.ReaderInterface;
+import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.Product;
+import ru.clevertec.app.service.ReaderInterface;
 
 public class ReaderImpl implements ReaderInterface {
 
