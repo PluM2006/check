@@ -20,6 +20,6 @@ public class CheckRunner {
 			PrintInterface cons = new PrintToConsoleImpl();
 			cons.print(check);
 		}
-
+		
 	}
 }

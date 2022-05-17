@@ -6,18 +6,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.check.app.entity.Card;
 import com.check.app.entity.Product;
+import com.check.app.service.CustomList;
 import com.check.app.service.ReaderInterface;
 
 public class ReaderImpl implements ReaderInterface {
 
 	@Override
-	public List<Product> getAllProduct(String path) {
-		List<Product> allProduct = new ArrayList<Product>();
+	public CustomList<Product> getAllProduct(String path) {
+		CustomList<Product> allProduct = new CustomArrayList<Product>();
 		StringBuilder invalidDate = new StringBuilder();
 		File file = new File("invalidDate.txt");
 		try (Scanner scanner = new Scanner(new File(path), "UTF-8");) {
@@ -66,8 +66,8 @@ public class ReaderImpl implements ReaderInterface {
 	}
 
 	@Override
-	public List<Card> getAllCard(String path) {
-		List<Card> allCard = new ArrayList<Card>();
+	public CustomList<Card> getAllCard(String path) {
+		CustomList<Card> allCard = new CustomArrayList<Card>();
 		try (Scanner scanner = new Scanner(new File(path), "UTF-8");) {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();

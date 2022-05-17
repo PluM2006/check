@@ -2,12 +2,11 @@ package com.check.app.service.impl;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.check.app.entity.Card;
 import com.check.app.entity.CheckItem;
 import com.check.app.entity.Product;
+import com.check.app.service.CustomList;
 import com.check.app.service.ParseArgsInterface;
 import com.check.app.service.ReaderInterface;
 
@@ -19,10 +18,10 @@ public class ParseArgsImpl implements ParseArgsInterface {
 	private static final String PATH_CARD = "card.csv";
 
 	@Override
-	public List<CheckItem> getCheckItem(String[] args) {
+	public CustomList<CheckItem> getCheckItem(String[] args) {
 		ReaderInterface reader = new ReaderImpl();
-		List<Product> allProduct = reader.getAllProduct(getPath(args, PRODUCT_FILE));
-		List<CheckItem> listCheckItem = new ArrayList<CheckItem>();
+		CustomList<Product> allProduct = reader.getAllProduct(getPath(args, PRODUCT_FILE));
+		CustomList<CheckItem> listCheckItem = new CustomArrayList<CheckItem>();
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
 			Long qty = Long.parseLong(a[1]);
@@ -41,7 +40,7 @@ public class ParseArgsImpl implements ParseArgsInterface {
 	@Override
 	public Card getCard(String[] args, String name) {
 		ReaderInterface reader = new ReaderImpl();
-		List<Card> allCard = reader.getAllCard(getPath(args, CARD_FILE));
+		CustomList<Card> allCard = reader.getAllCard(getPath(args, CARD_FILE));
 		Card card = null;
 		for (int i = 0; i < args.length; i++) {
 			String[] a = args[i].split("-");
