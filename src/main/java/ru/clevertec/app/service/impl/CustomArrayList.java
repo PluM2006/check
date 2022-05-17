@@ -174,7 +174,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 		sb.append("[");
 		for (int i = 0; i < size; i++) {
 			if (sb.length() > 1)
-				sb.append(", " + arrays[i]);
+				sb.append(", ").append(arrays[i]);
 			else
 				sb.append(arrays[i]);
 		}
