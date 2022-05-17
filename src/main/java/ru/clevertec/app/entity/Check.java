@@ -2,7 +2,7 @@ package ru.clevertec.app.entity;
 
 import java.math.BigDecimal;
 
-import com.check.app.service.CustomList;
+import ru.clevertec.app.service.CustomList;
 
 public class Check {
 

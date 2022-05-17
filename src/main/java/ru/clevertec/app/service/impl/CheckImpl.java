@@ -37,7 +37,7 @@ public class CheckImpl implements CheckInteface {
 		for (CheckItem checkItem : checkItems) {
 			// Скидка 10% если товара больше 5
 			Integer quantity = checkItems.stream().filter(p -> p.getProduct().getId() == checkItem.getProduct().getId())
-					.map(x -> x.getQty()).reduce(0, Integer::sum);
+					.map(CheckItem::getQty).reduce(0, Integer::sum);
 			if (checkItem.getProduct().getSale() && quantity >= 5) {
 				checkItem.setDiscount(getDiscount(checkItem.getSumm(), allDiscount));
 				checkItem.setPromDiscount(true);
