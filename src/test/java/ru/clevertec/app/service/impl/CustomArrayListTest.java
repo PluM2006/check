@@ -1,4 +1,4 @@
-package check;
+package ru.clevertec.app.service.impl;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +29,7 @@ public class CustomArrayListTest {
 	}
 
 	@Test
-	public void testsetMaxSize() {
+	public void setMaxSizeTest() {
 		int maxSizeL = sizeListA / 2;
 		int maxSizeM = sizeListA * 2;
 		listA.setMaxSize(maxSizeL);
@@ -50,25 +50,25 @@ public class CustomArrayListTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testsetMaxSizeException() {
+	public void setMaxSizeExceptionTest() {
 		int maxSize = -1;
 		listA.setMaxSize(maxSize);
 	}
 
 	@Test
-	public void testAdd() {
+	public void addTest() {
 		listA.add(12);
 		assertEquals(listA.size(), sizeListA + 1);
 	}
 
 	@Test
-	public void testAddAll() {
+	public void addAllTest() {
 		listA.addAll(listB);
 		assertEquals(listA.size(), sizeListB + sizeListA);
 	}
 
 	@Test
-	public void testSet() {
+	public void setTest() {
 		int value = random.nextInt(10);
 		int index = random.nextInt(sizeListA);
 		listA.set(index, value);
@@ -76,14 +76,14 @@ public class CustomArrayListTest {
 	}
 
 	@Test
-	public void testRemove() {
+	public void removeTest() {
 		int size = listA.size();
 		listA.remove(size / 2);
 		assertEquals(size - 1, listA.size());
 	}
 
 	@Test
-	public void testClear() {
+	public void clearTest() {
 		listA.clear();
 		assertEquals(listA.size(), 0);
 	}
@@ -97,7 +97,7 @@ public class CustomArrayListTest {
 	}
 
 	@Test
-	public void testGet() {
+	public void getTest() {
 		int value = random.nextInt();
 		int index = random.nextInt(listA.size());
 		listA.set(index, value);
@@ -105,14 +105,14 @@ public class CustomArrayListTest {
 	}
 
 	@Test
-	public void testToArray() {
+	public void toArrayTest() {
 		Object[] array = listA.toArray();
 		assertEquals(listA.size(), array.length);
 
 	}
 
 	@Test
-	public void testTrim() {
+	public void trimTest() {
 		int sizelist = listA.size();
 		int valueNull = 0;
 		for (int i = 0; i < listA.size(); i++) {

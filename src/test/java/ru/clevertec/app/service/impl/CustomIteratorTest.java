@@ -1,4 +1,4 @@
-package check;
+package ru.clevertec.app.service.impl;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +21,7 @@ public class CustomIteratorTest {
 	}
 
 	@Test
-	public void testNext() {
+	public void nextTest() {
 		assertEquals("Apple", it.next());
 	}
 
@@ -33,7 +33,7 @@ public class CustomIteratorTest {
 	}
 
 	@Test
-	public void testHasNext() {
+	public void hasNextTest() {
 		assertTrue(it.hasNext());
 		it.next();
 		it.next();
@@ -41,7 +41,7 @@ public class CustomIteratorTest {
 	}
 
 	@Test
-	public void testRemove() {
+	public void removeTest() {
 		it.next();
 		it.remove();
 		assertEquals(list.size(), 1);
@@ -49,7 +49,7 @@ public class CustomIteratorTest {
 	}
 
 	@Test
-	public void testAddBefore() {
+	public void addBeforeTest() {
 		String value = "Lenovo";
 		it.next();
 		it.addBefore(value);
@@ -57,7 +57,7 @@ public class CustomIteratorTest {
 	}
 
 	@Test
-	public void tesAddAfter() {
+	public void addAfterTest() {
 		String value = "Lenovo";
 		it.next();
 		it.addAfter(value);
