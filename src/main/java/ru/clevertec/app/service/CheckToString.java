@@ -51,16 +51,16 @@ public class CheckToString {
 
 			result.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
 			result.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
-			result.append("Итого: ").append(check.getSummTotal()).append("$").append("\n");
+			result.append("Итого: ").append(check.getSummTotal()).append("$");
 			if (check.getCard() != null) {
-				result.append("Дисконтная карта: ").append(check.getCard().getNumbercard()).append(" скидка: ")
+				result.append("\n").append("Дисконтная карта: ").append(check.getCard().getNumbercard()).append(" скидка: ")
 						.append(check.getCard().getDiscount()).append("%").append("\n");
 			}
 			if (check.getDiscountTotal().compareTo(BigDecimal.ZERO) != 0) {
 				result.append("Скидка: -").append(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN))
 						.append("$").append("\n");
 				result.append("Итого со скидкой: ").append(check.getSummTotal()
-						.subtract(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN))).append("\n");
+						.subtract(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN)));
 			}
 		} else {
 			result.append("Чек не сформирован" + "\n");

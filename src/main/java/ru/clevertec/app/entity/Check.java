@@ -1,6 +1,7 @@
 package ru.clevertec.app.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import ru.clevertec.app.service.CustomList;
 
@@ -104,4 +105,21 @@ public class Check {
 		this.printTo = printTo;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Check check = (Check) o;
+		return printTo == check.printTo && Objects.equals(checkItem, check.checkItem) && Objects.equals(card, check.card) && Objects.equals(summTotal, check.summTotal) && Objects.equals(discountTotal, check.discountTotal) && Objects.equals(shop, check.shop) && Objects.equals(cashier, check.cashier) && Objects.equals(date, check.date) && Objects.equals(time, check.time);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(checkItem, card, summTotal, discountTotal, shop, cashier, date, time, printTo);
+	}
+
+	@Override
+	public String toString() {
+		return "Check{" + "checkItem=" + checkItem + ", card=" + card + ", summTotal=" + summTotal + ", discountTotal=" + discountTotal + ", shop=" + shop + ", cashier=" + cashier + ", date='" + date + '\'' + ", time='" + time + '\'' + ", printTo=" + printTo + '}';
+	}
 }

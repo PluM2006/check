@@ -1,6 +1,7 @@
 package ru.clevertec.app.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class CheckItem {
 
@@ -61,4 +62,21 @@ public class CheckItem {
 		this.promDiscount = promDiscount;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CheckItem checkItem = (CheckItem) o;
+		return Objects.equals(product, checkItem.product) && Objects.equals(qty, checkItem.qty) && Objects.equals(summ, checkItem.summ) && Objects.equals(discount, checkItem.discount) && Objects.equals(promDiscount, checkItem.promDiscount);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(product, qty, summ, discount, promDiscount);
+	}
+
+	@Override
+	public String toString() {
+		return "CheckItem{" + "product=" + product + ", qty=" + qty + ", summ=" + summ + ", discount=" + discount + ", promDiscount=" + promDiscount + '}';
+	}
 }
