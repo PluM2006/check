@@ -30,48 +30,30 @@ public class CheckToString {
             result.append(String.format("%-9s", "цена"));
             result.append(String.format("%7s", "всего")).append("\n");
 
-            for (CheckItem ci : check.getCheckItem()) {
-                if (ci.getProduct().getName() == null) {
-                    result.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
-                } else {
-                    result.append(String.format("%-4s", ci.getQty()));
-                    result.append(String.format("%-30s", ci.getProduct().getName()));
-                    result.append(String.format("%-9s", ci.getProduct().getPrice() + "$"));
-                    result.append(String.format("%7s", ci.getSumm() + "$")).append("\n");
-                    if (!ci.getDiscount().equals(BigDecimal.ZERO)) {
-                        result.append(String.format("%6s", " "));
-                        result.append(String.format("%-37s", (ci.getPromDiscount() ? "Акция " : "")+"скидка 10%:"));
-                        result.append(String.format("%8s", "-" + ci.getDiscount() + "$" + "\n"));
-                        result.append(String.format("%6s", " "));
-                        result.append(String.format("%-37s", "цена со скидкой:"));
-                        result.append(String.format("%8s", ci.getSumm().subtract(ci.getDiscount()) + "$" + "\n"));
-                    }
-                }
-            }
-            result.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
-            result.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
-            result.append("Итого: ").append(check.getSummTotal()).append("$").append("\n");
-            if (check.getCard() != null) {
-                result.append("Дисконтная карта: ").append(check.getCard().getNumbercard()).append(" скидка: ")
-                        .append(check.getCard().getDiscount()).append("%").append("\n");
-            }
-            if (check.getDiscountTotal().compareTo(BigDecimal.ZERO) != 0) {
-                result.append("Скидка: -").append(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN))
-                        .append("$").append("\n");
-                result.append("Итого со скидкой: ").append(check.getSummTotal()
-                        .subtract(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN))).append("\n");
-            }
-        } else {
-            result.append("Чек не сформирован" + "\n");
-            result.append("Не указаны продукты, либо не правильный путь к файлу продуктов");
-            for (CheckItem ci : check.getCheckItem()) {
-                if (ci.getProduct().getName() == null) {
-                    result.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
-                }
-            }
-        }
-        return result.toString();
-    }
+			result.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
+			result.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
+			result.append("Итого: ").append(check.getSummTotal()).append("$");
+			if (check.getCard() != null) {
+				result.append("\n").append("Дисконтная карта: ").append(check.getCard().getNumbercard()).append(" скидка: ")
+						.append(check.getCard().getDiscount()).append("%").append("\n");
+			}
+			if (check.getDiscountTotal().compareTo(BigDecimal.ZERO) != 0) {
+				result.append("Скидка: -").append(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN))
+						.append("$").append("\n");
+				result.append("Итого со скидкой: ").append(check.getSummTotal()
+						.subtract(check.getDiscountTotal().setScale(2, RoundingMode.HALF_DOWN)));
+			}
+		} else {
+			result.append("Чек не сформирован" + "\n");
+			result.append("Не указаны продукты, либо не правильный путь к файлу продуктов");
+			for (CheckItem ci : check.getCheckItem()) {
+				if (ci.getProduct().getName() == null) {
+					result.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
+				}
+			}
+		}
+		return result.toString();
+	}
 
     private int center(int i) {
         return (LENGS_CHECK - i) / 2 + i;
