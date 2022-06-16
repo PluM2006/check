@@ -20,6 +20,7 @@ dependencies {
 }
 test {
     useJUnitPlatform()
+
 }
 
 group = 'ru.cleverteck.app'
