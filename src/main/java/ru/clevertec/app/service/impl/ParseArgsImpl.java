@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public class ParseArgsImpl implements ParseArgsInterface {
-
+    private static final String PRODUCT = "product";
     private static final String PRODUCT_FILE = "productFile";
     private static final String CARD_FILE = "cardFile";
     private static final String PATH_PRODUCT = "product.csv";
@@ -75,7 +75,7 @@ public class ParseArgsImpl implements ParseArgsInterface {
             }
         }
         if (path == null || !new File(path).isFile()) {
-            if (name.contains("product")) path = PATH_PRODUCT;
+            if (name.contains(PRODUCT)) path = PATH_PRODUCT;
             else path = PATH_CARD;
         }
         return path;
