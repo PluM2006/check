@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.Check;
-import ru.clevertec.app.service.CheckInteface;
+import ru.clevertec.app.service.CheckInterface;
 import ru.clevertec.app.service.CheckToString;
 import ru.clevertec.app.service.PrintInterface;
 
@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 class PrintToFileImplTest {
 
     PrintInterface printInterface = new PrintToFileImpl();
-    CheckInteface checkInteface = new CheckImpl();
+    CheckInterface checkInterface = new CheckImpl();
 
 
     @BeforeEach
@@ -27,7 +27,7 @@ class PrintToFileImplTest {
 
     @Test
     void print() throws IOException {
-        Check check = checkInteface.getCheck(new String[]{"1-1", "3-6", "card-1", "printTo-1", "cardFile-testCard.csv", "productFile-testProduct.csv"});
+        Check check = checkInterface.getCheck(new String[]{"1-1", "3-6", "card-1", "printTo-1", "cardFile-testCard.csv", "productFile-testProduct.csv"});
         CheckToString checkToString = new CheckToString();
         printInterface.print(check);
         String result = checkToString.result(check);

@@ -2,8 +2,8 @@ package ru.clevertec.app.service;
 
 import ru.clevertec.app.entity.Check;
 
-public interface CheckInteface {
+public interface CheckInterface {
 
-	public Check getCheck(String[] args);
+	Check getCheck(String[] args);
 
 }

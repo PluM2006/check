@@ -1,7 +1,7 @@
 package ru.clevertec.app.service.impl;
 
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.CheckInteface;
+import ru.clevertec.app.service.CheckInterface;
 import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.service.ParseArgsInterface;
 
@@ -9,13 +9,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class CheckImpl implements CheckInteface {
+public class CheckImpl implements CheckInterface {
     private static final String CARD = "card";
     private static final String PRINT_TO = "printTo";
     private static final String TIME_FORMAT = "HH:mm:ss";
@@ -52,6 +49,10 @@ public class CheckImpl implements CheckInteface {
                 }
             }
         }
+        List<CheckItem> list = new ArrayList<>();
+        for (CheckItem ci : checkItems){
+            list.add(ci);
+        }
         check.setCheckItem(checkItems);
         check.setCard(card.orElse(null));
         check.setSummTotal(checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add));
@@ -61,6 +62,7 @@ public class CheckImpl implements CheckInteface {
         check.setTime(getDateTime(cal, TIME_FORMAT));
         return check;
     }
+
 
     private BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
         BigDecimal discont;
