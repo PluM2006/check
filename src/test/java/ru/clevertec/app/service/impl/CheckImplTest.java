@@ -3,16 +3,14 @@ package ru.clevertec.app.service.impl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.Check;
-import ru.clevertec.app.service.CheckInteface;
-
-import java.io.FileNotFoundException;
+import ru.clevertec.app.service.CheckInterface;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CheckImplTest {
 
-    CheckInteface checkInteface = new CheckImpl();
+    CheckInterface checkInterface = new CheckImpl();
     String[] args = {};
     Long id;
     Integer qty;
@@ -28,19 +26,19 @@ public class CheckImplTest {
 
     @Test
     public void getCheck() {
-        Check check = checkInteface.getCheck(args);
+        Check check = checkInterface.getCheck(args);
         assertEquals(check.getCheckItem().get(0).getProduct().getId(), id);
     }
 
     @Test
     public void getCheckQty() {
-        Check check = checkInteface.getCheck(args);
+        Check check = checkInterface.getCheck(args);
         assertEquals(check.getCheckItem().get(0).getQty(), qty);
     }
 
     @Test
     public void getCheckFail() {
-        Check check = checkInteface.getCheck(args);
+        Check check = checkInterface.getCheck(args);
         assertNotNull(check);
     }
 }
