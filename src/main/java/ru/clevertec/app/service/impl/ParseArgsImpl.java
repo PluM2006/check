@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public class ParseArgsImpl implements ParseArgsInterface {
-
+    private static final String PRODUCT = "product";
     private static final String PRODUCT_FILE = "productFile";
     private static final String CARD_FILE = "cardFile";
     private static final String PATH_PRODUCT = "product.csv";
@@ -25,14 +25,20 @@ public class ParseArgsImpl implements ParseArgsInterface {
         CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
         for (String arg : args) {
             String[] a = arg.split("-");
-            long qty = Long.parseLong(a[1]);
-            if (a[0].matches("-?\\d+(\\.\\d+)?") && qty > 0L) {
-                Optional<Product> product = allProduct.stream().filter(p -> p.getId() == Integer.parseInt(a[0]))
-                        .findAny();
-                if (product.isPresent()) {
-                    CheckItem checkItem = new CheckItem(product.get(), Integer.parseInt(a[1]), product.get().getPrice()
-                            .multiply(new BigDecimal(a[1])), BigDecimal.ZERO, false);
-                    listCheckItem.add(checkItem);
+            if (a[1].matches("\\d")) {
+                long qty = Long.parseLong(a[1]);
+                if (a[0].matches("-?\\d+(\\.\\d+)?") && qty > 0L) {
+                    Optional<Product> product = allProduct
+                            .stream()
+                            .filter(p -> p.getId() == Integer.parseInt(a[0]))
+                            .findAny();
+                    if (product.isPresent()) {
+                        CheckItem checkItem = new CheckItem(product.get(), Integer.parseInt(a[1]), product
+                                .get()
+                                .getPrice()
+                                .multiply(new BigDecimal(a[1])), BigDecimal.ZERO, false);
+                        listCheckItem.add(checkItem);
+                    }
                 }
             }
         }
@@ -46,9 +52,16 @@ public class ParseArgsImpl implements ParseArgsInterface {
         Optional<Card> card = Optional.empty();
         for (String arg : args) {
             String[] a = arg.split("-");
-            if (a[0].contains(name)) {
+            if (a[0].equals(name)) {
                 Long id = Long.parseLong(a[1]);
-                card = allCard.stream().filter(c -> c.getNumbercard().equals(a[1]) || c.getId().equals(id)).findAny();
+                card = allCard
+                        .stream()
+                        .filter(c -> c
+                                .getNumbercard()
+                                .equals(a[1]) || c
+                                .getId()
+                                .equals(id))
+                        .findAny();
             }
         }
         return card;
@@ -75,7 +88,7 @@ public class ParseArgsImpl implements ParseArgsInterface {
             }
         }
         if (path == null || !new File(path).isFile()) {
-            if (name.contains("product")) path = PATH_PRODUCT;
+            if (name.contains(PRODUCT)) path = PATH_PRODUCT;
             else path = PATH_CARD;
         }
         return path;

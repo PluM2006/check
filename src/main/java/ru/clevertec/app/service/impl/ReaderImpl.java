@@ -14,12 +14,12 @@ import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.service.ReaderInterface;
 
 public class ReaderImpl implements ReaderInterface {
-
+	public static final String INVALID_FILE_NAME = "invalidDate.txt";
 	@Override
 	public CustomList<Product> getAllProduct(String path) {
 		CustomList<Product> allProduct = new CustomArrayList<>();
 		StringBuilder invalidDate = new StringBuilder();
-		File file = new File("invalidDate.txt");
+		File file = new File(INVALID_FILE_NAME);
 		try (Scanner scanner = new Scanner(new File(path), "UTF-8")) {
 			while (scanner.hasNextLine()) {
 				ArrayList<String> listErrorMessage = new ArrayList<>();

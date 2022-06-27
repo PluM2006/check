@@ -1,7 +1,7 @@
 package ru.clevertec.app.service.impl;
 
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.CheckInteface;
+import ru.clevertec.app.service.CheckInterface;
 import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.service.ParseArgsInterface;
 
@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class CheckImpl implements CheckInteface {
-
+public class CheckImpl implements CheckInterface {
+    private static final String CARD = "card";
+    private static final String PRINT_TO = "printTo";
+    private static final String TIME_FORMAT = "HH:mm:ss";
+    private static final String DATE_FORMAT = "dd-MM-YYYY";
     private final BigDecimal allDiscount = new BigDecimal(10);
 
     @Override
@@ -24,14 +24,14 @@ public class CheckImpl implements CheckInteface {
         Calendar cal = new GregorianCalendar();
         ParseArgsInterface parseArgs = new ParseArgsImpl();
         // Дисконтная карта
-        Optional<Card> card = parseArgs.getCard(args, "card");
+        Optional<Card> card = parseArgs.getCard(args, CARD);
         // Продукты
         CustomList<CheckItem> checkItems = parseArgs.getCheckItem(args);
         Check check = new Check();
         check.setShop(new Shop("Krama N646", "3-я ул. Строителей, 25"));
         check.setCashier(new Cashier("Luke Skywalker", "007"));
         // куда вывод
-        check.setPrintTo(parseArgs.getPrintTo(args, "printTo"));
+        check.setPrintTo(parseArgs.getPrintTo(args, PRINT_TO));
         //Количество купленного товара
         Map<Product, Integer> productQty = checkItems.stream()
                 .collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
@@ -49,15 +49,20 @@ public class CheckImpl implements CheckInteface {
                 }
             }
         }
+        List<CheckItem> list = new ArrayList<>();
+        for (CheckItem ci : checkItems){
+            list.add(ci);
+        }
         check.setCheckItem(checkItems);
         check.setCard(card.orElse(null));
         check.setSummTotal(checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add));
         check.setDiscountTotal(checkItems.stream().map(CheckItem::getDiscount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add));
-        check.setDate(getDateTime(cal, "dd-MM-YYYY"));
-        check.setTime(getDateTime(cal, "HH:mm:ss"));
+        check.setDate(getDateTime(cal, DATE_FORMAT));
+        check.setTime(getDateTime(cal, TIME_FORMAT));
         return check;
     }
+
 
     private BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
         BigDecimal discont;

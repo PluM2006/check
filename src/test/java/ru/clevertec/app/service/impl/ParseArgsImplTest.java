@@ -8,6 +8,7 @@ import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.service.CustomList;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +32,7 @@ public class ParseArgsImplTest {
 
     @Test
     public void getCardTest() {
-        Card card = new Card(1L, "1111 1111 1111 1111", new BigDecimal("10"));
+        Optional<Card> card = Optional.of(new Card(1L, "1111 1111 1111 1111", new BigDecimal("10")));
         assertEquals(card, parseArgs.getCard(args, "card"));
     }
 
