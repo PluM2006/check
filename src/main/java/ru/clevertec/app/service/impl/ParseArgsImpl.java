@@ -1,5 +1,6 @@
 package ru.clevertec.app.service.impl;
 
+import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
@@ -12,16 +13,12 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public class ParseArgsImpl implements ParseArgsInterface {
-    private static final String PRODUCT = "product";
-    private static final String PRODUCT_FILE = "productFile";
-    private static final String CARD_FILE = "cardFile";
-    private static final String PATH_PRODUCT = "product.csv";
-    private static final String PATH_CARD = "card.csv";
+
 
     @Override
     public CustomList<CheckItem> getCheckItem(String[] args) {
         ReaderInterface reader = new ReaderImpl();
-        CustomList<Product> allProduct = reader.getAllProduct(getPath(args, PRODUCT_FILE));
+        CustomList<Product> allProduct = reader.getAllProduct(getPath(args, Constants.PRODUCT_FILE.getName()));
         CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
         for (String arg : args) {
             String[] a = arg.split("-");
@@ -48,7 +45,7 @@ public class ParseArgsImpl implements ParseArgsInterface {
     @Override
     public Optional<Card> getCard(String[] args, String name) {
         ReaderInterface reader = new ReaderImpl();
-        CustomList<Card> allCard = reader.getAllCard(getPath(args, CARD_FILE));
+        CustomList<Card> allCard = reader.getAllCard(getPath(args, Constants.CARD_FILE.getName()));
         Optional<Card> card = Optional.empty();
         for (String arg : args) {
             String[] a = arg.split("-");
@@ -88,8 +85,8 @@ public class ParseArgsImpl implements ParseArgsInterface {
             }
         }
         if (path == null || !new File(path).isFile()) {
-            if (name.contains(PRODUCT)) path = PATH_PRODUCT;
-            else path = PATH_CARD;
+            if (name.contains(Constants.PRODUCT.getName())) path = Constants.PATH_PRODUCT.getName();
+            else path = Constants.PATH_CARD.getName();
         }
         return path;
     }
