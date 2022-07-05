@@ -4,17 +4,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Check;
 import ru.clevertec.app.service.CheckToString;
 import ru.clevertec.app.service.PrintInterface;
 
 public class PrintToFileImpl implements PrintInterface {
-	public static final String FILE_NAME = "check.txt";
+
 	@Override
 	public void print(Check check) {
 
 		CheckToString cts = new CheckToString();
-		File file = new File(FILE_NAME);
+		File file = new File(Constants.FILE_NAME.getName());
 		try (FileWriter myWriter = new FileWriter(file);) {
 			myWriter.write(cts.result(check));
 		} catch (IOException e) {

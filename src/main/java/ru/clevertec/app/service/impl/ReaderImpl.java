@@ -8,18 +8,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.service.ReaderInterface;
 
 public class ReaderImpl implements ReaderInterface {
-	public static final String INVALID_FILE_NAME = "invalidDate.txt";
+
 	@Override
 	public CustomList<Product> getAllProduct(String path) {
 		CustomList<Product> allProduct = new CustomArrayList<>();
 		StringBuilder invalidDate = new StringBuilder();
-		File file = new File(INVALID_FILE_NAME);
+		File file = new File(Constants.INVALID_FILE_NAME.getName());
 		try (Scanner scanner = new Scanner(new File(path), "UTF-8")) {
 			while (scanner.hasNextLine()) {
 				ArrayList<String> listErrorMessage = new ArrayList<>();

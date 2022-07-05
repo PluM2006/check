@@ -1,9 +1,10 @@
 package ru.clevertec.app.service;
 
-import ru.clevertec.app.entity.Check;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.CheckItem;
 
 public interface CheckInterface {
 
-	Check getCheck(String[] args);
+    String getCheck(CustomList<CheckItem> checkItems, Card card);
 
 }

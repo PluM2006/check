@@ -1,7 +1,9 @@
 package ru.clevertec.app.service.impl;
 
+import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.service.CheckInterface;
+import ru.clevertec.app.service.CheckToString;
 import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.service.ParseArgsInterface;
 
@@ -13,25 +15,30 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CheckImpl implements CheckInterface {
-    private static final String CARD = "card";
-    private static final String PRINT_TO = "printTo";
-    private static final String TIME_FORMAT = "HH:mm:ss";
-    private static final String DATE_FORMAT = "dd-MM-YYYY";
-    private final BigDecimal allDiscount = new BigDecimal(10);
+    private final Calendar cal = new GregorianCalendar();
+
+    private CheckToString cts= new CheckToString();
+    private StringBuilder stringBuilder = new StringBuilder();
 
     @Override
-    public Check getCheck(String[] args) {
-        Calendar cal = new GregorianCalendar();
-        ParseArgsInterface parseArgs = new ParseArgsImpl();
-        // Дисконтная карта
-        Optional<Card> card = parseArgs.getCard(args, CARD);
-        // Продукты
-        CustomList<CheckItem> checkItems = parseArgs.getCheckItem(args);
+    public String getCheck(CustomList<CheckItem> checkItems, Card card) {
         Check check = new Check();
+        // Продукты
         check.setShop(new Shop("Krama N646", "3-я ул. Строителей, 25"));
         check.setCashier(new Cashier("Luke Skywalker", "007"));
-        // куда вывод
-        check.setPrintTo(parseArgs.getPrintTo(args, PRINT_TO));
+        getDiscount(checkItems, card);
+        check.setCheckItem(checkItems);
+        check.setCard(card);
+        check.setSummTotal(checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add));
+        check.setDiscountTotal(checkItems.stream().map(CheckItem::getDiscount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+        check.setDate(getDateTime(Constants.DATE_FORMAT.getName()));
+        check.setTime(getDateTime(Constants.TIME_FORMAT.getName()));
+        return stringBuilder.toString();
+    }
+
+
+    private void getDiscount(CustomList<CheckItem> checkItems, Card card) {
         //Количество купленного товара
         Map<Product, Integer> productQty = checkItems.stream()
                 .collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
@@ -40,38 +47,25 @@ public class CheckImpl implements CheckInterface {
             // Скидка 10% если товара больше 5
             Integer quantity = productQty.get(checkItem.getProduct());
             if (checkItem.getProduct().getSale() && quantity >= 5) {
-                checkItem.setDiscount(getDiscount(checkItem.getSumm(), allDiscount));
+                checkItem.setDiscount(calculateDiscount(checkItem.getSumm(), new BigDecimal(Constants.ALL_DISCOUNT.getName())));
                 checkItem.setPromDiscount(true);
             } else {
                 //Скидка на остальные товары если предъявлена дисконтная карта
-                if (card.isPresent() && checkItem.getDiscount().equals(BigDecimal.ZERO)) {
-                    checkItem.setDiscount(getDiscount(checkItem.getSumm(), card.get().getDiscount()));
+                if (card != null && checkItem.getDiscount().equals(BigDecimal.ZERO)) {
+                    checkItem.setDiscount(calculateDiscount(checkItem.getSumm(), card.getDiscount()));
                 }
             }
         }
-        List<CheckItem> list = new ArrayList<>();
-        for (CheckItem ci : checkItems){
-            list.add(ci);
-        }
-        check.setCheckItem(checkItems);
-        check.setCard(card.orElse(null));
-        check.setSummTotal(checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add));
-        check.setDiscountTotal(checkItems.stream().map(CheckItem::getDiscount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
-        check.setDate(getDateTime(cal, DATE_FORMAT));
-        check.setTime(getDateTime(cal, TIME_FORMAT));
-        return check;
     }
 
-
-    private BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
-        BigDecimal discont;
-        discont = percent.multiply(summ).divide(new BigDecimal(100), RoundingMode.HALF_DOWN)
+    private BigDecimal calculateDiscount(BigDecimal sum, BigDecimal percent) {
+        BigDecimal discount;
+        discount = percent.multiply(sum).divide(new BigDecimal(100), RoundingMode.HALF_DOWN)
                 .setScale(2, RoundingMode.HALF_DOWN);
-        return discont;
+        return discount;
     }
 
-    private String getDateTime(Calendar cal, String format) {
+    private String getDateTime(String format) {
         DateFormat df = new SimpleDateFormat(format);
         return df.format(cal.getTime());
     }

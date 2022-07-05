@@ -15,13 +15,13 @@ public class Check {
 	private Cashier cashier;
 	private String date;
 	private String time;
-	private int printTo;
+
 
 	public Check() {
 	}
 
 	public Check(CustomList<CheckItem> checkItem, Card card, BigDecimal summTotal, BigDecimal discountTotal, Shop shop,
-			Cashier cashier, String date, String time, int printTo) {
+			Cashier cashier, String date, String time) {
 		this.checkItem = checkItem;
 		this.card = card;
 		this.summTotal = summTotal;
@@ -30,7 +30,7 @@ public class Check {
 		this.cashier = cashier;
 		this.date = date;
 		this.time = time;
-		this.printTo = printTo;
+
 	}
 
 	public CustomList<CheckItem> getCheckItem() {
@@ -97,29 +97,30 @@ public class Check {
 		this.time = time;
 	}
 
-	public int getPrintTo() {
-		return printTo;
-	}
-
-	public void setPrintTo(int printTo) {
-		this.printTo = printTo;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Check check = (Check) o;
-		return printTo == check.printTo && Objects.equals(checkItem, check.checkItem) && Objects.equals(card, check.card) && Objects.equals(summTotal, check.summTotal) && Objects.equals(discountTotal, check.discountTotal) && Objects.equals(shop, check.shop) && Objects.equals(cashier, check.cashier) && Objects.equals(date, check.date) && Objects.equals(time, check.time);
+		return Objects.equals(checkItem, check.checkItem) && Objects.equals(card, check.card) && Objects.equals(summTotal, check.summTotal) && Objects.equals(discountTotal, check.discountTotal) && Objects.equals(shop, check.shop) && Objects.equals(cashier, check.cashier) && Objects.equals(date, check.date) && Objects.equals(time, check.time);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(checkItem, card, summTotal, discountTotal, shop, cashier, date, time, printTo);
+		return Objects.hash(checkItem, card, summTotal, discountTotal, shop, cashier, date, time);
 	}
 
 	@Override
 	public String toString() {
-		return "Check{" + "checkItem=" + checkItem + ", card=" + card + ", summTotal=" + summTotal + ", discountTotal=" + discountTotal + ", shop=" + shop + ", cashier=" + cashier + ", date='" + date + '\'' + ", time='" + time + '\'' + ", printTo=" + printTo + '}';
+		return "Check{" +
+				"checkItem=" + checkItem +
+				", card=" + card +
+				", summTotal=" + summTotal +
+				", discountTotal=" + discountTotal +
+				", shop=" + shop +
+				", cashier=" + cashier +
+				", date='" + date + '\'' +
+				", time='" + time + '\'' +
+				'}';
 	}
 }
