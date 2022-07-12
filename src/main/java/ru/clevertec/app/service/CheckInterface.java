@@ -4,6 +4,5 @@ import ru.clevertec.app.entity.Check;
 
 public interface CheckInterface {
 
-	Check getCheck(String[] args);
-
+    Check getCheck(String[] args);
 }

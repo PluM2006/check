@@ -25,5 +25,4 @@ public class CheckImplProxy implements CheckInterface {
     public Check getCheck(String[] args) {
         return checkImpl.getCheck(args);
     }
-
 }

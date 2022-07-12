@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class Card {
 
+
 	private Long id;
 	private String numbercard;
 	private BigDecimal discount;

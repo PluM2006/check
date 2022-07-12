@@ -1,5 +1,7 @@
 package ru.clevertec.app.service.impl;
 
+import ru.clevertec.app.anatations.LoggerLog;
+import ru.clevertec.app.anatations.LoggingLevel;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.service.CheckInterface;
 import ru.clevertec.app.service.CustomList;
@@ -19,7 +21,9 @@ public class CheckImpl implements CheckInterface {
     private static final String DATE_FORMAT = "dd-MM-YYYY";
     private final BigDecimal allDiscount = new BigDecimal(10);
 
+
     @Override
+    @LoggerLog(LoggingLevel.ERROR)
     public Check getCheck(String[] args) {
         Calendar cal = new GregorianCalendar();
         ParseArgsInterface parseArgs = new ParseArgsImpl();
@@ -49,10 +53,6 @@ public class CheckImpl implements CheckInterface {
                 }
             }
         }
-        List<CheckItem> list = new ArrayList<>();
-        for (CheckItem ci : checkItems){
-            list.add(ci);
-        }
         check.setCheckItem(checkItems);
         check.setCard(card.orElse(null));
         check.setSummTotal(checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add));
@@ -62,7 +62,6 @@ public class CheckImpl implements CheckInterface {
         check.setTime(getDateTime(cal, TIME_FORMAT));
         return check;
     }
-
 
     private BigDecimal getDiscount(BigDecimal summ, BigDecimal percent) {
         BigDecimal discont;

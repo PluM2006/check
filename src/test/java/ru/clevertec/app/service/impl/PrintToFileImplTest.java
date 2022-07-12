@@ -9,6 +9,8 @@ import ru.clevertec.app.service.CheckToString;
 import ru.clevertec.app.service.PrintInterface;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,6 +38,7 @@ class PrintToFileImplTest {
         try (Stream<String> stream = Files.lines(file)) {
             allLine = stream.collect(Collectors.joining("\n"));
         }
+        System.out.println(allLine);
         Assertions.assertEquals(allLine, result);
     }
 }

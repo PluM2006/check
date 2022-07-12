@@ -1,5 +1,6 @@
 package ru.clevertec.app.service.impl;
 
+import ru.clevertec.app.anatations.LoggerLog;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
@@ -19,6 +20,7 @@ public class ParseArgsImpl implements ParseArgsInterface {
     private static final String PATH_CARD = "card.csv";
 
     @Override
+    @LoggerLog
     public CustomList<CheckItem> getCheckItem(String[] args) {
         ReaderInterface reader = new ReaderImpl();
         CustomList<Product> allProduct = reader.getAllProduct(getPath(args, PRODUCT_FILE));

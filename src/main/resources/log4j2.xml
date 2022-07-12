@@ -15,7 +15,7 @@
         <Logger name="ru.clevertec.app" level="DEBUG" additivity="false">
             <AppenderRef ref="LogToConsole"/>
         </Logger>
-        <Logger name="ru.clevertec.app.service.proxies" level="TRACE" additivity="false">
+        <Logger name="ru.clevertec.app.service" level="TRACE" additivity="false">
             <AppenderRef ref="LogToFile"/>
         </Logger>
         <Root level="error">

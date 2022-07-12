@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import ru.clevertec.app.anatations.LoggerLog;
 import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Product;
@@ -16,6 +17,7 @@ import ru.clevertec.app.service.ReaderInterface;
 public class ReaderImpl implements ReaderInterface {
 	public static final String INVALID_FILE_NAME = "invalidDate.txt";
 	@Override
+	@LoggerLog
 	public CustomList<Product> getAllProduct(String path) {
 		CustomList<Product> allProduct = new CustomArrayList<>();
 		StringBuilder invalidDate = new StringBuilder();
@@ -71,11 +73,8 @@ public class ReaderImpl implements ReaderInterface {
 		try (Scanner scanner = new Scanner(new File(path), "UTF-8")) {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
-				Card card = new Card();
 				String[] row = line.split(";");
-				card.setId(Long.parseLong(row[0]));
-				card.setNumbercard(row[1]);
-				card.setDiscount(new BigDecimal(row[2]));
+				Card card = new Card(Long.parseLong(row[0]), row[1], new BigDecimal(row[2]));
 				allCard.add(card);
 			}
 		} catch (FileNotFoundException e) {

@@ -4,41 +4,59 @@
 
 plugins {
     id 'java'
-    id 'maven-publish'
+    id 'io.freefair.aspectj.post-compile-weaving' version '5.3.0'
 }
 
 repositories {
     mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
+    mavenCentral()
 }
+group = 'ru.cleverteck.app'
+version = '0.0.1-SNAPSHOT'
+description = 'check'
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 dependencies {
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.2'
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'org.aspectj:aspectjtools:1.9.9.1'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
 }
 test {
     useJUnitPlatform()
-
 }
 
-group = 'ru.cleverteck.app'
-version = '0.0.1-SNAPSHOT'
-description = 'check'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    doFirst {
+        manifest {
+            attributes ('Main-Class': "ru.clevertec.app.CheckRunner",
+                    'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+            )
+        }
+        from{
+            configurations.runtimeClasspath.files.collect {it.isDirectory() ? it : zipTree(it)}
         }
     }
+//    doLast {
+//        copy {
+//            from(configurations.runtimeClasspath.files)
+//            into("$buildDir/libs/lib")
+//        }
+//    }
 }
+
+
+
 task downloadCheck(type: DownloadFile) {
     sourceUrl = 'https://github.com/PluM2006/file/blob/main/check.jpg?raw=true'
     target new File('src/main/resources/check.jpg')
@@ -65,3 +83,5 @@ class DownloadFile extends DefaultTask {
     }
 
 }
+
+targetCompatibility = JavaVersion.VERSION_11
