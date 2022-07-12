@@ -4,75 +4,68 @@ import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.service.CheckInterface;
 import ru.clevertec.app.service.CustomList;
-import ru.clevertec.app.service.ParseArgsInterface;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CheckImpl implements CheckInterface {
-    private Card card;
-    ParseArgsInterface parseArgs = new ParseArgsImpl();
-    Calendar cal = new GregorianCalendar();
 
     @Override
-    public Check getCheck(String[] args) {
-        Check check = new Check();
-        card = getCard(args);
-        // Продукты
-        CustomList<CheckItem> checkItems = parseArgs.getCheckItem(args);
-        check.setShop(new Shop("Krama N646", "3-я ул. Строителей, 25"));
-        check.setCashier(new Cashier("Luke Skywalker", "007"));
-        // куда вывод
-        check.setPrintTo(parseArgs.getPrintTo(args, Constants.PRINT_TO.getName()));
-        calcDiscount(checkItems);
-        check.setCheckItem(checkItems);
-        check.setCard(card);
-        check.setSummTotal(checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add));
-        check.setDiscountTotal(checkItems.stream().map(CheckItem::getDiscount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
-        check.setDate(getDateTime(Constants.DATE_FORMAT.getName()));
-        check.setTime(getDateTime(Constants.TIME_FORMAT.getName()));
-        return check;
+    public String getCheck(CustomList<CheckItem> checkItems, Card card, Shop shop, Cashier cashier) {
+        if (checkItems.size() > 0) {
+            buildHead(shop, cashier);
+            getDiscount(checkItems, card);
+            buildBasket(checkItems);
+            buildFooter(card, checkItems);
+        } else {
+            CheckFormatBuilder.errorCheck();
+        }
+        return CheckFormatBuilder.getCheckResult();
     }
 
-    private Card getCard(String[] args) {
-        return parseArgs.getCard(args, Constants.CARD.getName()).orElse(null);
+    private void buildHead(Shop shop, Cashier cashier) {
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        CheckFormatBuilder.getHeader(shop, cashier, date, time);
     }
 
-    private void calcDiscount(CustomList<CheckItem> checkItems) {
+    private void buildBasket(CustomList<CheckItem> checkItems) {
+        CheckFormatBuilder.getBasket(checkItems);
+    }
+
+    private void buildFooter(Card card, CustomList<CheckItem> checkItems) {
+        BigDecimal sumTotal = checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal discountTotal = checkItems.stream().map(CheckItem::getDiscount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        CheckFormatBuilder.getFooter(card, sumTotal, discountTotal);
+    }
+
+    private void getDiscount(CustomList<CheckItem> checkItems, Card card) {
         //Количество купленного товара
-        Map<Product, Integer> productQty = checkItems.stream()
-                .collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
+        Map<Product, Integer> productQty = checkItems.stream().collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
         // Расчет скидок
         for (CheckItem checkItem : checkItems) {
             // Скидка 10% если товара больше 5
             Integer quantity = productQty.get(checkItem.getProduct());
             if (checkItem.getProduct().getSale() && quantity >= 5) {
-                checkItem.setDiscount(getDiscount(checkItem.getSumm(), new BigDecimal(Constants.ALL_DISCOUNT.getName())));
+                checkItem.setDiscount(calculateDiscount(checkItem.getSumm(), new BigDecimal(Constants.ALL_DISCOUNT.getName())));
                 checkItem.setPromDiscount(true);
             } else {
                 //Скидка на остальные товары если предъявлена дисконтная карта
                 if (card != null && checkItem.getDiscount().equals(BigDecimal.ZERO)) {
-                    checkItem.setDiscount(getDiscount(checkItem.getSumm(), card.getDiscount()));
+                    checkItem.setDiscount(calculateDiscount(checkItem.getSumm(), card.getDiscount()));
                 }
             }
         }
     }
 
-    private BigDecimal getDiscount(BigDecimal sum, BigDecimal percent) {
+    private BigDecimal calculateDiscount(BigDecimal sum, BigDecimal percent) {
         BigDecimal discount;
-        discount = percent.multiply(sum).divide(new BigDecimal(100), RoundingMode.HALF_DOWN)
-                .setScale(2, RoundingMode.HALF_DOWN);
+        discount = percent.multiply(sum).divide(new BigDecimal(100), RoundingMode.HALF_DOWN).setScale(2, RoundingMode.HALF_DOWN);
         return discount;
     }
-
-    private String getDateTime(String format) {
-        DateFormat df = new SimpleDateFormat(format);
-        return df.format(cal.getTime());
-    }
-
 }

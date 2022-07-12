@@ -5,19 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import ru.clevertec.app.constant.Constants;
-import ru.clevertec.app.entity.Check;
-import ru.clevertec.app.service.CheckToString;
 import ru.clevertec.app.service.PrintInterface;
 
 public class PrintToFileImpl implements PrintInterface {
 
 	@Override
-	public void print(Check check) {
+	public void print(String check) {
 
-		CheckToString cts = new CheckToString();
 		File file = new File(Constants.FILE_NAME.getName());
 		try (FileWriter myWriter = new FileWriter(file);) {
-			myWriter.write(cts.result(check));
+			myWriter.write(CheckFormatBuilder.getCheckResult().toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

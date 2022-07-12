@@ -20,9 +20,10 @@ public class ParseArgsImpl implements ParseArgsInterface {
         ReaderInterface reader = new ReaderImpl();
         CustomList<Product> allProduct = reader.getAllProduct(getPath(args, Constants.PRODUCT_FILE.getName()));
         CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
+        CustomList<Integer> errorsItem = new CustomArrayList<>();
         for (String arg : args) {
             String[] a = arg.split("-");
-            if (a[1].matches("\\d")) {
+            if (a[1].matches("\\d+")) {
                 long qty = Long.parseLong(a[1]);
                 if (a[0].matches("-?\\d+(\\.\\d+)?") && qty > 0L) {
                     Optional<Product> product = allProduct
@@ -35,21 +36,24 @@ public class ParseArgsImpl implements ParseArgsInterface {
                                 .getPrice()
                                 .multiply(new BigDecimal(a[1])), BigDecimal.ZERO, false);
                         listCheckItem.add(checkItem);
+                    } else {
+                        errorsItem.add(Integer.valueOf(a[0]));
                     }
                 }
             }
         }
+        CheckFormatBuilder.errorCheckItems(errorsItem);
         return listCheckItem;
     }
 
     @Override
-    public Optional<Card> getCard(String[] args, String name) {
+    public Optional<Card> getCard(String[] args) {
         ReaderInterface reader = new ReaderImpl();
         CustomList<Card> allCard = reader.getAllCard(getPath(args, Constants.CARD_FILE.getName()));
         Optional<Card> card = Optional.empty();
         for (String arg : args) {
             String[] a = arg.split("-");
-            if (a[0].equals(name)) {
+            if (a[0].equals(Constants.CARD.getName())) {
                 Long id = Long.parseLong(a[1]);
                 card = allCard
                         .stream()
@@ -65,11 +69,11 @@ public class ParseArgsImpl implements ParseArgsInterface {
     }
 
     @Override
-    public int getPrintTo(String[] args, String name) {
+    public int getPrintTo(String[] args) {
         int printTo = 0;
         for (String arg : args) {
             String[] a = arg.split("-");
-            if (a[0].contains(name)) {
+            if (a[0].contains(Constants.PRINT_TO.getName())) {
                 printTo = Integer.parseInt(a[1]);
             }
         }

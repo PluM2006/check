@@ -9,8 +9,8 @@ public interface ParseArgsInterface {
 
 	CustomList<CheckItem> getCheckItem(String[] args);
 
-	Optional<Card> getCard(String[] args, String name);
+	Optional<Card> getCard(String[] args);
 
-	int getPrintTo(String[] args, String name);
+	int getPrintTo(String[] args);
 
 }

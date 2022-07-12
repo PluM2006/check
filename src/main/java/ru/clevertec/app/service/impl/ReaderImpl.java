@@ -61,6 +61,7 @@ public class ReaderImpl implements ReaderInterface {
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
+			CheckFormatBuilder.errorProductFIle();
 			e.printStackTrace();
 		}
 		return allProduct;
@@ -80,6 +81,7 @@ public class ReaderImpl implements ReaderInterface {
 				allCard.add(card);
 			}
 		} catch (FileNotFoundException e) {
+			CheckFormatBuilder.errorCardFile();
 			e.printStackTrace();
 		}
 
