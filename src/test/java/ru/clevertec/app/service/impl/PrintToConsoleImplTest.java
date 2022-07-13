@@ -3,23 +3,42 @@ package ru.clevertec.app.service.impl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.clevertec.app.entity.*;
 import ru.clevertec.app.service.CheckInterface;
+import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.service.PrintInterface;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PrintToConsoleImplTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    CheckInterface checkInterface = new CheckImpl();
-
     PrintInterface printInterface = new PrintToConsoleImpl();
+    CheckInterface checkInterface = new CheckImpl();
+    Shop shop;
+    Cashier cashier;
+
+    Card card;
+    CustomList<CheckItem> checkItems = new CustomArrayList<>();
 
     @BeforeEach
     public void setUp() throws Exception {
+        shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
+        cashier = new Cashier("Luke Skywalker", "007");
+        card = new Card(1L, "1-1-1-1", new BigDecimal("7"));
+        List<Product> productList = List.of(
+                new Product(1L, "banana", new BigDecimal("32.0"), 23, false),
+                new Product(2L, "tomato", new BigDecimal("10.0"), 23, true),
+                new Product(3L, "malina", new BigDecimal("11.0"), 23, false)
+        );
+        checkItems.add(new CheckItem(productList.get(0), 12, new BigDecimal("10"), new BigDecimal("1"), false));
+        checkItems.add(new CheckItem(productList.get(2), 5, new BigDecimal("30"), new BigDecimal("3"), true));
+        checkItems.add(new CheckItem(productList.get(1), 10, new BigDecimal("20"), new BigDecimal("2"), false));
         System.setOut(new PrintStream(outContent));
     }
 
@@ -30,10 +49,8 @@ public class PrintToConsoleImplTest {
 
     @Test
     public void print() {
-//        CheckFormatBuilder checkFormatBuilder = new CheckFormatBuilder();
-//        Check check = checkInterface.getCheck(new String[]{"1-1", "printTo-1"});
-//        String result = checkFormatBuilder.result(check);
-//        printInterface.print(check);
-//        assertEquals(result, outContent.toString());
+        String check = checkInterface.getCheck(checkItems, card, shop,  cashier);
+        printInterface.print(check);
+        assertEquals(check, outContent.toString());
     }
 }

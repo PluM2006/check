@@ -33,12 +33,12 @@ public class ParseArgsImplTest {
     @Test
     public void getCardTest() {
         Optional<Card> card = Optional.of(new Card(1L, "1111 1111 1111 1111", new BigDecimal("10")));
-        assertEquals(card, parseArgs.getCard(args, "card"));
+        assertEquals(card, parseArgs.getCard(args));
     }
 
     @Test
     public void getPrintToTest() {
         int printTo = 0;
-        assertEquals(printTo, parseArgs.getPrintTo(args, "printTo"));
+        assertEquals(printTo, parseArgs.getPrintTo(args));
     }
 }

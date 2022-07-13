@@ -5,8 +5,8 @@ import ru.clevertec.app.entity.Product;
 
 public interface ReaderInterface {
 
-	public CustomList<Product> getAllProduct(String path);
+	CustomList<Product> getAllProduct(String path);
 
-	public CustomList<Card> getAllCard(String path);
+	CustomList<Card> getAllCard(String path);
 
 }

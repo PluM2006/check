@@ -30,7 +30,7 @@ test {
 group = 'ru.cleverteck.app'
 version = '0.0.1-SNAPSHOT'
 description = 'check'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_14
 
 publishing {
     publications {
@@ -65,3 +65,5 @@ class DownloadFile extends DefaultTask {
     }
 
 }
+
+targetCompatibility = JavaVersion.VERSION_14

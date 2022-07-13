@@ -15,10 +15,12 @@ public enum Constants {
     PROMO_DISCOUNT_PERCENT("10");
 
     private final String name;
+
     Constants(String name) {
         this.name = name;
     }
-    public String  getName(){
+
+    public String getName() {
         return this.name;
     }
 }

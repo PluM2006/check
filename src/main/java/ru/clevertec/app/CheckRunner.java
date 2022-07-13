@@ -17,8 +17,8 @@ public class CheckRunner {
 
     public static void main(String[] args) {
 
+        PrintInterface print;
         CheckInterface checkImpl = new CheckImplProxy();
-
         ParseArgsInterface parseArgsInterface = new ParseArgsImpl();
 
         CustomList<CheckItem> checkItems = parseArgsInterface.getCheckItem(args);
@@ -30,14 +30,15 @@ public class CheckRunner {
 
         String check = checkImpl.getCheck(checkItems, card, shop, cashier);
 
-		if (printTo == 0) {
-			PrintInterface file = new PrintToFileImpl();
-			file.print(check);
-		}
-		if (printTo == 1) {
-			PrintInterface cons = new PrintToConsoleImpl();
-			cons.print(check);
-		}
-
+        switch (printTo) {
+            case 0 -> {
+                print = new PrintToFileImpl();
+                print.print(check);
+            }
+            case 1 -> {
+                print = new PrintToConsoleImpl();
+                print.print(check);
+            }
+        }
     }
 }
