@@ -1,9 +1,9 @@
 package ru.clevertec.app;
 
-import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.entity.Cashier;
-import ru.clevertec.app.entity.CheckItem;
-import ru.clevertec.app.entity.Shop;
+import ru.clevertec.app.entity.*;
+import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.dbImpl.CardRepositoryImpl;
+import ru.clevertec.app.repository.dbImpl.ProductRepositoryImpl;
 import ru.clevertec.app.service.CheckInterface;
 import ru.clevertec.app.service.CustomList;
 import ru.clevertec.app.service.ParseArgsInterface;
@@ -13,9 +13,17 @@ import ru.clevertec.app.service.impl.PrintToConsoleImpl;
 import ru.clevertec.app.service.impl.PrintToFileImpl;
 import ru.clevertec.app.service.proxies.service.CheckImplProxy;
 
+import java.math.BigDecimal;
+
 public class CheckRunner {
 
     public static void main(String[] args) {
+        Card card1 = new Card(null, "5555 5555 5555 5555", BigDecimal.valueOf(8));
+
+
+        Repository<Product> repository = new ProductRepositoryImpl();
+        Repository<Card> cardRepository = new CardRepositoryImpl();
+        System.out.println(cardRepository.findAll());
 
         PrintInterface print;
         CheckInterface checkImpl = new CheckImplProxy();
