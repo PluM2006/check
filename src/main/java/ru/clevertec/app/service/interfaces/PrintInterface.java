@@ -1,4 +1,4 @@
-package ru.clevertec.app.service;
+package ru.clevertec.app.service.interfaces;
 
 public interface PrintInterface {
 

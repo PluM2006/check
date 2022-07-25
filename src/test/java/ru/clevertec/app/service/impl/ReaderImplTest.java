@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.CustomList;
-import ru.clevertec.app.service.ReaderInterface;
+import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.interfaces.ReaderInterface;
 
 import java.math.BigDecimal;
 

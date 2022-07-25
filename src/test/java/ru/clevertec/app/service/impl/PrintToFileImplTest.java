@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.CheckInterface;
-import ru.clevertec.app.service.CustomList;
-import ru.clevertec.app.service.PrintInterface;
+import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.interfaces.PrintInterface;
 
 import java.io.IOException;
 import java.math.BigDecimal;

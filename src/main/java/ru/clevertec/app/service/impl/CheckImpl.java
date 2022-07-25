@@ -2,8 +2,9 @@ package ru.clevertec.app.service.impl;
 
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.CheckInterface;
-import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.service.CheckFormatBuilder;
+import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CustomList;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

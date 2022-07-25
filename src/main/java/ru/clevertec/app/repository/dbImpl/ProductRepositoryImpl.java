@@ -3,7 +3,7 @@ package ru.clevertec.app.repository.dbImpl;
 import ru.clevertec.app.connectionpool.ConnectionPool;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.impl.CustomArrayList;
 
 import java.sql.*;
@@ -38,20 +38,19 @@ public class ProductRepositoryImpl implements Repository<Product> {
     }
 
     @Override
-    public Product update(Product product, Long id) {
+    public Product update(Product product) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT)) {
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, product.getPrice());
             statement.setInt(3, product.getCount());
             statement.setBoolean(4, product.getSale());
-            statement.setLong(5, id);
+            statement.setLong(5, product.getId());
             statement.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return product;
     }
 
     @Override
@@ -92,12 +91,10 @@ public class ProductRepositoryImpl implements Repository<Product> {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_PRODUCT_BY_ID)) {
             statement.setLong(1, id);
-            statement.executeQuery();
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return false;
     }
 
     private Product createFromResultSet(ResultSet resultSet) throws SQLException {

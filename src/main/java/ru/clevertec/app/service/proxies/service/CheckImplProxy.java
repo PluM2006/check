@@ -4,8 +4,8 @@ import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Cashier;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.service.CheckInterface;
-import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.impl.CheckImpl;
 import ru.clevertec.app.service.proxies.heandler.CheckImplHandler;
 

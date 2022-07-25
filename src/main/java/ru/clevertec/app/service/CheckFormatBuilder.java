@@ -1,8 +1,8 @@
-package ru.clevertec.app.service.impl;
+package ru.clevertec.app.service;
 
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.service.interfaces.CustomList;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -69,8 +69,8 @@ public class CheckFormatBuilder {
         buildLine();
     }
 
-    public static void errorCheckItems(CustomList<Integer> errorItems) {
-        for (Integer ci : errorItems) {
+    public static void errorCheckItems(CustomList<Long> errorItems) {
+        for (Long ci : errorItems) {
             checkErrors.insert(0, "Нет продукта с id: " + ci + "\n");
         }
     }

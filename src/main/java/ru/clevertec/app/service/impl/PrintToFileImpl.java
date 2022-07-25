@@ -5,7 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import ru.clevertec.app.constant.Constants;
-import ru.clevertec.app.service.PrintInterface;
+import ru.clevertec.app.service.CheckFormatBuilder;
+import ru.clevertec.app.service.interfaces.PrintInterface;
 
 public class PrintToFileImpl implements PrintInterface {
 

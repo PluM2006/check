@@ -2,7 +2,7 @@ package ru.clevertec.app.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.clevertec.app.service.CustomIterator;
+import ru.clevertec.app.service.interfaces.CustomIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

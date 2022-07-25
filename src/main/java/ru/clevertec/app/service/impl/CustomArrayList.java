@@ -2,8 +2,8 @@ package ru.clevertec.app.service.impl;
 
 import java.util.Iterator;
 
-import ru.clevertec.app.service.CustomIterator;
-import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.service.interfaces.CustomIterator;
+import ru.clevertec.app.service.interfaces.CustomList;
 
 public class CustomArrayList<E> implements CustomList<E> {
 
