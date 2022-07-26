@@ -26,6 +26,7 @@ public class CheckRunner {
         CheckBuilderInterface checkImpl = new CheckBuilderImplProxy();
         CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
         Repository<Card> repository = new CardRepositoryImpl();
+
         Repository<Card> repositoryFile = new CardFileRepositoryImpl();
         repositoryFile.delete(2L);
         CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(args);
