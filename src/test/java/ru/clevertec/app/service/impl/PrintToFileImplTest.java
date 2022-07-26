@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.interfaces.PrintInterface;
 
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 class PrintToFileImplTest {
 
     PrintInterface printInterface = new PrintToFileImpl();
-    CheckInterface checkInterface = new CheckImpl();
+    CheckBuilderInterface checkBuilderInterface = new CheckBuilderImpl();
     Shop shop;
     Cashier cashier;
 
@@ -44,7 +44,7 @@ class PrintToFileImplTest {
 
     @Test
     void print() throws IOException {
-        String check = checkInterface.getCheck(checkItems, card, shop,  cashier);
+        String check = checkBuilderInterface.getCheck(checkItems, card, shop,  cashier);
         printInterface.print(check);
         Path file = Paths.get("check.txt");
         String allLine;

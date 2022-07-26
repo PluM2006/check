@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.gson.JsonCustomListSerializer;
 
@@ -18,9 +18,9 @@ public class CheckImplHandler implements InvocationHandler {
             .registerTypeAdapter(CustomList.class, new JsonCustomListSerializer())
             .create();
     private static final Logger log = LoggerFactory.getLogger(CheckImplHandler.class);
-    private final CheckInterface checkImpl;
+    private final CheckBuilderInterface checkImpl;
 
-    public CheckImplHandler(CheckInterface checkImpl) {
+    public CheckImplHandler(CheckBuilderInterface checkImpl) {
         this.checkImpl = checkImpl;
     }
 

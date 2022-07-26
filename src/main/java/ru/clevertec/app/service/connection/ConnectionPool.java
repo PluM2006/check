@@ -1,4 +1,6 @@
-package ru.clevertec.app.connectionpool;
+package ru.clevertec.app.service.connection;
+
+import ru.clevertec.app.service.utils.PropertiesUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,14 +13,14 @@ public class ConnectionPool {
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final BlockingDeque<ProxyConnection> activeConnections;
 
-    private final int DEFAULT_POLL_SIZE = Integer.parseInt(DBPropertiesUtil.getPoolSize());
-    private final String DATABASE_DRIVER = DBPropertiesUtil.getDriver();
+    private final String DATABASE_DRIVER = PropertiesUtil.getDriver();
 
     private ConnectionPool() {
+        int DEFAULT_POLL_SIZE = Integer.parseInt(PropertiesUtil.getPoolSize());
         freeConnections = new LinkedBlockingDeque<>(DEFAULT_POLL_SIZE);
         activeConnections = new LinkedBlockingDeque<>(DEFAULT_POLL_SIZE);
         registerDriver();
-        for (int i=0; i<DEFAULT_POLL_SIZE; i++){
+        for (int i = 0; i< DEFAULT_POLL_SIZE; i++){
             freeConnections.offer(ConnectionCreator.createConnection());
         }
     }
@@ -53,18 +55,6 @@ public class ConnectionPool {
         } else {
             System.err.println("Error");
         }
-    }
-    public void destroyPool(){
-        for (int i=0 ; i< DEFAULT_POLL_SIZE; i++){
-            try {
-                freeConnections.take().reallyClose();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } catch (SQLException e){
-                Thread.currentThread().interrupt();
-            }
-        }
-        deregisterDriver();
     }
     private void registerDriver(){
         try {

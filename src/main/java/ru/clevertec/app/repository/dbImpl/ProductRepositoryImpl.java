@@ -1,10 +1,10 @@
 package ru.clevertec.app.repository.dbImpl;
 
-import ru.clevertec.app.connectionpool.ConnectionPool;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.connection.ConnectionPool;
 import ru.clevertec.app.service.impl.CustomArrayList;
+import ru.clevertec.app.service.interfaces.CustomList;
 
 import java.sql.*;
 import java.util.Optional;
@@ -61,7 +61,7 @@ public class ProductRepositoryImpl implements Repository<Product> {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Product product = createFromResultSet(resultSet);
+                Product product = createProductFromResultSet(resultSet);
                 optionalProduct = Optional.of(product);
             }
         } catch (SQLException e) {
@@ -77,7 +77,7 @@ public class ProductRepositoryImpl implements Repository<Product> {
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Product product = createFromResultSet(resultSet);
+                Product product = createProductFromResultSet(resultSet);
                 customList.add(product);
             }
         } catch (SQLException e) {
@@ -97,7 +97,7 @@ public class ProductRepositoryImpl implements Repository<Product> {
         }
     }
 
-    private Product createFromResultSet(ResultSet resultSet) throws SQLException {
+    private Product createProductFromResultSet(ResultSet resultSet) throws SQLException {
         return new Product(
                 resultSet.getLong(1),
                 resultSet.getString(2),

@@ -4,11 +4,10 @@ import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.fileImpl.ProductFileRepositoryImpl;
-import ru.clevertec.app.service.CheckFormatBuilder;
-import ru.clevertec.app.service.ParseArgsService;
+import ru.clevertec.app.service.utils.CheckFormatBuilder;
+import ru.clevertec.app.service.utils.ArgsUtil;
 import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.interfaces.CheckItemsInterface;
-import ru.clevertec.app.service.interfaces.ReaderInterface;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
     @Override
     public CustomList<CheckItem> getCheckItem(String[] args) {
         CustomList<Product> allProduct = repository.findAll();
-        Map<Long, Integer> mapCheckItems = ParseArgsService.getInstance(args).getMapCheckItems();
+        Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
         for (var map : mapCheckItems.entrySet()) {
             Optional<Product> product = allProduct
                     .stream()
@@ -42,32 +41,4 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
         CheckFormatBuilder.errorCheckItems(errorsItem);
         return listCheckItem;
     }
-
-//    @Override
-//    public Optional<Card> getCard(String[] args) {
-//        CustomList<Card> allCard = reader.getAllCard(ParseArgsService.getInstance(args).getPathFileCard());
-//        Optional<Card> card = Optional.empty();
-//        for (String arg : args) {
-//            String[] a = arg.split("-");
-//            if (a[0].equals(Constants.CARD.getName())) {
-//                Long id = Long.parseLong(a[1]);
-//                card = allCard
-//                        .stream()
-//                        .filter(c -> c
-//                                .getNumbercard()
-//                                .equals(a[1]) || c
-//                                .getId()
-//                                .equals(id))
-//                        .findAny();
-//            }
-//        }
-//        return card;
-//    }
-//
-//    @Override
-//    public int getPrintTo(String[] args) {
-//        return ParseArgsService.getInstance(args).getPrintTo();
-//    }
-
-
 }

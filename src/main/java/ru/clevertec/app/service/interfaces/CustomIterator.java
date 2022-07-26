@@ -4,14 +4,14 @@ import java.util.Iterator;
 
 public interface CustomIterator<E> extends Iterator<E> {
 
-	E next();
+    E next();
 
-	boolean hasNext();
+    boolean hasNext();
 
-	void remove();
+    void remove();
 
-	void addBefore(E e);
+    void addBefore(E e);
 
-	void addAfter(E e);
+    void addAfter(E e);
 
 }

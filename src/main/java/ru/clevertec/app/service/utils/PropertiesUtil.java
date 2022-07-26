@@ -1,13 +1,13 @@
-package ru.clevertec.app.connectionpool;
+package ru.clevertec.app.service.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class DBPropertiesUtil {
+public class PropertiesUtil {
 
     public static final Properties PROPERTIES = new Properties();
-    private static final String PATH_FILE = "db.properties";
+    private static final String PATH_FILE = "application.properties";
 
     private static final String DRIVER = "database.driver";
     private static final String URL = "database.url";
@@ -17,16 +17,20 @@ public class DBPropertiesUtil {
 
 
     static {
-        try(InputStream inputStream = DBPropertiesUtil.class.getClassLoader().getResourceAsStream(PATH_FILE)){
+        try(InputStream inputStream = PropertiesUtil.class.getClassLoader().getResourceAsStream(PATH_FILE)){
             PROPERTIES.load(inputStream);
         } catch (IOException e){
             throw new RuntimeException(e);
         }
     }
+    public static String get(String key){
+        return PROPERTIES.getProperty(key);
+    }
 
     public static String getDriver(){
         return PROPERTIES.getProperty(DRIVER);
     }
+
     public static String getUrl(){
         return PROPERTIES.getProperty(URL);
     }

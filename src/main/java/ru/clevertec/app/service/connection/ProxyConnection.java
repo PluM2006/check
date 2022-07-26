@@ -1,4 +1,4 @@
-package ru.clevertec.app.connectionpool;
+package ru.clevertec.app.service.connection;
 
 import java.sql.*;
 import java.util.Map;

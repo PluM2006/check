@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.interfaces.PrintInterface;
 
@@ -19,7 +19,7 @@ public class PrintToConsoleImplTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     PrintInterface printInterface = new PrintToConsoleImpl();
-    CheckInterface checkInterface = new CheckImpl();
+    CheckBuilderInterface checkBuilderInterface = new CheckBuilderImpl();
     Shop shop;
     Cashier cashier;
 
@@ -49,7 +49,7 @@ public class PrintToConsoleImplTest {
 
     @Test
     public void print() {
-        String check = checkInterface.getCheck(checkItems, card, shop,  cashier);
+        String check = checkBuilderInterface.getCheck(checkItems, card, shop,  cashier);
         printInterface.print(check);
         assertEquals(check, outContent.toString());
     }

@@ -4,15 +4,15 @@ import ru.clevertec.app.entity.*;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.dbImpl.CardRepositoryImpl;
 import ru.clevertec.app.repository.fileImpl.CardFileRepositoryImpl;
-import ru.clevertec.app.service.ParseArgsService;
-import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.utils.ArgsUtil;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.interfaces.CheckItemsInterface;
 import ru.clevertec.app.service.interfaces.PrintInterface;
 import ru.clevertec.app.service.impl.CheckItemsFilesImpl;
 import ru.clevertec.app.service.impl.PrintToConsoleImpl;
 import ru.clevertec.app.service.impl.PrintToFileImpl;
-import ru.clevertec.app.service.proxies.service.CheckImplProxy;
+import ru.clevertec.app.service.proxies.service.CheckBuilderImplProxy;
 
 import java.util.Optional;
 
@@ -23,15 +23,14 @@ public class CheckRunner {
     public static void main(String[] args) {
         arg = args;
         PrintInterface print;
-        CheckInterface checkImpl = new CheckImplProxy();
+        CheckBuilderInterface checkImpl = new CheckBuilderImplProxy();
         CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
         Repository<Card> repository = new CardRepositoryImpl();
         Repository<Card> repositoryFile = new CardFileRepositoryImpl();
-        repositoryFile.findById(3L);
+        repositoryFile.delete(2L);
         CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(args);
-//        Card card = parseArgsInterface.getCard(args).orElse(null);
-        Optional<Card> card = repositoryFile.findById(ParseArgsService.getInstance(args).getIdCard());
-        int printTo = ParseArgsService.getInstance(args).getPrintTo();
+        Optional<Card> card = repository.findById(ArgsUtil.getInstance(args).getIdCard());
+        int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
         Shop shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
         Cashier cashier = new Cashier("Luke Skywalker", "007");

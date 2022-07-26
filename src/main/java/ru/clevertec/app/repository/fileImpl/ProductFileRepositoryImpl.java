@@ -1,13 +1,13 @@
 package ru.clevertec.app.repository.fileImpl;
 
 import ru.clevertec.app.CheckRunner;
-import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.service.CheckFormatBuilder;
-import ru.clevertec.app.service.ParseArgsService;
 import ru.clevertec.app.service.impl.CustomArrayList;
 import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.utils.ArgsUtil;
+import ru.clevertec.app.service.utils.CheckFormatBuilder;
+import ru.clevertec.app.service.utils.PropertiesUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,8 +39,8 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
     public CustomList<Product> findAll() {
         CustomList<Product> allProduct = new CustomArrayList<>();
         StringBuilder invalidDate = new StringBuilder();
-        File file = new File(Constants.INVALID_FILE_NAME.getName());
-        try (Scanner scanner = new Scanner(new File(ParseArgsService.getInstance(CheckRunner.arg).getPathFileProduct()), StandardCharsets.UTF_8)) {
+        File file = new File(PropertiesUtil.get("INVALID_FILE_NAME"));
+        try (Scanner scanner = new Scanner(new File(ArgsUtil.getInstance(CheckRunner.arg).getPathFileProduct()), StandardCharsets.UTF_8)) {
             while (scanner.hasNextLine()) {
                 ArrayList<String> listErrorMessage = new ArrayList<>();
                 String line = scanner.nextLine();

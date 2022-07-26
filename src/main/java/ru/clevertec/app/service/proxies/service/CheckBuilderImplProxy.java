@@ -4,25 +4,25 @@ import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Cashier;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
-import ru.clevertec.app.service.impl.CheckImpl;
+import ru.clevertec.app.service.impl.CheckBuilderImpl;
 import ru.clevertec.app.service.proxies.heandler.CheckImplHandler;
 
 import java.lang.reflect.Proxy;
 
-public class CheckImplProxy implements CheckInterface {
-    private static CheckInterface checkImpl;
+public class CheckBuilderImplProxy implements CheckBuilderInterface {
+    private static CheckBuilderInterface checkImpl;
 
     static {
-        checkImpl = new CheckImpl();
+        checkImpl = new CheckBuilderImpl();
         ClassLoader classLoader = checkImpl
                 .getClass()
                 .getClassLoader();
         Class<?>[] interfaces = checkImpl
                 .getClass()
                 .getInterfaces();
-        checkImpl = (CheckInterface) Proxy.newProxyInstance(classLoader, interfaces, new CheckImplHandler(checkImpl));
+        checkImpl = (CheckBuilderInterface) Proxy.newProxyInstance(classLoader, interfaces, new CheckImplHandler(checkImpl));
     }
 
     @Override

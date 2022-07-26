@@ -1,4 +1,6 @@
-package ru.clevertec.app.connectionpool;
+package ru.clevertec.app.service.connection;
+
+import ru.clevertec.app.service.utils.PropertiesUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,9 +8,9 @@ import java.sql.SQLException;
 
 public final class ConnectionCreator {
 
-    private static final String DATABASE_URL = DBPropertiesUtil.getUrl();
-    private static final String DATABASE_USER =  DBPropertiesUtil.getUser();
-    private static final String DATABASE_PASSWORD = DBPropertiesUtil.getPassword();
+    private static final String DATABASE_URL = PropertiesUtil.getUrl();
+    private static final String DATABASE_USER =  PropertiesUtil.getUser();
+    private static final String DATABASE_PASSWORD = PropertiesUtil.getPassword();
 
     public static ProxyConnection createConnection(){
         Connection connection;

@@ -1,92 +1,93 @@
 package ru.clevertec.app.repository.dbImpl;
 
-import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.service.connection.ConnectionPool;
+import ru.clevertec.app.entity.Shop;
+import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.service.impl.CustomArrayList;
 import ru.clevertec.app.service.interfaces.CustomList;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class CardRepositoryImpl implements Repository<Card> {
+public class ShopRepositoryImpl implements Repository<Shop> {
 
-    private static final String ADD_CARD = "INSERT INTO card(numbercard, discount) VALUES (?, ?)";
-    private static final String UPDATE_CARD = "UPDATE card SET numbercard=?, discount=? WHERE id=?";
-    private static final String FIND_BY_ID = "SELECT * FROM card WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM card";
-    private static final String DELETE_CARD_BY_ID = "DELETE FROM card WHERE id=?";
+    private static final String ADD_SHOP = "INSERT INTO shop(name, adress) VALUES (?, ?)";
+    private static final String UPDATE_SHOP = "UPDATE shop SET name=?, adress=? WHERE id=?";
+    private static final String FIND_BY_ID = "SELECT * FROM shop WHERE id=?";
+    private static final String FIND_ALL = "SELECT * FROM shop";
+    private static final String DELETE_SHOP_BY_ID = "DELETE FROM shop WHERE id=?";
 
     @Override
-    public Card add(Card card) {
+    public Shop add(Shop shop) {
+
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(ADD_CARD, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, card.getNumberCard());
-            statement.setBigDecimal(2, card.getDiscount());
+             PreparedStatement statement = connection.prepareStatement(ADD_SHOP, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, shop.getName());
+            statement.setString(2, shop.getAddress());
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                card.setId(generatedKeys.getLong(1));
+                long key = generatedKeys.getLong(1);
+                shop.setId(key);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return card;
+        return shop;
     }
 
     @Override
-    public Card update(Card card) {
+    public Shop update(Shop shop) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_CARD)) {
-            statement.setString(1, card.getNumberCard());
-            statement.setBigDecimal(2, card.getDiscount());
-            statement.setLong(3, card.getId());
+             PreparedStatement statement = connection.prepareStatement(UPDATE_SHOP)) {
+            statement.setString(1, shop.getName());
+            statement.setString(2, shop.getAddress());
+            statement.setLong(3, shop.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return card;
+        return shop;
     }
 
     @Override
-    public Optional<Card> findById(Long id) {
-        Optional<Card> optionalCard = Optional.empty();
+    public Optional<Shop> findById(Long id) {
+        Optional<Shop> optionalShop = Optional.empty();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Card card = createCardFromResultSet(resultSet);
-                optionalCard = Optional.of(card);
+                Shop shop = createShopFromResultSet(resultSet);
+                optionalShop = Optional.of(shop);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return optionalCard;
+        return optionalShop;
     }
 
     @Override
-    public CustomList<Card> findAll() {
-        CustomList<Card> cardCustomList = new CustomArrayList<>();
+    public CustomList<Shop> findAll() {
+        CustomList<Shop> shopCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
-
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Card card = createCardFromResultSet(resultSet);
-                cardCustomList.add(card);
+                Shop shop = createShopFromResultSet(resultSet);
+                shopCustomList.add(shop);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return cardCustomList;
+        return shopCustomList;
     }
 
     @Override
     public boolean delete(Long id) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_CARD_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(DELETE_SHOP_BY_ID)) {
             statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -94,11 +95,11 @@ public class CardRepositoryImpl implements Repository<Card> {
         }
     }
 
-    private Card createCardFromResultSet(ResultSet resultSet) throws SQLException {
-        return new Card(
+    private Shop createShopFromResultSet(ResultSet resultSet) throws SQLException {
+        return new Shop(
                 resultSet.getLong(1),
                 resultSet.getString(2),
-                resultSet.getBigDecimal(3)
+                resultSet.getString(3)
         );
     }
 }

@@ -5,32 +5,32 @@ import java.util.stream.StreamSupport;
 
 public interface CustomList<E> extends Iterable<E> {
 
-	CustomIterator<E> getIterator();
+    CustomIterator<E> getIterator();
 
-	void setMaxSize(int maxSize);
+    void setMaxSize(int maxSize);
 
-	void add(E e);
+    void add(E e);
 
-	void addAll(CustomList<? extends E> c);
+    void addAll(CustomList<? extends E> c);
 
-	E set(int index, E e);
+    E set(int index, E e);
 
-	E remove(int index);
+    E remove(int index);
 
-	void clear();
+    void clear();
 
-	int find(E e);
+    int find(E e);
 
-	E get(int index);
+    E get(int index);
 
-	Object[] toArray();
+    Object[] toArray();
 
-	int size();
+    int size();
 
-	void trim();
+    void trim();
 
-	default Stream<E> stream() {
-		return StreamSupport.stream(spliterator(), false);
-	}
+    default Stream<E> stream() {
+        return StreamSupport.stream(spliterator(), false);
+    }
 
 }

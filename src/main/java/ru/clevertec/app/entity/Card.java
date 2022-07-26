@@ -6,15 +6,15 @@ import java.util.Objects;
 public class Card {
 
 	private Long id;
-	private String numbercard;
+	private String numberCard;
 	private BigDecimal discount;
 
 	public Card() {
 	}
 
-	public Card(Long id, String numbercard, BigDecimal discount) {
+	public Card(Long id, String numberCard, BigDecimal discount) {
 		this.id = id;
-		this.numbercard = numbercard;
+		this.numberCard = numberCard;
 		this.discount = discount;
 	}
 
@@ -26,12 +26,12 @@ public class Card {
 		this.id = id;
 	}
 
-	public String getNumbercard() {
-		return numbercard;
+	public String getNumberCard() {
+		return numberCard;
 	}
 
-	public void setNumbercard(String numbercard) {
-		this.numbercard = numbercard;
+	public void setNumberCard(String numberCard) {
+		this.numberCard = numberCard;
 	}
 
 	public BigDecimal getDiscount() {
@@ -47,16 +47,16 @@ public class Card {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Card card = (Card) o;
-		return Objects.equals(id, card.id) && Objects.equals(numbercard, card.numbercard) && Objects.equals(discount, card.discount);
+		return Objects.equals(id, card.id) && Objects.equals(numberCard, card.numberCard) && Objects.equals(discount, card.discount);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, numbercard, discount);
+		return Objects.hash(id, numberCard, discount);
 	}
 
 	@Override
 	public String toString() {
-		return "Card{" + "id=" + id + ", numbercard='" + numbercard + '\'' + ", discount=" + discount + '}';
+		return "Card{" + "id=" + id + ", numbercard='" + numberCard + '\'' + ", discount=" + discount + '}';
 	}
 }

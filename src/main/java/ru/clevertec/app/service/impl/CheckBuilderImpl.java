@@ -1,9 +1,9 @@
 package ru.clevertec.app.service.impl;
 
-import ru.clevertec.app.constant.Constants;
+import ru.clevertec.app.service.utils.PropertiesUtil;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.CheckFormatBuilder;
-import ru.clevertec.app.service.interfaces.CheckInterface;
+import ru.clevertec.app.service.utils.CheckFormatBuilder;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CheckImpl implements CheckInterface {
+public class CheckBuilderImpl implements CheckBuilderInterface {
 
     @Override
     public String getCheck(CustomList<CheckItem> checkItems, Card card, Shop shop, Cashier cashier) {
@@ -40,7 +40,7 @@ public class CheckImpl implements CheckInterface {
     }
 
     private void buildFooter(Card card, CustomList<CheckItem> checkItems) {
-        BigDecimal sumTotal = checkItems.stream().map(CheckItem::getSumm).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal sumTotal = checkItems.stream().map(CheckItem::getSumma).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal discountTotal = checkItems.stream().map(CheckItem::getDiscount).reduce(BigDecimal.ZERO, BigDecimal::add);
         CheckFormatBuilder.getFooter(card, sumTotal, discountTotal);
     }
@@ -53,12 +53,12 @@ public class CheckImpl implements CheckInterface {
             // Скидка 10% если товара больше 5
             Integer quantity = productQty.get(checkItem.getProduct());
             if (checkItem.getProduct().getSale() && quantity >= 5) {
-                checkItem.setDiscount(calculateDiscount(checkItem.getSumm(), new BigDecimal(Constants.ALL_DISCOUNT.getName())));
+                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(PropertiesUtil.get("ALL_DISCOUNT"))));
                 checkItem.setPromDiscount(true);
             } else {
                 //Скидка на остальные товары если предъявлена дисконтная карта
                 if (card != null && checkItem.getDiscount().equals(BigDecimal.ZERO)) {
-                    checkItem.setDiscount(calculateDiscount(checkItem.getSumm(), card.getDiscount()));
+                    checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), card.getDiscount()));
                 }
             }
         }
