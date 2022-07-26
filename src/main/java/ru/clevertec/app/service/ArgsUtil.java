@@ -5,9 +5,9 @@ import ru.clevertec.app.constant.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParseArgsService {
+public class ArgsUtil {
 
-    private static ParseArgsService instants;
+    private static ArgsUtil instants;
 
     private static final Map<Long, Integer> mapCheckItems = new HashMap<>();
     private static Long idCard;
@@ -15,13 +15,13 @@ public class ParseArgsService {
     private static String pathFileCard;
     private static int printTo = 0;
 
-    private ParseArgsService(String[] args) {
+    private ArgsUtil(String[] args) {
         parseArgs(args);
     }
 
-    public static ParseArgsService getInstance(String[] args) {
+    public static ArgsUtil getInstance(String[] args) {
         if (instants == null) {
-            instants = new ParseArgsService(args);
+            instants = new ArgsUtil(args);
         }
         return instants;
     }
@@ -62,10 +62,10 @@ public class ParseArgsService {
                     idCard = Long.parseLong(argsLine[1]);
                 }
             }
-            if (argsLine[0].contains(Constants.PRODUCT_FILE.getName())) {
+            if (argsLine[0].contains(Constants.PATH_PRODUCT_FILE.getName())) {
                 pathFileProduct = argsLine[1];
             }
-            if (argsLine[0].contains(Constants.CARD_FILE.getName())) {
+            if (argsLine[0].contains(Constants.PATH_CARD_FILE.getName())) {
                 pathFileCard = argsLine[1];
             }
             if (argsLine[0].contains(Constants.PRINT_TO.getName())) {

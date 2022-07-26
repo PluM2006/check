@@ -28,23 +28,23 @@ public class CheckFormatBuilder {
     }
 
     public static void getBasket(CustomList<CheckItem> checkItems) {
-        checkResult.append(String.format("%-4s", "кол"));
         checkResult.append(String.format("%-30s", "наименование"));
+        checkResult.append(String.format("%-4s", "кол"));
         checkResult.append(String.format("%-9s", "цена"));
         checkResult.append(String.format("%7s", "всего")).append("\n");
         for (CheckItem ci : checkItems) {
             if (ci.getProduct().getName() == null) {
                 checkResult.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
             } else {
-                checkResult.append(String.format("%-4s", ci.getQty()));
                 checkResult.append(String.format("%-30s", ci.getProduct().getName()));
+                checkResult.append(String.format("%-4s", ci.getQty()));
                 checkResult.append(String.format("%-9s", ci.getProduct().getPrice() + "$"));
                 checkResult.append(String.format("%7s", ci.getSumm() + "$")).append("\n");
                 if (!ci.getDiscount().equals(BigDecimal.ZERO)) {
-                    checkResult.append(String.format("%6s", " "));
+                    checkResult.append(String.format("%3s", " "));
                     checkResult.append(String.format("%-36s ", (ci.getPromDiscount() ? String.format("Акция %s%% ", Constants.ALL_DISCOUNT.getName()) : "Карта ")+"скидка:"));
                     checkResult.append(String.format("%8s", "-" + ci.getDiscount() + "$" + "\n"));
-                    checkResult.append(String.format("%6s", " "));
+                    checkResult.append(String.format("%3s", " "));
                     checkResult.append(String.format("%-37s", "цена со скидкой:"));
                     checkResult.append(String.format("%8s", ci.getSumm().subtract(ci.getDiscount()) + "$" + "\n"));
                 }
@@ -64,7 +64,7 @@ public class CheckFormatBuilder {
             checkResult.append("Скидка: -").append(discountTotal.setScale(2, RoundingMode.HALF_DOWN))
                     .append("$").append("\n");
             checkResult.append("Итого со скидкой: ")
-                    .append(sumTotal.subtract(discountTotal.setScale(2, RoundingMode.HALF_DOWN))).append("\n");
+                    .append(sumTotal.subtract(discountTotal.setScale(2, RoundingMode.HALF_DOWN))).append("$").append("\n");
         }
         buildLine();
     }

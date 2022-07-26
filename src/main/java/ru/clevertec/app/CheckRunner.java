@@ -4,7 +4,8 @@ import ru.clevertec.app.entity.*;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.dbImpl.CardRepositoryImpl;
 import ru.clevertec.app.repository.fileImpl.CardFileRepositoryImpl;
-import ru.clevertec.app.service.ParseArgsService;
+import ru.clevertec.app.service.ArgsUtil;
+import ru.clevertec.app.service.impl.CheckItemsDBImpl;
 import ru.clevertec.app.service.interfaces.CheckInterface;
 import ru.clevertec.app.service.interfaces.CustomList;
 import ru.clevertec.app.service.interfaces.CheckItemsInterface;
@@ -26,12 +27,10 @@ public class CheckRunner {
         CheckInterface checkImpl = new CheckImplProxy();
         CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
         Repository<Card> repository = new CardRepositoryImpl();
-        Repository<Card> repositoryFile = new CardFileRepositoryImpl();
-        repositoryFile.findById(3L);
+//        Repository<Card> repositoryFile = new CardFileRepositoryImpl();
         CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(args);
-//        Card card = parseArgsInterface.getCard(args).orElse(null);
-        Optional<Card> card = repositoryFile.findById(ParseArgsService.getInstance(args).getIdCard());
-        int printTo = ParseArgsService.getInstance(args).getPrintTo();
+        Optional<Card> card = repository.findById(ArgsUtil.getInstance(args).getIdCard());
+        int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
         Shop shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
         Cashier cashier = new Cashier("Luke Skywalker", "007");
