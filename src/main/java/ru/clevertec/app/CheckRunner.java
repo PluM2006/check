@@ -1,42 +1,45 @@
 package ru.clevertec.app;
 
-import ru.clevertec.app.entity.*;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.Cashier;
+import ru.clevertec.app.entity.CheckItem;
+import ru.clevertec.app.entity.Shop;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.dbImpl.CardRepositoryImpl;
-import ru.clevertec.app.repository.fileImpl.CardFileRepositoryImpl;
-import ru.clevertec.app.service.utils.ArgsUtil;
-import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
-import ru.clevertec.app.service.interfaces.CustomList;
-import ru.clevertec.app.service.interfaces.CheckItemsInterface;
-import ru.clevertec.app.service.interfaces.PrintInterface;
-import ru.clevertec.app.service.impl.CheckItemsFilesImpl;
+import ru.clevertec.app.repository.dbImpl.CashierRepositoryImpl;
+import ru.clevertec.app.repository.dbImpl.ShopRepositoryImpl;
+import ru.clevertec.app.service.impl.CheckItemsDBImpl;
 import ru.clevertec.app.service.impl.PrintToConsoleImpl;
 import ru.clevertec.app.service.impl.PrintToFileImpl;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
+import ru.clevertec.app.service.interfaces.CheckItemsInterface;
+import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.interfaces.PrintInterface;
 import ru.clevertec.app.service.proxies.service.CheckBuilderImplProxy;
-
-import java.util.Optional;
+import ru.clevertec.app.service.utils.ArgsUtil;
 
 public class CheckRunner {
 
-    public static String[] arg;
-
     public static void main(String[] args) {
-        arg = args;
         PrintInterface print;
         CheckBuilderInterface checkImpl = new CheckBuilderImplProxy();
-        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
-        Repository<Card> repository = new CardRepositoryImpl();
+        //***If product and card in files
 
-        Repository<Card> repositoryFile = new CardFileRepositoryImpl();
-        repositoryFile.delete(2L);
+//        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
+//        Repository<Card> repository = new CardFileRepositoryImpl();
+
+        CheckItemsInterface checkItemsInterface = new CheckItemsDBImpl();
+        Repository<Card> repository = new CardRepositoryImpl();
+        Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
+        Repository<Shop> shopRepository = new ShopRepositoryImpl();
+
         CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(args);
-        Optional<Card> card = repository.findById(ArgsUtil.getInstance(args).getIdCard());
+        Card card = repository.findById(ArgsUtil.getInstance(args).getIdCard()).orElse(null);
+        Cashier cashier = cashierRepository.findById(1L).orElse(null);
+        Shop shop = shopRepository.findById(1L).orElse(null);
         int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
-        Shop shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
-        Cashier cashier = new Cashier("Luke Skywalker", "007");
-
-        String check = checkImpl.getCheck(checkItems, card.orElse(null), shop, cashier);
+        String check = checkImpl.getCheck(checkItems, card, shop, cashier);
 
         switch (printTo) {
             case 0 -> {

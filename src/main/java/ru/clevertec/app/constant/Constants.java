@@ -2,12 +2,7 @@ package ru.clevertec.app.constant;
 
 public enum Constants {
     CARD("card"),
-    PRINT_TO("printTo"),
-    PATH_PRODUCT_FILE("productFile"),
-    PATH_CARD_FILE("cardFile") ;
-
-
-
+    PRINT_TO("printTo");
 
     private final String name;
 

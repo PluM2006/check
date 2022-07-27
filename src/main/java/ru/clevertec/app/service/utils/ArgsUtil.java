@@ -11,8 +11,6 @@ public class ArgsUtil {
 
     private static final Map<Long, Integer> mapCheckItems = new HashMap<>();
     private static Long idCard;
-    private static String pathFileProduct;
-    private static String pathFileCard;
     private static int printTo = 0;
 
     private ArgsUtil(String[] args) {
@@ -32,14 +30,6 @@ public class ArgsUtil {
 
     public Long getIdCard() {
         return idCard;
-    }
-
-    public String getPathFileProduct() {
-        return pathFileProduct;
-    }
-
-    public String getPathFileCard() {
-        return pathFileCard;
     }
 
     public int getPrintTo() {
@@ -62,21 +52,9 @@ public class ArgsUtil {
                     idCard = Long.parseLong(argsLine[1]);
                 }
             }
-            if (argsLine[0].contains(Constants.PATH_PRODUCT_FILE.getName())) {
-                pathFileProduct = argsLine[1];
-            }
-            if (argsLine[0].contains(Constants.PATH_CARD_FILE.getName())) {
-                pathFileCard = argsLine[1];
-            }
             if (argsLine[0].contains(Constants.PRINT_TO.getName())) {
                 printTo = Integer.parseInt(argsLine[1]);
             }
-        }
-        if (pathFileProduct == null) {
-            pathFileProduct = PropertiesUtil.get("PATH_PRODUCT");
-        }
-        if (pathFileCard == null) {
-            pathFileCard = PropertiesUtil.get("PATH_CARD");
         }
     }
 }

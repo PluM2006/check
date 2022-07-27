@@ -1,18 +1,13 @@
 package ru.clevertec.app.repository.fileImpl;
 
-import ru.clevertec.app.CheckRunner;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.Repository;
-
 import ru.clevertec.app.service.impl.CustomArrayList;
 import ru.clevertec.app.service.interfaces.CustomList;
-import ru.clevertec.app.service.utils.ArgsUtil;
-
+import ru.clevertec.app.service.utils.PropertiesUtil;
 
 import java.io.FileWriter;
-
 import java.io.IOException;
-
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,23 +20,24 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class CardFileRepositoryImpl implements Repository<Card> {
-    public static final String SEPARATOR = ";";
-    private final Path path = Paths.get(ArgsUtil.getInstance(CheckRunner.arg).getPathFileCard());
+    private static final String SEPARATOR = ";";
+    private final Path pathCard = Paths.get(PropertiesUtil.get("PATH_CARD"));
 
     @Override
     public Card add(Card card) {
         Optional<String> max;
-        try (Stream<String> stream = Files.lines(path)) {
+        try (Stream<String> stream = Files.lines(pathCard)) {
             max = stream.map(line -> line.split(SEPARATOR))
                     .map(strings -> strings[0])
+                    .filter(s -> s.matches("\\d+"))
                     .max(Comparator.comparingInt(Integer::parseInt));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         card.setId(Long.parseLong(max.orElse("0")) + 1L);
-        String lineCsv = createLineCsv(card);
+        String lineCsv = (card.getId().equals(1L) ? "" : System.lineSeparator()) + createLineCsv(card);
         try {
-            Files.write(path, lineCsv.getBytes(), StandardOpenOption.APPEND);
+            Files.write(pathCard, lineCsv.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -50,13 +46,32 @@ public class CardFileRepositoryImpl implements Repository<Card> {
 
     @Override
     public Card update(Card card) {
-        return null;
+        List<String> result = new ArrayList<>();
+        try {
+            List<String> lines = Files.readAllLines(pathCard);
+            for (String line : lines) {
+                if (line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(card.getId()))) {
+                    String lineCsv = createLineCsv(card);
+                    result.add(lineCsv);
+                } else {
+                    result.add(line);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try (FileWriter fileWriter = new FileWriter(pathCard.toString())) {
+            fileWriter.write(String.join(System.lineSeparator(), result));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return card;
     }
 
     @Override
     public Optional<Card> findById(Long id) {
         Optional<Card> cardOptional = Optional.empty();
-        try (Stream<String> stream = Files.lines(path)) {
+        try (Stream<String> stream = Files.lines(pathCard)) {
             Optional<String> cardString = stream
                     .filter(r -> r.substring(0, r.indexOf(SEPARATOR)).contains(id.toString()))
                     .findAny();
@@ -72,7 +87,7 @@ public class CardFileRepositoryImpl implements Repository<Card> {
     @Override
     public CustomList<Card> findAll() {
         CustomList<Card> allCard;
-        try (Stream<String> stream = Files.lines(path)) {
+        try (Stream<String> stream = Files.lines(pathCard)) {
             allCard = stream.collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -83,22 +98,23 @@ public class CardFileRepositoryImpl implements Repository<Card> {
     @Override
     public boolean delete(Long id) {
         List<String> result = new ArrayList<>();
+        List<String> lines;
         try {
-            List<String> lines = Files.readAllLines(path);
-            for (String line:lines) {
-                if (!line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(id))){
+            lines = Files.readAllLines(pathCard);
+            for (String line : lines) {
+                if (!line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(id))) {
                     result.add(line);
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+        try (FileWriter fileWriter = new FileWriter(pathCard.toString())) {
             fileWriter.write(String.join(System.lineSeparator(), result));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return false;
+        return result.size() < lines.size();
     }
 
     private Card createCard(String line) {
@@ -107,8 +123,7 @@ public class CardFileRepositoryImpl implements Repository<Card> {
     }
 
     private String createLineCsv(Card card) {
-        return (card.getId().equals(1L) ? "" : System.lineSeparator()) +
-                card.getId() + SEPARATOR +
+        return card.getId() + SEPARATOR +
                 card.getNumberCard() + SEPARATOR +
                 card.getDiscount();
     }

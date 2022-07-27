@@ -31,6 +31,7 @@ public class CheckFormatBuilder {
         checkResult.append(String.format("%-4s", "кол"));
         checkResult.append(String.format("%-9s", "цена"));
         checkResult.append(String.format("%7s", "всего")).append("\n");
+        buildLine();
         for (CheckItem ci : checkItems) {
             if (ci.getProduct().getName() == null) {
                 checkResult.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
