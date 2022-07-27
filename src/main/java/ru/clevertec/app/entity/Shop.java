@@ -3,48 +3,69 @@ package ru.clevertec.app.entity;
 import java.util.Objects;
 
 public class Shop {
-	private String name;
-	private String adress;
 
-	public Shop(String name, String adress) {
-		this.name = name;
-		this.adress = adress;
-	}
+    private Long id;
+    private String name;
+    private String address;
 
-	public Shop() {
-	}
+    public Shop(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Shop(Long id, String name, String address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Shop() {
+    }
 
-	public String getAdress() {
-		return adress;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Shop shop = (Shop) o;
-		return Objects.equals(name, shop.name) && Objects.equals(adress, shop.adress);
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(name, adress);
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return "Shop{" + "name='" + name + '\'' + ", adress='" + adress + '\'' + '}';
-	}
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shop shop = (Shop) o;
+        return id.equals(shop.id) && name.equals(shop.name) && address.equals(shop.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, address);
+    }
+
+    @Override
+    public String
+    toString() {
+        return "Shop{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

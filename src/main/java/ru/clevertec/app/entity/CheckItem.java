@@ -7,17 +7,17 @@ public class CheckItem {
 
 	private Product product;
 	private Integer qty;
-	private BigDecimal summ = BigDecimal.ZERO;
+	private BigDecimal summa = BigDecimal.ZERO;
 	private BigDecimal discount = BigDecimal.ZERO;
 	private Boolean promDiscount = false;
 
 	public CheckItem() {
 	}
 
-	public CheckItem(Product product, Integer qty, BigDecimal summ, BigDecimal discount, Boolean promDiscount) {
+	public CheckItem(Product product, Integer qty, BigDecimal summa, BigDecimal discount, Boolean promDiscount) {
 		this.product = product;
 		this.qty = qty;
-		this.summ = summ;
+		this.summa = summa;
 		this.discount = discount;
 		this.promDiscount = promDiscount;
 	}
@@ -38,12 +38,12 @@ public class CheckItem {
 		this.qty = qty;
 	}
 
-	public BigDecimal getSumm() {
-		return summ;
+	public BigDecimal getSumma() {
+		return summa;
 	}
 
-	public void setSumm(BigDecimal summ) {
-		this.summ = summ;
+	public void setSumma(BigDecimal summa) {
+		this.summa = summa;
 	}
 
 	public BigDecimal getDiscount() {
@@ -67,16 +67,16 @@ public class CheckItem {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		CheckItem checkItem = (CheckItem) o;
-		return Objects.equals(product, checkItem.product) && Objects.equals(qty, checkItem.qty) && Objects.equals(summ, checkItem.summ) && Objects.equals(discount, checkItem.discount) && Objects.equals(promDiscount, checkItem.promDiscount);
+		return Objects.equals(product, checkItem.product) && Objects.equals(qty, checkItem.qty) && Objects.equals(summa, checkItem.summa) && Objects.equals(discount, checkItem.discount) && Objects.equals(promDiscount, checkItem.promDiscount);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(product, qty, summ, discount, promDiscount);
+		return Objects.hash(product, qty, summa, discount, promDiscount);
 	}
 
 	@Override
 	public String toString() {
-		return "CheckItem{" + "product=" + product + ", qty=" + qty + ", summ=" + summ + ", discount=" + discount + ", promDiscount=" + promDiscount + '}';
+		return "CheckItem{" + "product=" + product + ", qty=" + qty + ", summ=" + summa + ", discount=" + discount + ", promDiscount=" + promDiscount + '}';
 	}
 }

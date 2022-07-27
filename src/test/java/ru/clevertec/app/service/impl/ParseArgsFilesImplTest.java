@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.CustomList;
+import ru.clevertec.app.service.interfaces.CustomList;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ParseArgsImplTest {
+public class ParseArgsFilesImplTest {
 
     String[] args = {};
-    ParseArgsImpl parseArgs = new ParseArgsImpl();
+    CheckItemsFilesImpl parseArgs = new CheckItemsFilesImpl();
 
 
     @BeforeEach
@@ -30,15 +30,4 @@ public class ParseArgsImplTest {
         assertEquals(checkItems.get(0), checkItem);
     }
 
-    @Test
-    public void getCardTest() {
-        Optional<Card> card = Optional.of(new Card(1L, "1111 1111 1111 1111", new BigDecimal("10")));
-        assertEquals(card, parseArgs.getCard(args));
-    }
-
-    @Test
-    public void getPrintToTest() {
-        int printTo = 0;
-        assertEquals(printTo, parseArgs.getPrintTo(args));
-    }
 }

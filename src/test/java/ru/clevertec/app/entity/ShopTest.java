@@ -11,7 +11,7 @@ public class ShopTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        shop = new Shop("Krama", "Gomel, Rumyancevskaya str., 5");
+        shop = new Shop(1L, "Krama", "Gomel, Rumyancevskaya str., 5");
     }
 
     @Test
@@ -30,19 +30,19 @@ public class ShopTest {
     @Test
     public void getAdress() {
         String adressExpected = "Gomel, Rumyancevskaya str., 5";
-        assertEquals(shop.getAdress(), adressExpected);
+        assertEquals(shop.getAddress(), adressExpected);
     }
 
     @Test
     public void setAdress() {
         String adressExpected = "Mensk, Gaspadarchaya str., 153";
-        shop.setAdress(adressExpected);
-        assertEquals(shop.getAdress(), adressExpected);
+        shop.setAddress(adressExpected);
+        assertEquals(shop.getAddress(), adressExpected);
     }
 
     @Test
     public void testEquals() {
-        Shop shopExpected = new Shop("Krama", "Gomel, Rumyancevskaya str., 5");
+        Shop shopExpected = new Shop(1L, "Krama", "Gomel, Rumyancevskaya str., 5");
         assertTrue(shop.equals(shopExpected));
     }
     @Test
@@ -53,13 +53,13 @@ public class ShopTest {
 
     @Test
     public void testHashCode() {
-        Shop shopExpected = new Shop("Krama", "Gomel, Rumyancevskaya str., 5");
+        Shop shopExpected = new Shop(1L, "Krama", "Gomel, Rumyancevskaya str., 5");
         assertEquals(shop.hashCode(), shopExpected.hashCode());
     }
 
     @Test
     public void testToString() {
-        String expected = "Shop{name='Krama', adress='Gomel, Rumyancevskaya str., 5'}";
+        String expected = "Shop{id=1, name='Krama', address='Gomel, Rumyancevskaya str., 5'}";
         assertEquals(shop.toString(), expected);
     }
 }

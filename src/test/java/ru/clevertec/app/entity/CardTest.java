@@ -43,15 +43,15 @@ public class CardTest {
 
     @Test
     public void getNumbercard() {
-        assertEquals(card.getNumbercard(), stringArrays[0]);
+        assertEquals(card.getNumberCard(), stringArrays[0]);
     }
 
     @Test
     public void setNumbercard() {
-        cardEmpty.setNumbercard(stringArrays[2]);
-        card.setNumbercard(stringArrays[1]);
-        assertEquals(cardEmpty.getNumbercard(), stringArrays[2]);
-        assertEquals(card.getNumbercard(), stringArrays[1]);
+        cardEmpty.setNumberCard(stringArrays[2]);
+        card.setNumberCard(stringArrays[1]);
+        assertEquals(cardEmpty.getNumberCard(), stringArrays[2]);
+        assertEquals(card.getNumberCard(), stringArrays[1]);
     }
 
     @Test

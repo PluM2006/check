@@ -4,29 +4,40 @@ import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Cashier;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.service.CheckInterface;
-import ru.clevertec.app.service.CustomList;
-import ru.clevertec.app.service.ParseArgsInterface;
-import ru.clevertec.app.service.PrintInterface;
-import ru.clevertec.app.service.impl.ParseArgsImpl;
+import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.dbImpl.CardRepositoryImpl;
+import ru.clevertec.app.repository.dbImpl.CashierRepositoryImpl;
+import ru.clevertec.app.repository.dbImpl.ShopRepositoryImpl;
+import ru.clevertec.app.service.impl.CheckItemsDBImpl;
 import ru.clevertec.app.service.impl.PrintToConsoleImpl;
 import ru.clevertec.app.service.impl.PrintToFileImpl;
-import ru.clevertec.app.service.proxies.service.CheckImplProxy;
+import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
+import ru.clevertec.app.service.interfaces.CheckItemsInterface;
+import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.interfaces.PrintInterface;
+import ru.clevertec.app.service.proxies.service.CheckBuilderImplProxy;
+import ru.clevertec.app.service.utils.ArgsUtil;
 
 public class CheckRunner {
 
     public static void main(String[] args) {
-
         PrintInterface print;
-        CheckInterface checkImpl = new CheckImplProxy();
-        ParseArgsInterface parseArgsInterface = new ParseArgsImpl();
+        CheckBuilderInterface checkImpl = new CheckBuilderImplProxy();
+        //***If product and card in files
 
-        CustomList<CheckItem> checkItems = parseArgsInterface.getCheckItem(args);
-        Card card = parseArgsInterface.getCard(args).orElse(null);
-        int printTo = parseArgsInterface.getPrintTo(args);
+//        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
+//        Repository<Card> repository = new CardFileRepositoryImpl();
 
-        Shop shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
-        Cashier cashier = new Cashier("Luke Skywalker", "007");
+        CheckItemsInterface checkItemsInterface = new CheckItemsDBImpl();
+        Repository<Card> repository = new CardRepositoryImpl();
+        Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
+        Repository<Shop> shopRepository = new ShopRepositoryImpl();
+
+        CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(args);
+        Card card = repository.findById(ArgsUtil.getInstance(args).getIdCard()).orElse(null);
+        Cashier cashier = cashierRepository.findById(1L).orElse(null);
+        Shop shop = shopRepository.findById(1L).orElse(null);
+        int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
         String check = checkImpl.getCheck(checkItems, card, shop, cashier);
 
