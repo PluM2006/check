@@ -2,8 +2,8 @@ package ru.clevertec.app.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.clevertec.app.service.customlist.CustomArrayList;
-import ru.clevertec.app.service.customlist.CustomIterator;
+import ru.clevertec.app.customlist.CustomArrayList;
+import ru.clevertec.app.customlist.CustomIterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,9 +1,9 @@
-package ru.clevertec.app.repository.fileImpl;
+package ru.clevertec.app.repository.product.fileimpl;
 
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.service.customlist.CustomArrayList;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.customlist.CustomArrayList;
+import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.CheckFormatBuilder;
 import ru.clevertec.app.utils.PropertiesUtil;
 import ru.clevertec.app.validator.ValidationProduct;

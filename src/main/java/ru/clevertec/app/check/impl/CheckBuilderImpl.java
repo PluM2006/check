@@ -1,7 +1,7 @@
-package ru.clevertec.app.service.check.impl;
+package ru.clevertec.app.check.impl;
 
-import ru.clevertec.app.service.check.interfaces.CheckBuilderInterface;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.PropertiesUtil;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.utils.CheckFormatBuilder;

@@ -1,10 +1,10 @@
-package ru.clevertec.app.service.check.impl;
+package ru.clevertec.app.check.impl;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import ru.clevertec.app.service.check.interfaces.PrintInterface;
+import ru.clevertec.app.check.PrintInterface;
 import ru.clevertec.app.utils.PropertiesUtil;
 import ru.clevertec.app.utils.CheckFormatBuilder;
 

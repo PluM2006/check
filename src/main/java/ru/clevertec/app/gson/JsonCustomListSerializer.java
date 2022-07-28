@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.customlist.CustomList;
 
 import java.lang.reflect.Type;
 

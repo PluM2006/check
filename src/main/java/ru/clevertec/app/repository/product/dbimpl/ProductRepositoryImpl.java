@@ -1,10 +1,10 @@
-package ru.clevertec.app.repository.dbImpl;
+package ru.clevertec.app.repository.product.dbimpl;
 
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
-import ru.clevertec.app.service.customlist.CustomArrayList;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.customlist.CustomArrayList;
+import ru.clevertec.app.customlist.CustomList;
 
 import java.sql.*;
 import java.util.Optional;

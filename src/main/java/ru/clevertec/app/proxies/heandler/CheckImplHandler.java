@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.clevertec.app.service.check.interfaces.CheckBuilderInterface;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.gson.JsonCustomListSerializer;
 
 import java.lang.reflect.InvocationHandler;

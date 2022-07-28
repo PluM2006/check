@@ -1,4 +1,4 @@
-package ru.clevertec.app.service.customlist;
+package ru.clevertec.app.customlist;
 
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;

@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.repository.dbImpl.ProductRepositoryImpl;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.repository.product.dbimpl.ProductRepositoryImpl;
+import ru.clevertec.app.customlist.CustomList;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -2,11 +2,11 @@ package ru.clevertec.app.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.clevertec.app.service.check.impl.CheckItemsDBImpl;
+import ru.clevertec.app.check.impl.CheckItemsDBImpl;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.check.interfaces.CheckItemsInterface;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.check.CheckItemsInterface;
+import ru.clevertec.app.customlist.CustomList;
 
 import java.math.BigDecimal;
 

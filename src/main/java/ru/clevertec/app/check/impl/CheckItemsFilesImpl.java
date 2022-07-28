@@ -1,12 +1,12 @@
-package ru.clevertec.app.service.check.impl;
+package ru.clevertec.app.check.impl;
 
-import ru.clevertec.app.service.check.interfaces.CheckItemsInterface;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.check.CheckItemsInterface;
+import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.repository.fileImpl.ProductFileRepositoryImpl;
-import ru.clevertec.app.service.customlist.CustomArrayList;
+import ru.clevertec.app.repository.product.fileimpl.ProductFileRepositoryImpl;
+import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.utils.CheckFormatBuilder;
 import ru.clevertec.app.utils.ArgsUtil;
 

@@ -1,13 +1,14 @@
-package ru.clevertec.app.repository;
+package ru.clevertec.app.service;
 
 import ru.clevertec.app.customlist.CustomList;
 
+import java.util.Map;
 import java.util.Optional;
 
-public interface Repository<T> {
-    T add(T t);
+public interface Service<T> {
+    T add(Map<String, String> parameters);
 
-    T update(T t);
+    T update(Map<String, String> parameters);
 
     Optional<T> findById(Long id);
 

@@ -4,9 +4,9 @@ import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Cashier;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.service.check.interfaces.CheckBuilderInterface;
-import ru.clevertec.app.service.customlist.CustomList;
-import ru.clevertec.app.service.check.impl.CheckBuilderImpl;
+import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.check.impl.CheckBuilderImpl;
 import ru.clevertec.app.proxies.heandler.CheckImplHandler;
 
 import java.lang.reflect.Proxy;

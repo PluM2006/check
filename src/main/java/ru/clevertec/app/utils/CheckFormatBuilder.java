@@ -1,7 +1,7 @@
 package ru.clevertec.app.utils;
 
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.customlist.CustomList;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

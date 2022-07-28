@@ -1,14 +1,13 @@
 package ru.clevertec.app.validator;
 
-import ru.clevertec.app.service.customlist.CustomArrayList;
-import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.customlist.CustomArrayList;
+import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.PropertiesUtil;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ValidationProduct {
 
@@ -17,8 +16,22 @@ public class ValidationProduct {
     private static final String REGEX_PRICE = "([1-9][0-9]?)[.,][0-9]{2}|100.00";
     private static final String REGEX_COUNT = "[1-9]|1[0-9]?|20";
     private final File file = new File(PropertiesUtil.get("PATH_INVALID_FILE_NAME"));
-
     private final StringBuilder invalidDate = new StringBuilder();
+
+    public String validParametersProduct(Map<String, String> parameters ){
+        if (!parameters.get("name").matches(REGEX_NAME)) {
+            invalidDate.append("некорректное название").append("|").append(parameters.get("name")).append(System.lineSeparator());
+        }
+        if (!parameters.get("price").matches(REGEX_PRICE)) {
+            invalidDate.append("некорректная цена").append("|").append(parameters.get("price")).append(System.lineSeparator());
+        }
+        if (!parameters.get("count").matches(REGEX_COUNT)) {
+            invalidDate.append("некорректное количество").append("|").append(parameters.get("count")).append(System.lineSeparator());
+        }
+//        ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.UK);
+//        String message = bundle.getString("label");
+        return invalidDate.toString();
+    }
 
     public String getCorrectProduct(String line){
         String resultLine = "";

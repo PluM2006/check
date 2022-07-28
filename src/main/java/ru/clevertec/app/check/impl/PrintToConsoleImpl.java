@@ -1,6 +1,6 @@
-package ru.clevertec.app.service.check.impl;
+package ru.clevertec.app.check.impl;
 
-import ru.clevertec.app.service.check.interfaces.PrintInterface;
+import ru.clevertec.app.check.PrintInterface;
 import ru.clevertec.app.utils.CheckFormatBuilder;
 
 public class PrintToConsoleImpl implements PrintInterface {
