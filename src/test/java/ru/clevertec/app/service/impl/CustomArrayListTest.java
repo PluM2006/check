@@ -2,6 +2,7 @@ package ru.clevertec.app.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.clevertec.app.service.customlist.CustomArrayList;
 
 import java.util.Random;
 

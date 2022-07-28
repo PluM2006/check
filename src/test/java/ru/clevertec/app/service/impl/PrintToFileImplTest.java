@@ -3,10 +3,13 @@ package ru.clevertec.app.service.impl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.clevertec.app.service.check.impl.CheckBuilderImpl;
+import ru.clevertec.app.service.customlist.CustomArrayList;
+import ru.clevertec.app.service.check.impl.PrintToFileImpl;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
-import ru.clevertec.app.service.interfaces.CustomList;
-import ru.clevertec.app.service.interfaces.PrintInterface;
+import ru.clevertec.app.service.check.interfaces.CheckBuilderInterface;
+import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.service.check.interfaces.PrintInterface;
 
 import java.io.IOException;
 import java.math.BigDecimal;

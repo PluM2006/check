@@ -2,11 +2,11 @@ package ru.clevertec.app.repository.fileImpl;
 
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.service.impl.CustomArrayList;
-import ru.clevertec.app.service.interfaces.CustomList;
-import ru.clevertec.app.service.utils.CheckFormatBuilder;
-import ru.clevertec.app.service.utils.PropertiesUtil;
-import ru.clevertec.app.service.validator.ValidationProduct;
+import ru.clevertec.app.service.customlist.CustomArrayList;
+import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.utils.CheckFormatBuilder;
+import ru.clevertec.app.utils.PropertiesUtil;
+import ru.clevertec.app.validator.ValidationProduct;
 
 import java.io.FileWriter;
 import java.io.IOException;

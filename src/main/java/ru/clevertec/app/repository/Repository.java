@@ -1,6 +1,6 @@
 package ru.clevertec.app.repository;
 
-import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.customlist.CustomList;
 
 import java.util.Optional;
 

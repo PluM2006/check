@@ -8,26 +8,26 @@ import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.dbImpl.CardRepositoryImpl;
 import ru.clevertec.app.repository.dbImpl.CashierRepositoryImpl;
 import ru.clevertec.app.repository.dbImpl.ShopRepositoryImpl;
-import ru.clevertec.app.service.impl.CheckItemsDBImpl;
-import ru.clevertec.app.service.impl.PrintToConsoleImpl;
-import ru.clevertec.app.service.impl.PrintToFileImpl;
-import ru.clevertec.app.service.interfaces.CheckBuilderInterface;
-import ru.clevertec.app.service.interfaces.CheckItemsInterface;
-import ru.clevertec.app.service.interfaces.CustomList;
-import ru.clevertec.app.service.interfaces.PrintInterface;
-import ru.clevertec.app.service.proxies.service.CheckBuilderImplProxy;
-import ru.clevertec.app.service.utils.ArgsUtil;
+import ru.clevertec.app.service.check.impl.CheckItemsDBImpl;
+import ru.clevertec.app.service.check.impl.PrintToConsoleImpl;
+import ru.clevertec.app.service.check.impl.PrintToFileImpl;
+import ru.clevertec.app.service.check.interfaces.CheckBuilderInterface;
+import ru.clevertec.app.service.check.interfaces.CheckItemsInterface;
+import ru.clevertec.app.service.customlist.CustomList;
+import ru.clevertec.app.service.check.interfaces.PrintInterface;
+import ru.clevertec.app.proxies.service.CheckBuilderImplProxy;
+import ru.clevertec.app.utils.ArgsUtil;
 
 public class CheckRunner {
 
     public static void main(String[] args) {
         PrintInterface print;
         CheckBuilderInterface checkImpl = new CheckBuilderImplProxy();
-        //***If product and card in files
-
-//        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
-//        Repository<Card> repository = new CardFileRepositoryImpl();
-
+//        //***If product and card in files
+//
+////        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
+////        Repository<Card> repository = new CardFileRepositoryImpl();
+//
         CheckItemsInterface checkItemsInterface = new CheckItemsDBImpl();
         Repository<Card> repository = new CardRepositoryImpl();
         Repository<Cashier> cashierRepository = new CashierRepositoryImpl();

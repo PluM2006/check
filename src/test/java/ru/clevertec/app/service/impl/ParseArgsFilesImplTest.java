@@ -2,13 +2,12 @@ package ru.clevertec.app.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.service.check.impl.CheckItemsFilesImpl;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.interfaces.CustomList;
+import ru.clevertec.app.service.customlist.CustomList;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
