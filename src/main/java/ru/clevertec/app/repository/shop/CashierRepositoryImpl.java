@@ -1,4 +1,4 @@
-package ru.clevertec.app.repository.dbImpl;
+package ru.clevertec.app.repository.shop;
 
 import ru.clevertec.app.entity.Cashier;
 import ru.clevertec.app.repository.Repository;
@@ -69,7 +69,7 @@ public class CashierRepositoryImpl implements Repository<Cashier> {
 
     }
     @Override
-    public CustomList<Cashier> findAll() {
+    public CustomList<Cashier> findAll(Integer limit, Integer offset) {
         CustomList<Cashier> cashierCustomList = new CustomArrayList<>();
         try (Connection connection = INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)){

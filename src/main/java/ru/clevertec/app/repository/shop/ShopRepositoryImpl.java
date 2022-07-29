@@ -1,4 +1,4 @@
-package ru.clevertec.app.repository.dbImpl;
+package ru.clevertec.app.repository.shop;
 
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.entity.Shop;
@@ -69,7 +69,7 @@ public class ShopRepositoryImpl implements Repository<Shop> {
     }
 
     @Override
-    public CustomList<Shop> findAll() {
+    public CustomList<Shop> findAll(Integer limit, Integer offset) {
         CustomList<Shop> shopCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {

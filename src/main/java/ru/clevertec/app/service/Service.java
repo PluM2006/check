@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface Service<T> {
-    T add(Map<String, String> parameters);
+    Optional<T> add(Map<String, String> parameters);
 
-    T update(Map<String, String> parameters);
+    Optional<T> update(Map<String, String> parameters);
 
-    Optional<T> findById(Long id);
+    Optional<T> findById(String id);
 
-    CustomList<T> findAll();
+    CustomList<T> findAll(String limit, String offset);
 
-    boolean delete(Long id);
+    boolean delete(String id);
 
 }

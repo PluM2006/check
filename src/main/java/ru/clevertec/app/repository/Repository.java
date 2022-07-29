@@ -11,7 +11,7 @@ public interface Repository<T> {
 
     Optional<T> findById(Long id);
 
-    CustomList<T> findAll();
+    CustomList<T> findAll(Integer limit, Integer offset);
 
     boolean delete(Long id);
 

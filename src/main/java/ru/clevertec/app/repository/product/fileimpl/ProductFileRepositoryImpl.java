@@ -95,7 +95,7 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
     }
 
     @Override
-    public CustomList<Product> findAll() {
+    public CustomList<Product> findAll(Integer limit, Integer offset) {
         CustomList<Product> allProduct = new CustomArrayList<>();
 
         try {

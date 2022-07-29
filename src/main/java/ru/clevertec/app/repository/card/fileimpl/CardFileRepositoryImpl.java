@@ -1,4 +1,4 @@
-package ru.clevertec.app.repository.fileImpl;
+package ru.clevertec.app.repository.card.fileimpl;
 
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.Repository;
@@ -85,7 +85,7 @@ public class CardFileRepositoryImpl implements Repository<Card> {
     }
 
     @Override
-    public CustomList<Card> findAll() {
+    public CustomList<Card> findAll(Integer limit, Integer offset) {
         CustomList<Card> allCard;
         try (Stream<String> stream = Files.lines(pathCard)) {
             allCard = stream.collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);

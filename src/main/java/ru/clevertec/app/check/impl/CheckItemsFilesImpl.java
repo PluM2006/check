@@ -22,7 +22,7 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
 
     @Override
     public CustomList<CheckItem> getCheckItem(String[] args) {
-        CustomList<Product> allProduct = repository.findAll();
+        CustomList<Product> allProduct = repository.findAll(null, null);
         Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
         for (var map : mapCheckItems.entrySet()) {
             Optional<Product> product = allProduct

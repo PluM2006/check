@@ -13,6 +13,8 @@ public class ProductRepositoryImpl implements Repository<Product> {
     public static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
     public static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";
     public static final String FIND_ALL = "SELECT * FROM product";
+
+    public static final String FIND_ALL_PAGINATOR = "SELECT * FROM product LIMIT ? OFFSET ?";
     public static final String UPDATE_PRODUCT = "UPDATE product SET name=?, price=?, count=?, sale=? WHERE id=?";
     public static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE id=?";
 
@@ -71,10 +73,12 @@ public class ProductRepositoryImpl implements Repository<Product> {
     }
 
     @Override
-    public CustomList<Product> findAll() {
+    public CustomList<Product> findAll(Integer limit, Integer offset) {
         var customList = new CustomArrayList<Product>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Product product = createProductFromResultSet(resultSet);

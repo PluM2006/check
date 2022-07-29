@@ -1,4 +1,4 @@
-package ru.clevertec.app.repository.dbImpl;
+package ru.clevertec.app.repository.card.dbimpl;
 
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.Repository;
@@ -66,7 +66,7 @@ public class CardRepositoryImpl implements Repository<Card> {
     }
 
     @Override
-    public CustomList<Card> findAll() {
+    public CustomList<Card> findAll(Integer limit, Integer offset) {
         CustomList<Card> cardCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
