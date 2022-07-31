@@ -8,7 +8,7 @@ import liquibase.integration.servlet.LiquibaseJakartaServletListener;
 public class LiquibaseListener extends LiquibaseJakartaServletListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        super.contextInitialized(sce);
+//        super.contextInitialized(sce);
     }
 
     @Override

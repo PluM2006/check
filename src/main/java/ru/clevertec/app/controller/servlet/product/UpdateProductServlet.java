@@ -24,13 +24,13 @@ public class UpdateProductServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductService productService = new ProductService();
         JsonObject jsonObject = new Gson().fromJson(req.getReader(), JsonObject.class);
-        String id = jsonObject.get(ParameterNames.PRODUCT_ID).toString().replaceAll("\"", "");
+        String id = jsonObject.get(ParameterNames.ID).toString().replaceAll("\"", "");
         String name = jsonObject.get(ParameterNames.PRODUCT_NAME).toString().replaceAll("\"", "");
         String price = jsonObject.get(ParameterNames.PRODUCT_PRICE).toString().replaceAll("\"", "");
         String count = jsonObject.get(ParameterNames.PRODUCT_COUNT).toString().replaceAll("\"", "");
         String sale = jsonObject.get(ParameterNames.PRODUCT_SALE).toString().replaceAll("\"", "");
         Map<String, String> parameters = new HashMap<>();
-        parameters.put(ParameterNames.PRODUCT_ID, id);
+        parameters.put(ParameterNames.ID, id);
         parameters.put(ParameterNames.PRODUCT_NAME, name);
         parameters.put(ParameterNames.PRODUCT_PRICE, price);
         parameters.put(ParameterNames.PRODUCT_COUNT, count);

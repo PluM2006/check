@@ -27,7 +27,7 @@ public class ProductService implements Service<Product> {
 
     @Override
     public Optional<Product> update(Map<String, String> parameters) {
-        String id = parameters.get(ParameterNames.PRODUCT_ID);
+        String id = parameters.get(ParameterNames.ID);
         if (!validationProduct.validParametersProduct(parameters) &&
                 validationProduct.isValidIdProduct(id)) {
             return Optional.empty();
