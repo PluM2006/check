@@ -1,16 +1,16 @@
 package ru.clevertec.app.validator;
 
-import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.utils.PropertiesUtil;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ValidationProduct {
 
@@ -22,15 +22,15 @@ public class ValidationProduct {
     private StringBuilder invalidDate = new StringBuilder();
 
 
-    public boolean validParametersProduct(Map<String, String> parameters) {
+    public boolean validParametersProduct(Product product) {
         var isValid = true;
-        if (!isValidNameProduct(parameters.get(ParameterNames.PRODUCT_NAME))) {
+        if (!isValidNameProduct(product.getName())) {
             isValid = false;
         }
-        if (!isValidPriceProduct(parameters.get(ParameterNames.PRODUCT_PRICE))) {
+        if (!isValidPriceProduct(product.getPrice())) {
             isValid = false;
         }
-        if (!isValidCountProduct(parameters.get(ParameterNames.PRODUCT_COUNT))) {
+        if (!isValidCountProduct(product.getCount())) {
             isValid = false;
         }
 //        ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.UK);
@@ -43,12 +43,14 @@ public class ValidationProduct {
         return name != null && name.matches(REGEX_NAME);
     }
 
-    public boolean isValidPriceProduct(String price) {
-        return price != null && price.matches(REGEX_PRICE);
+    public boolean isValidPriceProduct(BigDecimal price) {
+        return price != null;
+//                && price.matches(REGEX_PRICE);
     }
 
-    public boolean isValidCountProduct(String count) {
-        return count != null && count.matches(REGEX_COUNT);
+    public boolean isValidCountProduct(Integer count) {
+        return count != null && (count >= 0);
+//                && count.matches(REGEX_COUNT);
     }
 
     public boolean isValidIdProduct(String id) {

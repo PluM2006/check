@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ArgsUtil {
 
-    private static ArgsUtil instants;
+    private static ArgsUtil INSTANCE;
     private static final Map<Long, Integer> mapCheckItems = new HashMap<>();
     private static Long idCard;
     private static int printTo = 0;
@@ -17,10 +17,10 @@ public class ArgsUtil {
     }
 
     public static ArgsUtil getInstance(String[] args) {
-        if (instants == null) {
-            instants = new ArgsUtil(args);
+        if (INSTANCE == null) {
+            INSTANCE = new ArgsUtil(args);
         }
-        return instants;
+        return INSTANCE;
     }
 
     public Map<Long, Integer> getMapCheckItems() {

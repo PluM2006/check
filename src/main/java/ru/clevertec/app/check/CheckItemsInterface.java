@@ -3,6 +3,8 @@ package ru.clevertec.app.check;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.customlist.CustomList;
 
+import java.util.Map;
+
 public interface CheckItemsInterface {
-    CustomList<CheckItem> getCheckItem(String[] args);
+    CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems);
 }

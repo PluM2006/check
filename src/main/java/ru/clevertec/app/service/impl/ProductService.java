@@ -1,41 +1,42 @@
 package ru.clevertec.app.service.impl;
 
-import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.product.dbimpl.ProductRepositoryImpl;
-import ru.clevertec.app.repository.product.mapper.ProductMapper;
 import ru.clevertec.app.service.Service;
 import ru.clevertec.app.validator.ValidationProduct;
 
-import java.util.Map;
 import java.util.Optional;
 
+import static ru.clevertec.app.constant.Constants.OFFSET_DEFAULT;
+import static ru.clevertec.app.constant.Constants.PAGE_SIZE_DEFAULT;
+
 public class ProductService implements Service<Product> {
+
+    private static final ProductService INSTANCE = new ProductService();
     private final ProductRepositoryImpl productRepository = new ProductRepositoryImpl();
     private final ValidationProduct validationProduct = new ValidationProduct();
 
-    @Override
-    public Optional<Product> add(Map<String, String> parameters) {
-        if (!validationProduct.validParametersProduct(parameters)) {
-            return Optional.empty();
-        }
-        ProductMapper productMapper = new ProductMapper(parameters);
-        Product productFromParameters = productMapper.createProductFromParameters();
-        return Optional.of(productRepository.add(productFromParameters));
+    private ProductService() {
+
     }
 
-    @Override
-    public Optional<Product> update(Map<String, String> parameters) {
-        String id = parameters.get(ParameterNames.ID);
-        if (!validationProduct.validParametersProduct(parameters) &&
-                validationProduct.isValidIdProduct(id)) {
+    public static ProductService getInstance() {
+        return INSTANCE;
+    }
+
+    public Optional<Product> add(Product product) {
+        if (!validationProduct.validParametersProduct(product)) {
             return Optional.empty();
         }
-        ProductMapper productMapper = new ProductMapper(parameters);
-        Product productFromParameters = productMapper.createProductFromParameters();
-        productFromParameters.setId(Long.parseLong(id));
-        return Optional.of(productRepository.update(productFromParameters));
+        return Optional.of(productRepository.add(product));
+    }
+
+    public Optional<Product> update(Product product) {
+        if (!validationProduct.validParametersProduct(product)) {
+            return Optional.empty();
+        }
+        return Optional.of(productRepository.update(product));
     }
 
     @Override
@@ -48,8 +49,8 @@ public class ProductService implements Service<Product> {
 
     @Override
     public CustomList<Product> findAll(String limit, String offset) {
-        if (limit == null) limit = "20";
-        if (offset == null) offset = "0";
+        if (limit == null) limit = PAGE_SIZE_DEFAULT;
+        if (offset == null) offset = OFFSET_DEFAULT;
 
         return productRepository.findAll(Integer.parseInt(limit), Integer.parseInt(offset));
     }

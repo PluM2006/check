@@ -2,16 +2,16 @@ package ru.clevertec.app.check.impl;
 
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.customlist.CustomList;
-import ru.clevertec.app.utils.PropertiesUtil;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.utils.CheckFormatBuilder;
+import ru.clevertec.app.utils.PropertiesUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CheckBuilderImpl implements CheckBuilderInterface {

@@ -1,14 +1,14 @@
 package ru.clevertec.app.check.impl;
 
+import ru.clevertec.app.check.CheckItemsInterface;
+import ru.clevertec.app.customlist.CustomArrayList;
+import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.product.dbimpl.ProductRepositoryImpl;
-import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.utils.ArgsUtil;
 import ru.clevertec.app.utils.CheckFormatBuilder;
-import ru.clevertec.app.check.CheckItemsInterface;
-import ru.clevertec.app.customlist.CustomList;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -20,11 +20,11 @@ public class CheckItemsDBImpl implements CheckItemsInterface {
     CustomList<Long> errorsItem = new CustomArrayList<>();
 
     @Override
-    public CustomList<CheckItem> getCheckItem(String[] args) {
-        Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
-        for (var map: mapCheckItems.entrySet()){
+    public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems) {
+
+        for (var map : mapCheckItems.entrySet()) {
             Optional<Product> productById = repository.findById(map.getKey());
-            if (productById.isPresent()){
+            if (productById.isPresent()) {
                 CheckItem checkItem = new CheckItem(
                         productById.get(),
                         map.getValue(),

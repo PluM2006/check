@@ -1,8 +1,8 @@
 package ru.clevertec.app.validator;
 
-import ru.clevertec.app.constant.ParameterNames;
+import ru.clevertec.app.entity.Card;
 
-import java.util.Map;
+import java.math.BigDecimal;
 
 public class CardValidator {
 
@@ -10,25 +10,30 @@ public class CardValidator {
     private static final String REGEX_NUMBERCARD = "[1-9]([0-9]){3}-[0-9]{4}-[0-9]{4}-[0-9]{4}";
     private static final String REGEX_DISCOUNT = "([1-9][0-9]?)|100";
 
-    public boolean isValidParametersCard(Map<String, String> parameters){
+    public boolean isValidParametersCard(Card card) {
         boolean isValid = true;
-        if (!isValidNumberCard(parameters.get(ParameterNames.CARD_NUMBERCARD))){
+        if (!isValidNumberCard(card.getNumberCard())) {
             isValid = false;
         }
-        if (!isValidDiscount(parameters.get(ParameterNames.CARD_DISCOUNT))){
+        if (!isValidDiscount(card.getDiscount())) {
             isValid = false;
         }
         return isValid;
     }
 
-    public boolean isValidIdCard(String id){
-        return id!=null && id.matches(REGEX_ID);
+    public boolean isValidIdCard(String id) {
+        return id != null && id.matches(REGEX_ID);
     }
-    public boolean isValidNumberCard(String numberCard){
-        return numberCard!=null && numberCard.matches(REGEX_NUMBERCARD);
+
+    public boolean isValidNumberCard(String numberCard) {
+        return numberCard != null && numberCard.matches(REGEX_NUMBERCARD);
     }
-    public boolean isValidDiscount(String discount){
-        return discount!=null && discount.matches(REGEX_DISCOUNT);
+
+    public boolean isValidDiscount(BigDecimal discount) {
+        return discount != null
+                && (discount.compareTo(BigDecimal.ZERO) >= 0)
+                && (discount.compareTo(BigDecimal.valueOf(100)) <= 0);
+        //*&& discount.matches(REGEX_DISCOUNT);
     }
 
 

@@ -1,14 +1,14 @@
 package ru.clevertec.app.check.impl;
 
 import ru.clevertec.app.check.CheckItemsInterface;
+import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.product.fileimpl.ProductFileRepositoryImpl;
-import ru.clevertec.app.customlist.CustomArrayList;
-import ru.clevertec.app.utils.CheckFormatBuilder;
 import ru.clevertec.app.utils.ArgsUtil;
+import ru.clevertec.app.utils.CheckFormatBuilder;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -21,9 +21,8 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
     CustomList<Long> errorsItem = new CustomArrayList<>();
 
     @Override
-    public CustomList<CheckItem> getCheckItem(String[] args) {
+    public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems) {
         CustomList<Product> allProduct = repository.findAll(null, null);
-        Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
         for (var map : mapCheckItems.entrySet()) {
             Optional<Product> product = allProduct
                     .stream()

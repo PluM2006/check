@@ -18,6 +18,8 @@ import ru.clevertec.app.repository.shop.CashierRepositoryImpl;
 import ru.clevertec.app.repository.shop.ShopRepositoryImpl;
 import ru.clevertec.app.utils.ArgsUtil;
 
+import java.util.Map;
+
 public class CheckRunner {
 
     public static void main(String[] args) {
@@ -28,12 +30,13 @@ public class CheckRunner {
 ////        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
 ////        Repository<Card> repository = new CardFileRepositoryImpl();
 //
+        Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
         CheckItemsInterface checkItemsInterface = new CheckItemsDBImpl();
         Repository<Card> repository = new CardRepositoryImpl();
         Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
         Repository<Shop> shopRepository = new ShopRepositoryImpl();
 
-        CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(args);
+        CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(mapCheckItems);
         Card card = repository.findById(ArgsUtil.getInstance(args).getIdCard()).orElse(null);
         Cashier cashier = cashierRepository.findById(1L).orElse(null);
         Shop shop = shopRepository.findById(1L).orElse(null);

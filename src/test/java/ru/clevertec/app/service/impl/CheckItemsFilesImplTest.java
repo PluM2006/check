@@ -16,7 +16,6 @@ class CheckItemsFilesImplTest {
     String[] args = {};
     CheckItemsFilesImpl parseArgs = new CheckItemsFilesImpl();
 
-
     @BeforeEach
     public void setUp() throws Exception {
         args = new String[]{"1-6", "card-1", "printTo-0"};
