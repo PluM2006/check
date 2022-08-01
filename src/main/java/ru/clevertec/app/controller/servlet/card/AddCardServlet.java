@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.clevertec.app.controller.ParameterNames;
+import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.service.impl.CardService;
 

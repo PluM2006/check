@@ -1,6 +1,6 @@
 package ru.clevertec.app.utils;
 
-import ru.clevertec.app.constant.Constants;
+import ru.clevertec.app.constant.ConstantsFromArgs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,6 @@ import java.util.Map;
 public class ArgsUtil {
 
     private static ArgsUtil instants;
-
     private static final Map<Long, Integer> mapCheckItems = new HashMap<>();
     private static Long idCard;
     private static int printTo = 0;
@@ -47,12 +46,12 @@ public class ArgsUtil {
                     }
                 }
             }
-            if (argsLine[0].equals(Constants.CARD.getName())) {
+            if (argsLine[0].equals(ConstantsFromArgs.CARD.getName())) {
                 if (argsLine[1].matches("\\d+")) {
                     idCard = Long.parseLong(argsLine[1]);
                 }
             }
-            if (argsLine[0].contains(Constants.PRINT_TO.getName())) {
+            if (argsLine[0].contains(ConstantsFromArgs.PRINT_TO.getName())) {
                 printTo = Integer.parseInt(argsLine[1]);
             }
         }

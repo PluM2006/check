@@ -13,8 +13,8 @@ public class CardRepositoryImpl implements Repository<Card> {
 
     private static final String ADD_CARD = "INSERT INTO card(numbercard, discount) VALUES (?, ?)";
     private static final String UPDATE_CARD = "UPDATE card SET numbercard=?, discount=? WHERE id=?";
-    private static final String FIND_BY_ID = "SELECT * FROM card WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM card";
+    private static final String FIND_BY_ID = "SELECT id, numbercard, discount FROM card WHERE id=?";
+    private static final String FIND_ALL = "SELECT id, numbercard, discount FROM card";
     private static final String DELETE_CARD_BY_ID = "DELETE FROM card WHERE id=?";
 
     @Override

@@ -1,6 +1,6 @@
 package ru.clevertec.app.repository.card.mapper;
 
-import ru.clevertec.app.controller.ParameterNames;
+import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.entity.Card;
 
 import java.math.BigDecimal;

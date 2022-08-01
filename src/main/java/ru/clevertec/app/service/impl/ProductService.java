@@ -1,6 +1,6 @@
 package ru.clevertec.app.service.impl;
 
-import ru.clevertec.app.controller.ParameterNames;
+import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.product.dbimpl.ProductRepositoryImpl;

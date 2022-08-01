@@ -1,4 +1,4 @@
-package ru.clevertec.app.controller;
+package ru.clevertec.app.constant;
 
 public class ParameterNames {
 

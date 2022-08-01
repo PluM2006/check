@@ -1,6 +1,6 @@
 package ru.clevertec.app.validator;
 
-import ru.clevertec.app.controller.ParameterNames;
+import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.PropertiesUtil;

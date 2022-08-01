@@ -1,6 +1,6 @@
 package ru.clevertec.app.validator;
 
-import ru.clevertec.app.controller.ParameterNames;
+import ru.clevertec.app.constant.ParameterNames;
 
 import java.util.Map;
 

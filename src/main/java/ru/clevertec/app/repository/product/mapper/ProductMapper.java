@@ -1,6 +1,6 @@
 package ru.clevertec.app.repository.product.mapper;
 
-import ru.clevertec.app.controller.ParameterNames;
+import ru.clevertec.app.constant.ParameterNames;
 import ru.clevertec.app.entity.Product;
 
 import java.math.BigDecimal;
