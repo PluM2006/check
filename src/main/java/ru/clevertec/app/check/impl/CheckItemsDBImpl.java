@@ -14,13 +14,20 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CheckItemsDBImpl implements CheckItemsInterface {
-    Repository<Product> repository = new ProductRepositoryImpl();
-    CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
-    CustomList<Long> errorsItem = new CustomArrayList<>();
+
+    private static final CheckItemsDBImpl INSTANCE = new CheckItemsDBImpl();
+    private final Repository<Product> repository = new ProductRepositoryImpl();
+
+    private CheckItemsDBImpl() {
+    }
+
+    public static CheckItemsDBImpl getINSTANCE() {
+        return INSTANCE;
+    }
 
     @Override
-    public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems) {
-
+    public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems, CustomList<Long> errorsItem) {
+        CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
         for (var map : mapCheckItems.entrySet()) {
             Optional<Product> productById = repository.findById(map.getKey());
             if (productById.isPresent()) {
@@ -35,7 +42,6 @@ public class CheckItemsDBImpl implements CheckItemsInterface {
                 errorsItem.add(map.getKey());
             }
         }
-        CheckStringFormatting.errorCheckItems(errorsItem);
         return listCheckItem;
     }
 }

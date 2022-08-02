@@ -8,7 +8,6 @@ public class PropertiesUtil {
 
     public static final Properties PROPERTIES = new Properties();
     private static final String PATH_FILE = "application.properties";
-
     private static final String DRIVER = "database.driver";
     private static final String URL = "database.url";
     private static final String USER = "database.user";

@@ -10,6 +10,7 @@ import ru.clevertec.app.check.impl.CheckBuilderImpl;
 import ru.clevertec.app.proxies.heandler.CheckImplHandler;
 
 import java.lang.reflect.Proxy;
+import java.util.Map;
 
 public class CheckBuilderImplProxy implements CheckBuilderInterface {
     private static CheckBuilderInterface checkImpl;
@@ -26,8 +27,8 @@ public class CheckBuilderImplProxy implements CheckBuilderInterface {
     }
 
     @Override
-    public String getCheck(CustomList<CheckItem>checkItems, Card card) {
-        return checkImpl.getCheck(checkItems, card);
+    public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
+        return checkImpl.getCheck(mapCheckItems, card);
     }
 
 }

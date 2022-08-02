@@ -14,7 +14,9 @@ import ru.clevertec.app.check.PrintInterface;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,6 +29,8 @@ public class PrintToConsoleImplTest {
     Cashier cashier;
     Card card;
     CustomList<CheckItem> checkItems = new CustomArrayList<>();
+
+    Map<Long,Integer> mapParam = new HashMap<>();
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -47,7 +51,7 @@ public class PrintToConsoleImplTest {
 
     @Test
     public void print() {
-        String check = checkBuilderInterface.getCheck(checkItems, card, shop, cashier);
+        String check = checkBuilderInterface.getCheck(mapParam, card);
         printInterface.print(check);
         assertEquals(check, outContent.toString());
     }

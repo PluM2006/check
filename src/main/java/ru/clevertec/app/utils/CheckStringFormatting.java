@@ -8,57 +8,62 @@ import java.math.RoundingMode;
 
 public class CheckStringFormatting {
     private static final int LENGTH_CHECK = 50;
-    private static final StringBuilder checkErrors = new StringBuilder();
-    private static final StringBuilder checkResult = new StringBuilder();
 
-    public static String getCheckResult() {
-        return checkErrors.toString() + checkResult;
+    private StringBuilder checkResult;
+
+    public String getCheckResult(StringBuilder checkResult, StringBuilder checkError) {
+        return checkError+(checkResult!=null?checkResult.toString():"");
     }
 
-    public static void getHeader(Shop shop, Cashier cashier, String date, String time) {
-        buildLine();
+    public StringBuilder getHeader(Shop shop, Cashier cashier, String date, String time) {
+        checkResult = new StringBuilder();
+        buildLine(checkResult);
         checkResult.append(String.format("%" + center(shop.getName().length()) + "s", shop.getName())).append("\n");
         checkResult.append(String.format("%" + center(shop.getAddress().length()) + "s", shop.getAddress())).append("\n");
         checkResult.append(String.format("кассир: # %-23s ", cashier.getNumber()));
         checkResult.append(String.format("Дата: %s", date)).append("\n");
         checkResult.append(String.format("%-34s", ""));
         checkResult.append(String.format("Время:%" + date.length() + "s", time)).append("\n");
-        buildLine();
+        buildLine(checkResult);
+        return checkResult;
     }
 
-    public static void getBasket(CustomList<CheckItem> checkItems) {
+    public StringBuilder getBasket(CustomList<CheckItem> checkItems) {
+        checkResult = new StringBuilder();
         checkResult.append(String.format("%-30s", "наименование"));
         checkResult.append(String.format("%-4s", "кол"));
         checkResult.append(String.format("%-9s", "цена"));
         checkResult.append(String.format("%7s", "всего")).append("\n");
-        buildLine();
+        buildLine(checkResult);
         for (CheckItem ci : checkItems) {
             if (ci.getProduct().getName() == null) {
                 checkResult.insert(0, "нет продукта с id: " + ci.getProduct().getId() + "\n");
             } else {
                 checkResult.append(String.format("%-30s", ci.getProduct().getName()));
                 checkResult.append(String.format("%-4s", ci.getQty()));
-                checkResult.append(String.format("%-9s", ci.getProduct().getPrice() + "$"));
-                checkResult.append(String.format("%7s", ci.getSumma() + "$")).append("\n");
+                checkResult.append(String.format("%-7s", ci.getProduct().getPrice() + "$"));
+                checkResult.append(String.format("%9s", ci.getSumma() + "$")).append("\n");
                 if (!ci.getDiscount().equals(BigDecimal.ZERO)) {
                     checkResult.append(String.format("%3s", " "));
-                    checkResult.append(String.format("%-39s ", (ci.getPromDiscount() ? String.format("акция %s%% ", PropertiesUtil.get("ALL_DISCOUNT")) : "карта ")+"скидка:"));
-                    checkResult.append(String.format("%8s", "-" + ci.getDiscount() + "$" + "\n"));
+                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", PropertiesUtil.get("ALL_DISCOUNT")) : "карта ")+"скидка:"));
+                    checkResult.append(String.format("%10s", "-" + ci.getDiscount() + "$" + "\n"));
                     checkResult.append(String.format("%3s", " "));
-                    checkResult.append(String.format("%-40s", "цена со скидкой:"));
-                    checkResult.append(String.format("%8s", ci.getSumma().subtract(ci.getDiscount()) + "$" + "\n"));
+                    checkResult.append(String.format("%-38s", "цена со скидкой:"));
+                    checkResult.append(String.format("%10s", ci.getSumma().subtract(ci.getDiscount()) + "$" + "\n"));
                 }
             }
         }
-        buildLine();
-        buildLine();
+        buildLine(checkResult);
+        buildLine(checkResult);
+        return checkResult;
     }
 
-    public static void getFooter(Card card, BigDecimal sumTotal, BigDecimal discountTotal) {
+    public StringBuilder getFooter(Card card, BigDecimal sumTotal, BigDecimal discountTotal) {
+        checkResult = new StringBuilder();
         checkResult.append("Итого: ").append(sumTotal).append("$").append("\n");
         if (card != null) {
             checkResult.append("Дисконтная карта: ").append(card.getNumberCard()).append(" скидка: ")
-                    .append(card.getDiscount()).append("%").append("\n");
+                    .append(card.getDiscount().setScale(0, RoundingMode.HALF_DOWN)).append("%").append("\n");
         }
         if (discountTotal.compareTo(BigDecimal.ZERO) != 0) {
             checkResult.append("Скидка: -").append(discountTotal.setScale(2, RoundingMode.HALF_DOWN))
@@ -66,30 +71,14 @@ public class CheckStringFormatting {
             checkResult.append("Итого со скидкой: ")
                     .append(sumTotal.subtract(discountTotal.setScale(2, RoundingMode.HALF_DOWN))).append("$").append("\n");
         }
-        buildLine();
+        buildLine(checkResult);
+        return checkResult;
     }
 
-    public static void errorCheckItems(CustomList<Long> errorItems) {
-        for (Long ci : errorItems) {
-            checkErrors.insert(0, "Нет продукта с id: " + ci + "\n");
-        }
-    }
 
-    public static void errorCardFile() {
-        checkErrors.append("Нет файла card.csv, либо не правильный путь к файлу дискотных карт" + "\n");
-    }
 
-    public static void errorProductFIle() {
-        checkErrors.append("Нет файла product.csv, либо не правильный путь к файлу продуктов" + "\n");
-    }
-
-    public static void errorCheck() {
-        checkErrors.append("Чек не сформирован" + "\n");
-        checkErrors.append("Не указаны продукты");
-    }
-
-    private static void buildLine() {
-        checkResult.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
+    private void buildLine(StringBuilder stringBuilder) {
+        stringBuilder.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
     }
 
 

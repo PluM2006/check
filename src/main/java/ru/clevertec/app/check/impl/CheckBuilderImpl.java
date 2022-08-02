@@ -1,11 +1,14 @@
 package ru.clevertec.app.check.impl;
 
 import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.check.CheckItemsInterface;
+import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.shop.CashierRepositoryImpl;
 import ru.clevertec.app.repository.shop.ShopRepositoryImpl;
+import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
 import ru.clevertec.app.utils.PropertiesUtil;
 
@@ -22,35 +25,45 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
     private final Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
     private final Repository<Shop> shopRepository = new ShopRepositoryImpl();
 
+
+    private final CheckItemsInterface checkItemsDB = CheckItemsDBImpl.getINSTANCE();
+    private final CheckErrorsStringFormatting checkErrorsStringFormatting = new CheckErrorsStringFormatting();
+    private final CheckStringFormatting checkStringFormatting = new CheckStringFormatting();
+
     @Override
-    public String getCheck(CustomList<CheckItem> checkItems, Card card) {
+    public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
+        StringBuilder stringBuilderError = new StringBuilder();
+        StringBuilder stringBuilderCheck = new StringBuilder();
         Cashier cashier = cashierRepository.findById(1L).orElse(null);
         Shop shop = shopRepository.findById(1L).orElse(null);
+        CustomList<Long> errorsItem = new CustomArrayList<>();
+        CustomList<CheckItem> checkItems = checkItemsDB.getCheckItem(mapCheckItems, errorsItem);
         if (checkItems.size() > 0) {
-            buildHead(shop, cashier);
+            stringBuilderCheck.append(buildHead(shop, cashier));
             getDiscount(checkItems, card);
-            buildBasket(checkItems);
-            buildFooter(card, checkItems);
+            stringBuilderCheck.append(buildBasket(checkItems));
+            stringBuilderCheck.append(buildFooter(card, checkItems));
         } else {
-            CheckStringFormatting.errorCheck();
+            checkErrorsStringFormatting.errorCheck(stringBuilderError);
         }
-        return CheckStringFormatting.getCheckResult();
+        if (errorsItem.size()>0) checkErrorsStringFormatting.errorCheckItems(stringBuilderError, errorsItem);
+        return checkStringFormatting.getCheckResult(stringBuilderCheck, stringBuilderError);
     }
 
-    private void buildHead(Shop shop, Cashier cashier) {
+    private StringBuilder buildHead(Shop shop, Cashier cashier) {
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        CheckStringFormatting.getHeader(shop, cashier, date, time);
+        return checkStringFormatting.getHeader(shop, cashier, date, time);
     }
 
-    private void buildBasket(CustomList<CheckItem> checkItems) {
-        CheckStringFormatting.getBasket(checkItems);
+    private StringBuilder buildBasket(CustomList<CheckItem> checkItems) {
+        return checkStringFormatting.getBasket(checkItems);
     }
 
-    private void buildFooter(Card card, CustomList<CheckItem> checkItems) {
+    private StringBuilder buildFooter(Card card, CustomList<CheckItem> checkItems) {
         BigDecimal sumTotal = checkItems.stream().map(CheckItem::getSumma).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal discountTotal = checkItems.stream().map(CheckItem::getDiscount).reduce(BigDecimal.ZERO, BigDecimal::add);
-        CheckStringFormatting.getFooter(card, sumTotal, discountTotal);
+        return checkStringFormatting.getFooter(card, sumTotal, discountTotal);
     }
 
     private void getDiscount(CustomList<CheckItem> checkItems, Card card) {
@@ -77,4 +90,5 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
         discount = percent.multiply(sum).divide(new BigDecimal(100), RoundingMode.HALF_DOWN).setScale(2, RoundingMode.HALF_DOWN);
         return discount;
     }
+
 }

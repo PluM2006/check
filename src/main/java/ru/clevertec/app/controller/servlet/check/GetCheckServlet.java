@@ -19,6 +19,6 @@ public class GetCheckServlet extends HttpServlet {
         resp.setContentType("application/pdf");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Content-disposition", "inline; filename=\"check.pdf\"");
-        checkPDF.printToPdf(req, resp);
+        checkPDF.printPdf(req, resp);
     }
 }

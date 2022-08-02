@@ -15,7 +15,7 @@ public class PrintToFileImpl implements PrintInterface {
 
 		File file = new File(PropertiesUtil.get("FILE_NAME"));
 		try (FileWriter myWriter = new FileWriter(file)) {
-			myWriter.write(CheckStringFormatting.getCheckResult());
+			myWriter.write(check);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

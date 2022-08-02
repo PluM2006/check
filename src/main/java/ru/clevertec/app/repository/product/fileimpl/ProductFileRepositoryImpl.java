@@ -105,7 +105,7 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
                 allProduct.add(createProduct(correctProduct));
             }
         } catch (IOException e) {
-            CheckStringFormatting.errorProductFIle();
+
             throw new RuntimeException(e);
         }
         return allProduct;

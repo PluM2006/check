@@ -6,6 +6,7 @@ import ru.clevertec.app.check.PrintInterface;
 import ru.clevertec.app.check.impl.CheckItemsDBImpl;
 import ru.clevertec.app.check.impl.PrintToConsoleImpl;
 import ru.clevertec.app.check.impl.PrintToFileImpl;
+import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Cashier;
@@ -31,15 +32,12 @@ public class CheckRunner {
 ////        Repository<Card> repository = new CardFileRepositoryImpl();
 //
         Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
-        CheckItemsInterface checkItemsInterface = new CheckItemsDBImpl();
         Repository<Card> repository = new CardRepositoryImpl();
-
-        CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(mapCheckItems);
         Card card = repository.findById(ArgsUtil.getInstance(args).getIdCard()).orElse(null);
 
         int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
-        String check = checkImpl.getCheck(checkItems, card);
+        String check = checkImpl.getCheck(mapCheckItems, card);
 
         switch (printTo) {
             case 0 -> {

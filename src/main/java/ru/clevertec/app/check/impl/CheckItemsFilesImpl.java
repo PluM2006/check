@@ -17,10 +17,9 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
 
     Repository<Product> repository = new ProductFileRepositoryImpl();
     CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
-    CustomList<Long> errorsItem = new CustomArrayList<>();
 
     @Override
-    public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems) {
+    public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems, CustomList<Long> errorsItem) {
         CustomList<Product> allProduct = repository.findAll(null, null);
         for (var map : mapCheckItems.entrySet()) {
             Optional<Product> product = allProduct
@@ -37,7 +36,7 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
                 errorsItem.add(map.getKey());
             }
         }
-        CheckStringFormatting.errorCheckItems(errorsItem);
+
         return listCheckItem;
     }
 }
