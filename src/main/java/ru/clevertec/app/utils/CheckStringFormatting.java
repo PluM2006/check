@@ -6,7 +6,7 @@ import ru.clevertec.app.customlist.CustomList;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CheckFormatBuilder {
+public class CheckStringFormatting {
     private static final int LENGTH_CHECK = 50;
     private static final StringBuilder checkErrors = new StringBuilder();
     private static final StringBuilder checkResult = new StringBuilder();

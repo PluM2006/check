@@ -4,7 +4,7 @@ import ru.clevertec.app.entity.Card;
 
 import java.math.BigDecimal;
 
-public class CardValidator {
+public class ValidatorCard {
 
     private static final String REGEX_ID = "[1-9]\\d*";
     private static final String REGEX_NUMBERCARD = "[1-9]([0-9]){3}-[0-9]{4}-[0-9]{4}-[0-9]{4}";

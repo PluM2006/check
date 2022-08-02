@@ -4,7 +4,7 @@ import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
-import ru.clevertec.app.utils.CheckFormatBuilder;
+import ru.clevertec.app.utils.CheckStringFormatting;
 import ru.clevertec.app.utils.PropertiesUtil;
 import ru.clevertec.app.validator.ValidationProduct;
 
@@ -105,7 +105,7 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
                 allProduct.add(createProduct(correctProduct));
             }
         } catch (IOException e) {
-            CheckFormatBuilder.errorProductFIle();
+            CheckStringFormatting.errorProductFIle();
             throw new RuntimeException(e);
         }
         return allProduct;

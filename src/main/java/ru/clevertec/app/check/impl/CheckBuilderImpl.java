@@ -3,7 +3,10 @@ package ru.clevertec.app.check.impl;
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.utils.CheckFormatBuilder;
+import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.shop.CashierRepositoryImpl;
+import ru.clevertec.app.repository.shop.ShopRepositoryImpl;
+import ru.clevertec.app.utils.CheckStringFormatting;
 import ru.clevertec.app.utils.PropertiesUtil;
 
 import java.math.BigDecimal;
@@ -16,33 +19,38 @@ import java.util.stream.Collectors;
 
 public class CheckBuilderImpl implements CheckBuilderInterface {
 
+    private final Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
+    private final Repository<Shop> shopRepository = new ShopRepositoryImpl();
+
     @Override
-    public String getCheck(CustomList<CheckItem> checkItems, Card card, Shop shop, Cashier cashier) {
+    public String getCheck(CustomList<CheckItem> checkItems, Card card) {
+        Cashier cashier = cashierRepository.findById(1L).orElse(null);
+        Shop shop = shopRepository.findById(1L).orElse(null);
         if (checkItems.size() > 0) {
             buildHead(shop, cashier);
             getDiscount(checkItems, card);
             buildBasket(checkItems);
             buildFooter(card, checkItems);
         } else {
-            CheckFormatBuilder.errorCheck();
+            CheckStringFormatting.errorCheck();
         }
-        return CheckFormatBuilder.getCheckResult();
+        return CheckStringFormatting.getCheckResult();
     }
 
     private void buildHead(Shop shop, Cashier cashier) {
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        CheckFormatBuilder.getHeader(shop, cashier, date, time);
+        CheckStringFormatting.getHeader(shop, cashier, date, time);
     }
 
     private void buildBasket(CustomList<CheckItem> checkItems) {
-        CheckFormatBuilder.getBasket(checkItems);
+        CheckStringFormatting.getBasket(checkItems);
     }
 
     private void buildFooter(Card card, CustomList<CheckItem> checkItems) {
         BigDecimal sumTotal = checkItems.stream().map(CheckItem::getSumma).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal discountTotal = checkItems.stream().map(CheckItem::getDiscount).reduce(BigDecimal.ZERO, BigDecimal::add);
-        CheckFormatBuilder.getFooter(card, sumTotal, discountTotal);
+        CheckStringFormatting.getFooter(card, sumTotal, discountTotal);
     }
 
     private void getDiscount(CustomList<CheckItem> checkItems, Card card) {

@@ -8,6 +8,6 @@ import ru.clevertec.app.customlist.CustomList;
 
 public interface CheckBuilderInterface {
 
-    String getCheck(CustomList<CheckItem> checkItems, Card card, Shop shop, Cashier cashier);
+    String getCheck(CustomList<CheckItem> checkItems, Card card);
 
 }

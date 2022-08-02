@@ -33,16 +33,13 @@ public class CheckRunner {
         Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
         CheckItemsInterface checkItemsInterface = new CheckItemsDBImpl();
         Repository<Card> repository = new CardRepositoryImpl();
-        Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
-        Repository<Shop> shopRepository = new ShopRepositoryImpl();
 
         CustomList<CheckItem> checkItems = checkItemsInterface.getCheckItem(mapCheckItems);
         Card card = repository.findById(ArgsUtil.getInstance(args).getIdCard()).orElse(null);
-        Cashier cashier = cashierRepository.findById(1L).orElse(null);
-        Shop shop = shopRepository.findById(1L).orElse(null);
+
         int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
-        String check = checkImpl.getCheck(checkItems, card, shop, cashier);
+        String check = checkImpl.getCheck(checkItems, card);
 
         switch (printTo) {
             case 0 -> {

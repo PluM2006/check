@@ -5,7 +5,7 @@ import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.card.dbimpl.CardRepositoryImpl;
 import ru.clevertec.app.service.Service;
-import ru.clevertec.app.validator.CardValidator;
+import ru.clevertec.app.validator.ValidatorCard;
 
 import java.util.Optional;
 
@@ -18,11 +18,11 @@ public class CardService implements Service<Card> {
 
     private final Repository<Card> cardRepository = new CardRepositoryImpl();
 
-    private final CardValidator cardValidator = new CardValidator();
+    private final ValidatorCard validatorCard = new ValidatorCard();
 
     @Override
     public Optional<Card> add(Card card) {
-        if (!cardValidator.isValidParametersCard(card)) {
+        if (!validatorCard.isValidParametersCard(card)) {
             return Optional.empty();
         }
         return Optional.of(cardRepository.add(card));
@@ -35,7 +35,7 @@ public class CardService implements Service<Card> {
 
     @Override
     public Optional<Card> findById(String id) {
-        if (!cardValidator.isValidIdCard(id)) {
+        if (!validatorCard.isValidIdCard(id)) {
             return Optional.empty();
         }
         return cardRepository.findById(Long.parseLong(id));
@@ -51,7 +51,7 @@ public class CardService implements Service<Card> {
 
     @Override
     public boolean delete(String id) {
-        if (!cardValidator.isValidNumberCard(id)) {
+        if (!validatorCard.isValidNumberCard(id)) {
             return false;
         }
         return cardRepository.delete(Long.parseLong(id));

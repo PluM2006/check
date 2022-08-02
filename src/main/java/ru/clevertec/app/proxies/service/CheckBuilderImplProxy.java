@@ -26,8 +26,8 @@ public class CheckBuilderImplProxy implements CheckBuilderInterface {
     }
 
     @Override
-    public String getCheck(CustomList<CheckItem>checkItems, Card card, Shop shop, Cashier cashier) {
-        return checkImpl.getCheck(checkItems, card, shop, cashier);
+    public String getCheck(CustomList<CheckItem>checkItems, Card card) {
+        return checkImpl.getCheck(checkItems, card);
     }
 
 }

@@ -7,8 +7,7 @@ import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.product.fileimpl.ProductFileRepositoryImpl;
-import ru.clevertec.app.utils.ArgsUtil;
-import ru.clevertec.app.utils.CheckFormatBuilder;
+import ru.clevertec.app.utils.CheckStringFormatting;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class CheckItemsFilesImpl implements CheckItemsInterface {
                 errorsItem.add(map.getKey());
             }
         }
-        CheckFormatBuilder.errorCheckItems(errorsItem);
+        CheckStringFormatting.errorCheckItems(errorsItem);
         return listCheckItem;
     }
 }
