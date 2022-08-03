@@ -12,7 +12,7 @@ public class CheckStringFormatting {
     private StringBuilder checkResult;
 
     public String getCheckResult(StringBuilder checkResult, StringBuilder checkError) {
-        return checkError+(checkResult!=null?checkResult.toString():"");
+        return checkError + (checkResult != null ? checkResult.toString() : "");
     }
 
     public StringBuilder getHeader(Shop shop, Cashier cashier, String date, String time) {
@@ -45,7 +45,7 @@ public class CheckStringFormatting {
                 checkResult.append(String.format("%9s", ci.getSumma() + "$")).append("\n");
                 if (!ci.getDiscount().equals(BigDecimal.ZERO)) {
                     checkResult.append(String.format("%3s", " "));
-                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", PropertiesUtil.get("ALL_DISCOUNT")) : "карта ")+"скидка:"));
+                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", PropertiesUtil.get("ALL_DISCOUNT")) : "карта ") + "скидка:"));
                     checkResult.append(String.format("%10s", "-" + ci.getDiscount() + "$" + "\n"));
                     checkResult.append(String.format("%3s", " "));
                     checkResult.append(String.format("%-38s", "цена со скидкой:"));
@@ -75,12 +75,9 @@ public class CheckStringFormatting {
         return checkResult;
     }
 
-
-
     private void buildLine(StringBuilder stringBuilder) {
         stringBuilder.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
     }
-
 
     private static int center(int i) {
         return (LENGTH_CHECK - i) / 2 + i;

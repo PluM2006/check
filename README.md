@@ -1,45 +1,123 @@
 # CheckRunner
+
 Программа формирует чек магазина.
 
-Если в чеке больше пяти акционных товаров, на них делается скидка 10%, так же если предъявлена карта предоставляется скидка на весь чек, без учета акционных товаров на которые уже предоставлена скидка 10%
+Если в чеке больше пяти акционных товаров, на них делается скидка 10%, так же если предъявлена карта предоставляется
+скидка на весь чек, без учета акционных товаров на которые уже предоставлена скидка 10%
 
-## Программа запускается java CheckRunner <набор параметров>
-Например:  *java CheckRunner 3-1 2-5 5-1 card-1234*
+Примеры URL запросов
 
-где id продукта = 3, количество = 1. Дисконтная карта номер - 1234
+**Получить чек (GET)**
 
-*параметры:*
+***id*** - id продукта
 
-**card** - номер карты или id
+***value*** - количество
 
-**productFile** - путь к файлу csv продуктов
+***card*** - дисконтная карта
 
-**cardFile** - путь к файлу csv карточек 
+```
+http://localhost:8080/api/check?id=1&value=5&id=2&value=6&card=2
+http://localhost:8080/api/check?id=1&value=5&id=2&value=6
+```
 
-**printTo** - куда выводить чек: 0 - в файл, 1 - в консоль (если параметр не указан выводится в файл)
+***Продукты***
 
-### **структура файла product.csv**
+**Продукты по id (GET)**
+
+```
+http://localhost:8080/api/products?id=25
+```
+
+**Получить все продукты (GET)**
+
+*offset - смещение*
+
+*pagesize - количество на странице (если не указывать по умолчанию 20)*
+
+```
+http://localhost:8080/api/products
+http://localhost:8080/api/products?pagesize=5&offset=3
+http://localhost:8080/api/products?offset=3
+```
+
+**Добавить продукты (POST)**
+
+```
+http://localhost:8080/api/products
+{
+    "name": "Жареная курица",
+    "price": "52.69",
+    "count": "20",
+    "sale": "false"
+}
+```
+
+**Удалить продукт по id (DELETE)**
+
+```
+http://localhost:8080/api/products?id=25
+```
+
+**Обновить продукт (PUT)**
+
+```
+http://localhost:8080/api/products
+{
+    "id": 1,
+    "name": "Бульба",
+    "price": 20.00,
+    "count": 10,
+    "sale": false
+}
+```
+
+***Дисконтная карта***
+
+**Карта по id (GET)**
+
+```
+http://localhost:8080/api/cards?id=1
+```
+
+**Получить все карты (GET)**
+
+*offset - смещение*
+
+*pagesize - количество на странице (если не указывать по умолчанию 20)*
+
+```
+http://localhost:8080/api/cards
+http://localhost:8080/api/cards?pagesize=5&offset=3
+http://localhost:8080/api/cards?offset=3
+```
+
+**Добавить карту (POST)**
+
+```
+http://localhost:8080/api/cards
+{
+    "numberCard": "6666-5555-5555-5555",
+    "discount": "10"
+}
+```
+
+**Удалить карту по id (DELETE)**
+
+```
+http://localhost:8080/api/cards?id=3
+```
+
+**Обновить карту (PUT)**
+
+```
+http://localhost:8080/api/cards
+{
+    "id": "1",
+    "numberCard": "6666-5555-5555-5555",
+    "discount": "10"
+}
+```
 
 
-***пример:***
 
-1;Картофель;23,55;10;true
-
-2;Яйца;97,61;5;false
-
-[product.csv](https://github.com/PluM2006/check/blob/master/src/main/resources/product.csv)
-
-### **структура файла card.csv**
-
-id; номер карты ; скидка (сколько процентов)
-
-***пример:***
-
-1;1111 1111 1111 1111;7
-
-2;2222 2222 2222 2222;5
-
-[card.csv](https://github.com/PluM2006/check/blob/master/src/main/resources/card.csv)
-
-Файлы product.csv и card.csv можно поместить в папку с программой и не указывать в параметрах
 

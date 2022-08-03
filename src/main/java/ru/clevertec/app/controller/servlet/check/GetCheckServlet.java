@@ -9,7 +9,7 @@ import ru.clevertec.app.controller.CheckPdf;
 
 import java.io.IOException;
 
-@WebServlet("/api/get")
+@WebServlet("/api/check")
 public class GetCheckServlet extends HttpServlet {
 
     private final CheckPdf checkPDF = new CheckPdf();

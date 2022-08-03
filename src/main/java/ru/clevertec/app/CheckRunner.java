@@ -1,22 +1,13 @@
 package ru.clevertec.app;
 
 import ru.clevertec.app.check.CheckBuilderInterface;
-import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.check.PrintInterface;
-import ru.clevertec.app.check.impl.CheckItemsDBImpl;
 import ru.clevertec.app.check.impl.PrintToConsoleImpl;
 import ru.clevertec.app.check.impl.PrintToFileImpl;
-import ru.clevertec.app.customlist.CustomArrayList;
-import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.entity.Cashier;
-import ru.clevertec.app.entity.CheckItem;
-import ru.clevertec.app.entity.Shop;
 import ru.clevertec.app.proxies.service.CheckBuilderImplProxy;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.card.dbimpl.CardRepositoryImpl;
-import ru.clevertec.app.repository.shop.CashierRepositoryImpl;
-import ru.clevertec.app.repository.shop.ShopRepositoryImpl;
 import ru.clevertec.app.utils.ArgsUtil;
 
 import java.util.Map;
