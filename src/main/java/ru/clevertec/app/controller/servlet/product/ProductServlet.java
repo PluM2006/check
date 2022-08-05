@@ -22,6 +22,10 @@ import java.util.Optional;
 public class ProductServlet extends HttpServlet {
 
     private final ProductService productService = ProductService.getInstance();
+    private static final String PRODUCT_NOT_ADD = "Продукт не добавлен";
+    private static final String PRODUCT_NOT_EDIT = "Продукт не изменен";
+    private static final String PRODUCT_DELETE_BY_ID = "Удален Продукт с id = ";
+    private static final String PRODUCT_NOT_FOUND = "Продукт не найден";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -32,7 +36,7 @@ public class ProductServlet extends HttpServlet {
                 writer.write(new Gson().toJson(optionalProduct.get()));
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                writer.write("Продукт не добавлен");
+                writer.write(PRODUCT_NOT_ADD);
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
@@ -47,7 +51,7 @@ public class ProductServlet extends HttpServlet {
                 writer.write(new Gson().toJson(updateProduct.get()));
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                writer.write("Прподукт не изменен");
+                writer.write(PRODUCT_NOT_EDIT);
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
@@ -55,14 +59,14 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+        String id = req.getParameter(ParametersNames.ID);
         boolean delete = productService.delete(id);
         try (PrintWriter writer = resp.getWriter()) {
             if (delete) {
-                writer.write("Удален продукт с id = " + id);
+                writer.write(PRODUCT_DELETE_BY_ID + id);
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                writer.write("Продукт не найден");
+                writer.write(PRODUCT_NOT_FOUND);
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             }
         }
@@ -70,9 +74,9 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String limit = req.getParameter("pagesize");
-        String offset = req.getParameter("offset");
-        String id = req.getParameter("id");
+        String limit = req.getParameter(ParametersNames.PAGE_SIZE);
+        String offset = req.getParameter(ParametersNames.PAGE_OFFSET);
+        String id = req.getParameter(ParametersNames.ID);
         if (id != null) {
             Optional<Product> byId = productService.findById(id);
             try (PrintWriter writer = resp.getWriter()) {
@@ -80,7 +84,7 @@ public class ProductServlet extends HttpServlet {
                     writer.write(new Gson().toJson(byId.get()));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 } else {
-                    writer.write("Продукт не найден");
+                    writer.write(PRODUCT_NOT_FOUND);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
             }
@@ -91,7 +95,5 @@ public class ProductServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
             }
         }
-
-
     }
 }

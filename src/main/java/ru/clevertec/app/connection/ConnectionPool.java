@@ -1,5 +1,6 @@
 package ru.clevertec.app.connection;
 
+import lombok.Value;
 import ru.clevertec.app.utils.PropertiesUtil;
 
 import java.sql.Connection;
@@ -9,17 +10,20 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class ConnectionPool {
+
     private static ConnectionPool instants;
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final BlockingDeque<ProxyConnection> activeConnections;
     private final int DEFAULT_POLL_SIZE = Integer.parseInt(PropertiesUtil.getPoolSize());
-    private final String DATABASE_DRIVER = PropertiesUtil.getDriver();
+    private static final String DATABASE_DRIVER = PropertiesUtil.getDriver();
+
+    static {
+        registerDriver();
+    }
 
     private ConnectionPool() {
-
         freeConnections = new LinkedBlockingDeque<>(DEFAULT_POLL_SIZE);
         activeConnections = new LinkedBlockingDeque<>(DEFAULT_POLL_SIZE);
-        registerDriver();
         for (int i = 0; i< DEFAULT_POLL_SIZE; i++){
             freeConnections.offer(ConnectionCreator.createConnection());
         }
@@ -68,7 +72,7 @@ public class ConnectionPool {
         }
         deregisterDriver();
     }
-    private void registerDriver(){
+    private static void registerDriver(){
         try {
             Class.forName(DATABASE_DRIVER);
         } catch (ClassNotFoundException e) {

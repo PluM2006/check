@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.clevertec.app.controller.CheckPdf;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @WebServlet("/api/check")
 public class GetCheckServlet extends HttpServlet {
@@ -18,7 +20,7 @@ public class GetCheckServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/pdf");
         resp.setCharacterEncoding("UTF-8");
-        resp.setHeader("Content-disposition", "inline; filename=\"check.pdf\"");
+        resp.setHeader("Content-disposition", "inline; filename=\"check"+ LocalDateTime.now() +".pdf\"");
         checkPDF.printPdf(req, resp);
     }
 }

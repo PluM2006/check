@@ -24,8 +24,6 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
 
     private final Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
     private final Repository<Shop> shopRepository = new ShopRepositoryImpl();
-
-
     private final CheckItemsInterface checkItemsDB = CheckItemsDBImpl.getINSTANCE();
     private final CheckErrorsStringFormatting checkErrorsStringFormatting = new CheckErrorsStringFormatting();
     private final CheckStringFormatting checkStringFormatting = new CheckStringFormatting();

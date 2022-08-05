@@ -1,6 +1,6 @@
 package ru.clevertec.app.constant;
 
-public class ParametersNames {
+public final class ParametersNames {
 
     public static final String ID = "id";
     public static final String PRODUCT_NAME = "name";
@@ -9,6 +9,8 @@ public class ParametersNames {
     public static final String PRODUCT_SALE = "sale";
     public static final String CARD_NUMBERCARD = "numbercard";
     public static final String CARD_DISCOUNT = "discount";
+    public static final String PAGE_SIZE = "pagesize";
+    public static final String PAGE_OFFSET = "offset";
 
     private ParametersNames() {
     }

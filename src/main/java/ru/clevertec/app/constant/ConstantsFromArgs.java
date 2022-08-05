@@ -1,6 +1,7 @@
 package ru.clevertec.app.constant;
 
 public enum ConstantsFromArgs {
+
     CARD("card"),
     PRINT_TO("printTo");
 

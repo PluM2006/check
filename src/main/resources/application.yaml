@@ -1,0 +1,18 @@
+database:
+  driver: org.postgresql.Driver
+  url: jdbc:postgresql://localhost/postgres
+  user: postgres
+  password: 18011984
+poll:
+  size: 5
+
+PATH_PRODUCT: product.csv
+PATH_CARD: card.csv
+PATH_INVALID_FILE_NAME: invalidDate.txt
+FILE_NAME: check.txt
+ALL_DISCOUNT: 10
+
+  
+
+
+

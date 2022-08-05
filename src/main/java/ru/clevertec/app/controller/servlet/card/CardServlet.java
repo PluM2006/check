@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.service.impl.CardService;
@@ -16,6 +17,11 @@ import java.util.Optional;
 
 @WebServlet("/api/cards")
 public class CardServlet extends HttpServlet {
+
+    private static final String CARD_NOT_FOUND = "Карта не найдена";
+    private static final String CARD_NOT_ADD = "Карта не добавлена";
+    private static final String CARD_DELETE_BY_ID = "Удалена карта с id = ";
+    private static final String CARD_NOT_EDIT = "Карта не изменена";
 
     private final CardService cardService = CardService.getInstance();
 
@@ -28,7 +34,7 @@ public class CardServlet extends HttpServlet {
                 writer.write(new Gson().toJson(cardOptional.get()));
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                writer.write("Карта не добавлена");
+                writer.write(CARD_NOT_ADD);
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
@@ -36,14 +42,14 @@ public class CardServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+        String id = req.getParameter(ParametersNames.ID);
         boolean delete = cardService.delete(id);
         try (PrintWriter writer = resp.getWriter()) {
             if (delete) {
-                writer.write("Удалена карта с id = " + id);
+                writer.write(CARD_DELETE_BY_ID + id);
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                writer.write("Карта не найдена");
+                writer.write(CARD_NOT_FOUND);
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             }
         }
@@ -53,9 +59,9 @@ public class CardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Optional<Card> byId;
         CustomList<Card> allPage;
-        String limit = req.getParameter("pagesize");
-        String offset = req.getParameter("offset");
-        String id = req.getParameter("id");
+        String limit = req.getParameter(ParametersNames.PAGE_SIZE);
+        String offset = req.getParameter(ParametersNames.PAGE_OFFSET);
+        String id = req.getParameter(ParametersNames.ID);
         if (id != null) {
             byId = cardService.findById(id);
             try (PrintWriter writer = resp.getWriter()) {
@@ -63,7 +69,7 @@ public class CardServlet extends HttpServlet {
                     writer.write(new Gson().toJson(byId.get()));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 } else {
-                    writer.write("Карта не найдена");
+                    writer.write(CARD_NOT_FOUND);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
             }
@@ -85,7 +91,7 @@ public class CardServlet extends HttpServlet {
                 writer.write(new Gson().toJson(updateCard.get()));
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                writer.write("Карта не изменена");
+                writer.write(CARD_NOT_EDIT);
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
