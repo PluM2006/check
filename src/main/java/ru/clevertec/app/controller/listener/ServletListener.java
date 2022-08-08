@@ -20,6 +20,7 @@ import java.sql.Connection;
 public class ServletListener implements ServletContextListener {
 
     public static final String PATH_CHANGE_XML = "changeLog/changelog.xml";
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         Connection connection = ConnectionPool.getInstance().getConnection();

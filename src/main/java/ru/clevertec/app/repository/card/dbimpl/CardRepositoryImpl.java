@@ -56,8 +56,7 @@ public class CardRepositoryImpl implements Repository<Card> {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Card card = createCardFromResultSet(resultSet);
-                optionalCard = Optional.of(card);
+                optionalCard = Optional.of(createCardFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

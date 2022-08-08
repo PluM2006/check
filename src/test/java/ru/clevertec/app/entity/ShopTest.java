@@ -29,8 +29,8 @@ public class ShopTest {
 
     @Test
     public void getAdress() {
-        String adressExpected = "Gomel, Rumyancevskaya str., 5";
-        assertEquals(shop.getAddress(), adressExpected);
+        String addressExpected = "Gomel, Rumyancevskaya str., 5";
+        assertEquals(shop.getAddress(), addressExpected);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ShopTest {
 
     @Test
     public void testToString() {
-        String expected = "Shop{id=1, name='Krama', address='Gomel, Rumyancevskaya str., 5'}";
+        String expected = "Shop(id=1, name=Krama, address=Gomel, Rumyancevskaya str., 5)";
         assertEquals(shop.toString(), expected);
     }
 }

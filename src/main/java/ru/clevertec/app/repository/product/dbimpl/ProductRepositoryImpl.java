@@ -63,8 +63,7 @@ public class ProductRepositoryImpl implements Repository<Product> {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Product product = createProductFromResultSet(resultSet);
-                optionalProduct = Optional.of(product);
+                optionalProduct = Optional.of(createProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -81,8 +80,7 @@ public class ProductRepositoryImpl implements Repository<Product> {
             statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Product product = createProductFromResultSet(resultSet);
-                customList.add(product);
+                customList.add(createProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

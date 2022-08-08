@@ -1,15 +1,13 @@
 package ru.clevertec.app.entity;
 
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Shop {
 
     private @Id Long id;

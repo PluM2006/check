@@ -81,7 +81,7 @@ public class CardTest {
 
     @Test
     public void testToString() {
-        String expected = "Card{id=1, numbercard='1111 1111 1111 1111', discount=10}";
+        String expected = "Card(id=1, numberCard=1111 1111 1111 1111, discount=10)";
         assertEquals(card.toString(), expected);
     }
 }

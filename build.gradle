@@ -11,20 +11,24 @@ repositories {
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
+    mavenCentral()
 }
 
 dependencies {
     implementation group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0'
     implementation group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
-    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.18.0'
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.4.0'
     implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.14.0'
-    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation 'com.itextpdf:itext7-core:7.2.3'
     implementation 'com.itextpdf:io:7.2.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testImplementation('org.junit.jupiter:junit-jupiter-params:5.9.0')
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 test {
     useJUnitPlatform()
