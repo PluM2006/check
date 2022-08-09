@@ -1,11 +1,11 @@
 package ru.clevertec.app.repository.product.fileimpl;
 
+import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
-import ru.clevertec.app.utils.CheckStringFormatting;
-import ru.clevertec.app.utils.PropertiesUtil;
+import ru.clevertec.app.utils.YamlUtils;
 import ru.clevertec.app.validator.ValidationProduct;
 
 import java.io.FileWriter;
@@ -22,8 +22,7 @@ import java.util.stream.Stream;
 public class ProductFileRepositoryImpl implements Repository<Product> {
 
     private static final String SEPARATOR = ";";
-    private final Path pathProduct = Paths.get(PropertiesUtil.get("PATH_PRODUCT"));
-
+    private final Path pathProduct = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathProduct());
     private final ValidationProduct validationProduct = new ValidationProduct();
 
 
@@ -33,12 +32,12 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
         try (Stream<String> stream = Files.lines(pathProduct)) {
             max = stream.map(line -> line.split(SEPARATOR))
                     .map(arr -> arr[0])
-                    .filter(s -> s.matches("\\d+"))
+                    .filter(s -> s.matches(Constants.REG_ONLY_NUMBERS))
                     .max(Comparator.comparingInt(Integer::parseInt));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        product.setId(Long.parseLong(max.orElse("0")) + 1L);
+        product.setId(Long.parseLong(max.orElse(Constants.ZERO_STRING)) + 1L);
         String lineCsv = (product.getId().equals(1L) ? "" : System.lineSeparator()) + createLineCsv(product);
         try {
             Files.write(pathProduct, lineCsv.getBytes(), StandardOpenOption.APPEND);

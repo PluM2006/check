@@ -23,12 +23,12 @@ import java.util.Optional;
 
 public class CheckPdf {
 
+    private static final String FONT_COUR = "assets/fonts/cour.ttf";
     private final CheckBuilderImpl checkBuilder = new CheckBuilderImpl();
     private final ValidationProduct validationProduct = new ValidationProduct();
     private final ValidatorCard validatorCard = new ValidatorCard();
-    private Map<Long, Integer> mapResult;
     private final Repository<Card> repository = new CardRepositoryImpl();
-    private static final String FONT_COUR = "assets/fonts/cour.ttf";
+    private Map<Long, Integer> mapResult;
 
     public void printPdf(HttpServletRequest request, HttpServletResponse response) throws IOException {
         mapResult = new HashMap<>();
@@ -53,7 +53,6 @@ public class CheckPdf {
     }
 
     private Map<Long, Integer> getCheckItemsFromParameters(Map<String, String[]> mapParameters) {
-
         String[] ids = mapParameters.get("id");
         String[] values = mapParameters.get("value");
         for (int i = 0; i <= ids.length - 1; i++) {
@@ -73,5 +72,4 @@ public class CheckPdf {
         }
         return byId;
     }
-
 }

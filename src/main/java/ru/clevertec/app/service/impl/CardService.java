@@ -15,10 +15,12 @@ import static ru.clevertec.app.constant.Constants.PAGE_SIZE_DEFAULT;
 public class CardService implements Service<Card> {
 
     private static final CardService INSTANCE = new CardService();
-
     private final Repository<Card> cardRepository = new CardRepositoryImpl();
-
     private final ValidatorCard validatorCard = new ValidatorCard();
+
+    public static CardService getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public Optional<Card> add(Card card) {
@@ -45,7 +47,6 @@ public class CardService implements Service<Card> {
     public CustomList<Card> findAll(String limit, String offset) {
         if (limit == null) limit = PAGE_SIZE_DEFAULT;
         if (offset == null) offset = OFFSET_DEFAULT;
-
         return cardRepository.findAll(Integer.parseInt(limit), Integer.parseInt(offset));
     }
 
@@ -55,9 +56,5 @@ public class CardService implements Service<Card> {
             return false;
         }
         return cardRepository.delete(Long.parseLong(id));
-    }
-
-    public static CardService getInstance() {
-        return INSTANCE;
     }
 }

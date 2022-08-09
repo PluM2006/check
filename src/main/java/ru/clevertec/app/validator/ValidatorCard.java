@@ -33,7 +33,6 @@ public class ValidatorCard {
         return discount != null
                 && (discount.compareTo(BigDecimal.ZERO) >= 0)
                 && (discount.compareTo(BigDecimal.valueOf(100)) <= 0);
-        //*&& discount.matches(REGEX_DISCOUNT);
     }
 
 

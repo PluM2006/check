@@ -13,12 +13,12 @@ import java.lang.reflect.Method;
 
 public class CheckImplHandler implements InvocationHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(CheckImplHandler.class);
+    private final CheckBuilderInterface checkImpl;
     Gson gson = new
             GsonBuilder()
             .registerTypeAdapter(CustomList.class, new JsonCustomListSerializer())
             .create();
-    private static final Logger log = LoggerFactory.getLogger(CheckImplHandler.class);
-    private final CheckBuilderInterface checkImpl;
 
     public CheckImplHandler(CheckBuilderInterface checkImpl) {
         this.checkImpl = checkImpl;
@@ -27,9 +27,9 @@ public class CheckImplHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object invoke = method.invoke(checkImpl, args);
-        log.info("Метод: {}",method.getName());
-        log.info("Параметры: {}",gson.toJson(args));
-        log.info("Результат: {}",gson.toJson(invoke));
+        log.info("Метод: {}", method.getName());
+        log.info("Параметры: {}", gson.toJson(args));
+        log.info("Результат: {}", gson.toJson(invoke));
         return invoke;
     }
 }

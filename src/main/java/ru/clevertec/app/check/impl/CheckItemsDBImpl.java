@@ -7,7 +7,6 @@ import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.repository.product.dbimpl.ProductRepositoryImpl;
-import ru.clevertec.app.utils.CheckStringFormatting;
 
 import java.math.BigDecimal;
 import java.util.Map;

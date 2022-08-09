@@ -16,8 +16,8 @@
 ***card*** - дисконтная карта
 
 ```
-http://localhost:8080/api/check?id=1&value=5&id=2&value=6&card=2
-http://localhost:8080/api/check?id=1&value=5&id=2&value=6
+http://localhost:8080/check?id=1&value=5&id=2&value=6&card=2
+http://localhost:8080/check?id=1&value=5&id=2&value=6
 ```
 
 ***Продукты***
@@ -25,7 +25,7 @@ http://localhost:8080/api/check?id=1&value=5&id=2&value=6
 **Продукты по id (GET)**
 
 ```
-http://localhost:8080/api/products?id=25
+http://localhost:8080/products?id=25
 ```
 
 **Получить все продукты (GET)**
@@ -35,15 +35,15 @@ http://localhost:8080/api/products?id=25
 *pagesize - количество на странице (если не указывать по умолчанию 20)*
 
 ```
-http://localhost:8080/api/products
-http://localhost:8080/api/products?pagesize=5&offset=3
-http://localhost:8080/api/products?offset=3
+http://localhost:8080/products
+http://localhost:8080/products?pagesize=5&offset=3
+http://localhost:8080/products?offset=3
 ```
 
 **Добавить продукты (POST)**
 
 ```
-http://localhost:8080/api/products
+http://localhost:8080/products
 {
     "name": "Жареная курица",
     "price": "52.69",
@@ -55,13 +55,13 @@ http://localhost:8080/api/products
 **Удалить продукт по id (DELETE)**
 
 ```
-http://localhost:8080/api/products?id=25
+http://localhost:8080/products?id=25
 ```
 
 **Обновить продукт (PUT)**
 
 ```
-http://localhost:8080/api/products
+http://localhost:8080/products
 {
     "id": 1,
     "name": "Бульба",
@@ -76,7 +76,7 @@ http://localhost:8080/api/products
 **Карта по id (GET)**
 
 ```
-http://localhost:8080/api/cards?id=1
+http://localhost:8080/cards?id=1
 ```
 
 **Получить все карты (GET)**
@@ -86,15 +86,15 @@ http://localhost:8080/api/cards?id=1
 *pagesize - количество на странице (если не указывать по умолчанию 20)*
 
 ```
-http://localhost:8080/api/cards
-http://localhost:8080/api/cards?pagesize=5&offset=3
-http://localhost:8080/api/cards?offset=3
+http://localhost:8080/cards
+http://localhost:8080/cards?pagesize=5&offset=3
+http://localhost:8080/cards?offset=3
 ```
 
 **Добавить карту (POST)**
 
 ```
-http://localhost:8080/api/cards
+http://localhost:8080/cards
 {
     "numberCard": "6666-5555-5555-5555",
     "discount": "10"
@@ -104,13 +104,13 @@ http://localhost:8080/api/cards
 **Удалить карту по id (DELETE)**
 
 ```
-http://localhost:8080/api/cards?id=3
+http://localhost:8080/cards?id=3
 ```
 
 **Обновить карту (PUT)**
 
 ```
-http://localhost:8080/api/cards
+http://localhost:8080/cards
 {
     "id": "1",
     "numberCard": "6666-5555-5555-5555",

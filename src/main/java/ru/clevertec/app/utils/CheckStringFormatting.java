@@ -1,15 +1,22 @@
 package ru.clevertec.app.utils;
 
-import ru.clevertec.app.entity.*;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.entity.Cashier;
+import ru.clevertec.app.entity.CheckItem;
+import ru.clevertec.app.entity.Shop;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class CheckStringFormatting {
-    private static final int LENGTH_CHECK = 50;
 
+    private static final int LENGTH_CHECK = 50;
     private StringBuilder checkResult;
+
+    private static int center(int i) {
+        return (LENGTH_CHECK - i) / 2 + i;
+    }
 
     public String getCheckResult(StringBuilder checkResult, StringBuilder checkError) {
         return checkError + (checkResult != null ? checkResult.toString() : "");
@@ -45,7 +52,7 @@ public class CheckStringFormatting {
                 checkResult.append(String.format("%9s", ci.getSumma() + "$")).append("\n");
                 if (!ci.getDiscount().equals(BigDecimal.ZERO)) {
                     checkResult.append(String.format("%3s", " "));
-                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", PropertiesUtil.get("ALL_DISCOUNT")) : "карта ") + "скидка:"));
+                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", YamlUtils.getYamlProperties().getConstants().getAllDiscount()) : "карта ") + "скидка:"));
                     checkResult.append(String.format("%10s", "-" + ci.getDiscount() + "$" + "\n"));
                     checkResult.append(String.format("%3s", " "));
                     checkResult.append(String.format("%-38s", "цена со скидкой:"));
@@ -77,9 +84,5 @@ public class CheckStringFormatting {
 
     private void buildLine(StringBuilder stringBuilder) {
         stringBuilder.append(String.format("%50s", " ").replace(" ", "-")).append("\n");
-    }
-
-    private static int center(int i) {
-        return (LENGTH_CHECK - i) / 2 + i;
     }
 }

@@ -13,7 +13,6 @@ public class Cashier {
     private String name;
     private String number;
 
-
     public Cashier(Long id, String name, String number) {
         this.id = id;
         this.name = name;

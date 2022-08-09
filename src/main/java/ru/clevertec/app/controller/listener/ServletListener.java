@@ -17,9 +17,10 @@ import ru.clevertec.app.connection.ConnectionPool;
 import java.sql.Connection;
 
 @WebListener
-public class ServletListener implements ServletContextListener {
+public class ServletListener implements ServletContextListener{
 
     public static final String PATH_CHANGE_XML = "changeLog/changelog.xml";
+
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -35,6 +36,4 @@ public class ServletListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
         ConnectionPool.getInstance().destroyPool();
     }
-
-    // implementations for other methods
 }

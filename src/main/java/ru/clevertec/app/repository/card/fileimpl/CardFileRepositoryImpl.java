@@ -1,10 +1,11 @@
 package ru.clevertec.app.repository.card.fileimpl;
 
+import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
-import ru.clevertec.app.utils.PropertiesUtil;
+import ru.clevertec.app.utils.YamlUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,8 +21,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class CardFileRepositoryImpl implements Repository<Card> {
+
     private static final String SEPARATOR = ";";
-    private final Path pathCard = Paths.get(PropertiesUtil.get("PATH_CARD"));
+    private final Path pathCard = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathCard());
 
     @Override
     public Card add(Card card) {
@@ -29,12 +31,12 @@ public class CardFileRepositoryImpl implements Repository<Card> {
         try (Stream<String> stream = Files.lines(pathCard)) {
             max = stream.map(line -> line.split(SEPARATOR))
                     .map(strings -> strings[0])
-                    .filter(s -> s.matches("\\d+"))
+                    .filter(s -> s.matches(Constants.REG_ONLY_NUMBERS))
                     .max(Comparator.comparingInt(Integer::parseInt));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        card.setId(Long.parseLong(max.orElse("0")) + 1L);
+        card.setId(Long.parseLong(max.orElse(Constants.ZERO_STRING)) + 1L);
         String lineCsv = (card.getId().equals(1L) ? "" : System.lineSeparator()) + createLineCsv(card);
         try {
             Files.write(pathCard, lineCsv.getBytes(), StandardOpenOption.APPEND);

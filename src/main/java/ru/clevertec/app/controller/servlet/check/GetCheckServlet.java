@@ -8,10 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.clevertec.app.controller.CheckPdf;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@WebServlet("/api/check")
+@WebServlet("/check")
 public class GetCheckServlet extends HttpServlet {
 
     private final CheckPdf checkPDF = new CheckPdf();

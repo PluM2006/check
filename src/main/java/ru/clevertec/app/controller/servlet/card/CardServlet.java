@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-@WebServlet("/api/cards")
+@WebServlet("/cards")
 public class CardServlet extends HttpServlet {
 
     private static final String CARD_NOT_FOUND = "Карта не найдена";

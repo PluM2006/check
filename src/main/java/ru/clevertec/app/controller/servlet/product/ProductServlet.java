@@ -1,7 +1,6 @@
 package ru.clevertec.app.controller.servlet.product;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,18 +13,16 @@ import ru.clevertec.app.service.impl.ProductService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
-@WebServlet("/api/products")
+@WebServlet("/products")
 public class ProductServlet extends HttpServlet {
 
-    private final ProductService productService = ProductService.getInstance();
     private static final String PRODUCT_NOT_ADD = "Продукт не добавлен";
     private static final String PRODUCT_NOT_EDIT = "Продукт не изменен";
     private static final String PRODUCT_DELETE_BY_ID = "Удален Продукт с id = ";
     private static final String PRODUCT_NOT_FOUND = "Продукт не найден";
+    private final ProductService productService = ProductService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

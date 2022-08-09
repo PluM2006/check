@@ -1,7 +1,6 @@
 package ru.clevertec.app.connection;
 
-import lombok.Value;
-import ru.clevertec.app.utils.PropertiesUtil;
+import ru.clevertec.app.utils.YamlUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +13,8 @@ public class ConnectionPool {
     private static ConnectionPool instants;
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final BlockingDeque<ProxyConnection> activeConnections;
-    private final int DEFAULT_POLL_SIZE = Integer.parseInt(PropertiesUtil.getPoolSize());
-    private static final String DATABASE_DRIVER = PropertiesUtil.getDriver();
+    private final int DEFAULT_POLL_SIZE = Integer.parseInt(YamlUtils.getYamlProperties().getDatabase().getPollSize());
+    private static final String DATABASE_DRIVER = YamlUtils.getYamlProperties().getDatabase().getDriver();
 
     static {
         registerDriver();

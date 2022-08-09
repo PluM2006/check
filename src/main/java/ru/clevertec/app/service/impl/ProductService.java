@@ -51,7 +51,6 @@ public class ProductService implements Service<Product> {
     public CustomList<Product> findAll(String limit, String offset) {
         if (limit == null) limit = PAGE_SIZE_DEFAULT;
         if (offset == null) offset = OFFSET_DEFAULT;
-
         return productRepository.findAll(Integer.parseInt(limit), Integer.parseInt(offset));
     }
 

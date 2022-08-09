@@ -53,7 +53,6 @@ public class ProxyConnection implements Connection {
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
-
     }
 
     @Override

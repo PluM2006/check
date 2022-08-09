@@ -1,19 +1,19 @@
 package ru.clevertec.app.repository.product.dbimpl;
 
-import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.entity.Product;
+import ru.clevertec.app.repository.Repository;
 
 import java.sql.*;
 import java.util.Optional;
 
 public class ProductRepositoryImpl implements Repository<Product> {
+
     public static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
     public static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";
     public static final String FIND_ALL = "SELECT id, name, price, count, sale FROM product";
-
     public static final String FIND_ALL_PAGINATOR = "SELECT id, name, price, count, sale FROM product LIMIT ? OFFSET ?";
     public static final String UPDATE_PRODUCT = "UPDATE product SET name=?, price=?, count=?, sale=? WHERE id=?";
     public static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE id=?";
@@ -22,7 +22,7 @@ public class ProductRepositoryImpl implements Repository<Product> {
     @Override
     public Product add(Product product) {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(ADD_PRODUCT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, product.getPrice());
             statement.setInt(3, product.getCount());
@@ -57,18 +57,18 @@ public class ProductRepositoryImpl implements Repository<Product> {
 
     @Override
     public Optional<Product> findById(Long id) {
-        Optional<Product> optionalProduct = Optional.empty();
+        Product product = null;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                optionalProduct = Optional.of(createProductFromResultSet(resultSet));
+                product = createProductFromResultSet(resultSet);
             }
+            return Optional.ofNullable(product);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return optionalProduct;
     }
 
     @Override

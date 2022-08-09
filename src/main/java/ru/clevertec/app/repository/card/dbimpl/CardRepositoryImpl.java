@@ -1,10 +1,10 @@
 package ru.clevertec.app.repository.card.dbimpl;
 
-import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.entity.Card;
+import ru.clevertec.app.repository.Repository;
 
 import java.sql.*;
 import java.util.Optional;
@@ -50,18 +50,18 @@ public class CardRepositoryImpl implements Repository<Card> {
 
     @Override
     public Optional<Card> findById(Long id) {
-        Optional<Card> optionalCard = Optional.empty();
+        Card card = null;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                optionalCard = Optional.of(createCardFromResultSet(resultSet));
+                card = createCardFromResultSet(resultSet);
             }
+            return Optional.ofNullable(card);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return optionalCard;
     }
 
     @Override
@@ -75,7 +75,6 @@ public class CardRepositoryImpl implements Repository<Card> {
                 Card card = createCardFromResultSet(resultSet);
                 cardCustomList.add(card);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

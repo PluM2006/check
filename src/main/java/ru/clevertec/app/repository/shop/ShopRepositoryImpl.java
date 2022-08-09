@@ -1,10 +1,10 @@
 package ru.clevertec.app.repository.shop;
 
 import ru.clevertec.app.connection.ConnectionPool;
-import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.entity.Shop;
+import ru.clevertec.app.repository.Repository;
 
 import java.sql.*;
 import java.util.Optional;
@@ -19,7 +19,6 @@ public class ShopRepositoryImpl implements Repository<Shop> {
 
     @Override
     public Shop add(Shop shop) {
-
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_SHOP, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, shop.getName());

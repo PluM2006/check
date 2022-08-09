@@ -17,5 +17,4 @@ public class EncodingFilter implements Filter {
         servletResponse.setContentType("application/json");
         filterChain.doFilter(servletRequest, servletResponse);
     }
-
 }

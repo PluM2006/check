@@ -4,7 +4,6 @@ import ru.clevertec.app.customlist.CustomList;
 
 public class CheckErrorsStringFormatting {
 
-
     public void errorCheckItems(StringBuilder stringBuilderError, CustomList<Long> errorItems) {
         for (Long ci : errorItems) {
             stringBuilderError.insert(0, "Нет продукта с id: " + ci + "\n");

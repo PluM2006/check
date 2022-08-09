@@ -9,5 +9,4 @@ public class PrintToConsoleImpl implements PrintInterface {
 	public void print(String check) {
 		System.out.print(check);
 	}
-
 }

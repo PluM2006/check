@@ -10,7 +10,7 @@ import ru.clevertec.app.repository.shop.CashierRepositoryImpl;
 import ru.clevertec.app.repository.shop.ShopRepositoryImpl;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
-import ru.clevertec.app.utils.PropertiesUtil;
+import ru.clevertec.app.utils.YamlUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -44,7 +44,7 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
         } else {
             checkErrorsStringFormatting.errorCheck(stringBuilderError);
         }
-        if (errorsItem.size()>0) checkErrorsStringFormatting.errorCheckItems(stringBuilderError, errorsItem);
+        if (errorsItem.size() > 0) checkErrorsStringFormatting.errorCheckItems(stringBuilderError, errorsItem);
         return checkStringFormatting.getCheckResult(stringBuilderCheck, stringBuilderError);
     }
 
@@ -72,7 +72,7 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
             // Скидка 10% если товара больше 5
             Integer quantity = productQty.get(checkItem.getProduct());
             if (checkItem.getProduct().getSale() && quantity >= 5) {
-                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(PropertiesUtil.get("ALL_DISCOUNT"))));
+                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(YamlUtils.getYamlProperties().getConstants().getAllDiscount())));
                 checkItem.setPromDiscount(true);
             } else {
                 //Скидка на остальные товары если предъявлена дисконтная карта
@@ -88,5 +88,4 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
         discount = percent.multiply(sum).divide(new BigDecimal(100), RoundingMode.HALF_DOWN).setScale(2, RoundingMode.HALF_DOWN);
         return discount;
     }
-
 }

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class CardMapper {
+
     private final Map<String, String> parameters;
 
     public CardMapper(Map<String, String> parameters) {
