@@ -4,7 +4,7 @@ import ru.clevertec.app.customlist.CustomList;
 
 import java.util.Optional;
 
-public interface Service<T> {
+public interface CheckService<T> {
     Optional<T> add(T t);
 
     Optional<T> update(T t);

@@ -1,5 +1,6 @@
 package ru.clevertec.app.validator;
 
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
@@ -12,12 +13,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ValidationProduct {
 
-    private static final String INCORRECT_INDEX =  "некорректный индекс";
+    private static final String INCORRECT_INDEX = "некорректный индекс";
     private static final String INCORRECT_NAME = "некорректное название";
-    private static final String INCORRECT_PRICE =  "некорректная цена";
-    private static final String INCORRECT_COUNT =  "некорректная количество";
+    private static final String INCORRECT_PRICE = "некорректная цена";
+    private static final String INCORRECT_COUNT = "некорректная количество";
     private static final String SPLITERATOR = ";";
     private static final String VERTICAL_LINE = " |";
     private static final String REGEX_ID = "[1-9][0-9]?[0-9]?[0-9]?|10000";

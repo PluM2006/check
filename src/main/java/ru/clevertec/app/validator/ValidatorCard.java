@@ -1,9 +1,11 @@
 package ru.clevertec.app.validator;
 
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.entity.Card;
 
 import java.math.BigDecimal;
 
+@Component
 public class ValidatorCard {
 
     private static final String REGEX_ID = "[1-9]\\d*";

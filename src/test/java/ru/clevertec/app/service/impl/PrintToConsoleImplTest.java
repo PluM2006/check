@@ -24,7 +24,7 @@ public class PrintToConsoleImplTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     PrintInterface printInterface = new PrintToConsoleImpl();
-    CheckBuilderInterface checkBuilderInterface = new CheckBuilderImpl();
+    CheckBuilderInterface checkBuilderInterface;
     Shop shop;
     Cashier cashier;
     Card card;

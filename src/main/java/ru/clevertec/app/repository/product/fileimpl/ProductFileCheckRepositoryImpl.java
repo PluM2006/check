@@ -1,8 +1,11 @@
 package ru.clevertec.app.repository.product.fileimpl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.YamlUtils;
@@ -19,11 +22,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class ProductFileRepositoryImpl implements Repository<Product> {
+@Repository
+@RequiredArgsConstructor
+public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> {
 
     private static final String SEPARATOR = ";";
     private final Path pathProduct = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathProduct());
-    private final ValidationProduct validationProduct = new ValidationProduct();
+    private final ValidationProduct validationProduct;
 
 
     @Override

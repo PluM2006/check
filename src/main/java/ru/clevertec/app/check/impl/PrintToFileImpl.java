@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.check.PrintInterface;
 import ru.clevertec.app.utils.YamlUtils;
 
+@Component
 public class PrintToFileImpl implements PrintInterface {
 
 	@Override

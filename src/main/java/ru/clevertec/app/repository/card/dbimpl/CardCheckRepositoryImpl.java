@@ -1,15 +1,17 @@
 package ru.clevertec.app.repository.card.dbimpl;
 
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class CardRepositoryImpl implements Repository<Card> {
+@Repository
+public class CardCheckRepositoryImpl implements CheckRepository<Card> {
 
     private static final String ADD_CARD = "INSERT INTO card(numbercard, discount) VALUES (?, ?)";
     private static final String UPDATE_CARD = "UPDATE card SET numbercard=?, discount=? WHERE id=?";

@@ -1,7 +1,9 @@
 package ru.clevertec.app.utils;
 
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.customlist.CustomList;
 
+@Component
 public class CheckErrorsStringFormatting {
 
     public void errorCheckItems(StringBuilder stringBuilderError, CustomList<Long> errorItems) {

@@ -1,10 +1,12 @@
 package ru.clevertec.app.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.repository.card.dbimpl.CardRepositoryImpl;
-import ru.clevertec.app.service.Service;
+import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.card.dbimpl.CardCheckRepositoryImpl;
+import ru.clevertec.app.service.CheckService;
 import ru.clevertec.app.validator.ValidatorCard;
 
 import java.util.Optional;
@@ -12,22 +14,19 @@ import java.util.Optional;
 import static ru.clevertec.app.constant.Constants.OFFSET_DEFAULT;
 import static ru.clevertec.app.constant.Constants.PAGE_SIZE_DEFAULT;
 
-public class CardService implements Service<Card> {
+@Service
+@RequiredArgsConstructor
+public class CardCheckService implements CheckService<Card> {
 
-    private static final CardService INSTANCE = new CardService();
-    private final Repository<Card> cardRepository = new CardRepositoryImpl();
-    private final ValidatorCard validatorCard = new ValidatorCard();
-
-    public static CardService getInstance() {
-        return INSTANCE;
-    }
+    private final CheckRepository<Card> cardCheckRepositoryImpl;
+    private final ValidatorCard validatorCard;
 
     @Override
     public Optional<Card> add(Card card) {
         if (!validatorCard.isValidParametersCard(card)) {
             return Optional.empty();
         }
-        return Optional.of(cardRepository.add(card));
+        return Optional.of(cardCheckRepositoryImpl.add(card));
     }
 
     @Override
@@ -40,14 +39,14 @@ public class CardService implements Service<Card> {
         if (!validatorCard.isValidIdCard(id)) {
             return Optional.empty();
         }
-        return cardRepository.findById(Long.parseLong(id));
+        return cardCheckRepositoryImpl.findById(Long.parseLong(id));
     }
 
     @Override
     public CustomList<Card> findAll(String limit, String offset) {
         if (limit == null) limit = PAGE_SIZE_DEFAULT;
         if (offset == null) offset = OFFSET_DEFAULT;
-        return cardRepository.findAll(Integer.parseInt(limit), Integer.parseInt(offset));
+        return cardCheckRepositoryImpl.findAll(Integer.parseInt(limit), Integer.parseInt(offset));
     }
 
     @Override
@@ -55,6 +54,6 @@ public class CardService implements Service<Card> {
         if (!validatorCard.isValidNumberCard(id)) {
             return false;
         }
-        return cardRepository.delete(Long.parseLong(id));
+        return cardCheckRepositoryImpl.delete(Long.parseLong(id));
     }
 }

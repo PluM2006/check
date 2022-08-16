@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 class PrintToFileImplTest {
 
     PrintInterface printInterface = new PrintToFileImpl();
-    CheckBuilderInterface checkBuilderInterface = new CheckBuilderImpl();
+    CheckBuilderInterface checkBuilderInterface;
     Shop shop;
     Cashier cashier;
 

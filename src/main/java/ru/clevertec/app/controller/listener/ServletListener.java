@@ -27,6 +27,7 @@ public class ServletListener implements ServletContextListener{
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
              Liquibase liquibase = new Liquibase(PATH_CHANGE_XML, new ClassLoaderResourceAccessor(), database)){
+            liquibase.clearCheckSums();
             liquibase.update(new Contexts(), new LabelExpression());
         } catch (LiquibaseException e) {
             throw new RuntimeException(e);
