@@ -1,16 +1,14 @@
 package ru.clevertec.app.check.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import ru.clevertec.app.annatation.Logger;
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.repository.CheckRepository;
-import ru.clevertec.app.repository.shop.CashierCheckRepositoryImpl;
-import ru.clevertec.app.repository.shop.ShopCheckRepositoryImpl;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
 import ru.clevertec.app.utils.YamlUtils;
@@ -33,6 +31,7 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
     private final CheckErrorsStringFormatting checkErrorsStringFormatting;
     private final CheckStringFormatting checkStringFormatting;
 
+    @Logger
     @Override
     public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
         StringBuilder stringBuilderError = new StringBuilder();

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.impl.CheckBuilderImpl;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.CheckRepository;
@@ -28,7 +29,7 @@ import java.util.Optional;
 public class CheckPdf {
 
     private static final String FONT_COUR = "assets/fonts/cour.ttf";
-    private final CheckBuilderImpl checkBuilder;
+    private final CheckBuilderInterface checkBuilder;
     private final ValidationProduct validationProduct;
     private final ValidatorCard validatorCard;
     private final CheckRepository<Card> cardCheckRepositoryImpl;
