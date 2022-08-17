@@ -6,11 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
-import ru.clevertec.app.annatation.Logger;
-import ru.clevertec.app.check.impl.CheckBuilderImpl;
-import ru.clevertec.app.proxies.heandler.CheckImplHandler;
+import ru.clevertec.app.annatation.Log;
+import ru.clevertec.app.constant.Constants;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
@@ -28,8 +26,8 @@ public class LoggerPostProcessor implements BeanPostProcessor {
         Class<?> beanClass = bean.getClass();
         Method[] methods = beanClass.getMethods();
         for (Method method : methods) {
-            Logger annotation = method.getAnnotation(Logger.class);
-            if (annotation!=null){
+            Log annotation = method.getAnnotation(Log.class);
+            if (annotation != null) {
                 beansMap.put(beanName, beanClass);
             }
         }
@@ -39,13 +37,13 @@ public class LoggerPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = beansMap.get(beanName);
-        if (beanClass!=null){
+        if (beanClass != null) {
             return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), (proxy, method, args) -> {
                 org.slf4j.Logger log = LoggerFactory.getLogger(bean.getClass());
                 Object invoke = method.invoke(bean, args);
-                log.info("Метод: {}", method.getName());
-                log.info("Параметры: {}", gson.toJson(args));
-                log.info("Результат: {}", gson.toJson(invoke));
+                log.info(Constants.METOD, method.getName());
+                log.info(Constants.PARAMETRS, gson.toJson(args));
+                log.info(Constants.RESULT, gson.toJson(invoke));
                 return invoke;
             });
         }

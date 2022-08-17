@@ -17,8 +17,13 @@ repositories {
 dependencies {
     implementation group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0'
     implementation group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
+
+
     implementation group: 'org.springframework', name: 'spring-core', version: '5.3.22'
     implementation group: 'org.springframework', name: 'spring-context', version: '5.3.22'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.22'
+
+
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.18.0'
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.4.0'

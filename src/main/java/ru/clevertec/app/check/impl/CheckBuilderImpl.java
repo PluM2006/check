@@ -2,7 +2,7 @@ package ru.clevertec.app.check.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.clevertec.app.annatation.Logger;
+import ru.clevertec.app.annatation.Log;
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
@@ -31,7 +31,7 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
     private final CheckErrorsStringFormatting checkErrorsStringFormatting;
     private final CheckStringFormatting checkStringFormatting;
 
-    @Logger
+    @Log
     @Override
     public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
         StringBuilder stringBuilderError = new StringBuilder();

@@ -1,12 +1,16 @@
 package ru.clevertec.app.controller.servlet.card;
 
 import com.google.gson.Gson;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.configuration.ApplicationConfig;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
@@ -26,18 +30,19 @@ public class CardServlet extends HttpServlet {
     private static final String CARD_DELETE_BY_ID = "Удалена карта с id = ";
     private static final String CARD_NOT_EDIT = "Карта не изменена";
 
-    private CheckService<Card> cardService;
+    CheckService<Card> cardCheckService;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-        cardService = context.getBean(CardCheckService.class);
+        cardCheckService = context.getBean(CardCheckService.class);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Card card = new Gson().fromJson(req.getReader(), Card.class);
-        Optional<Card> cardOptional = cardService.add(card);
+        Optional<Card> cardOptional = cardCheckService.add(card);
         try (PrintWriter writer = resp.getWriter()) {
             if (cardOptional.isPresent()) {
                 writer.write(new Gson().toJson(cardOptional.get()));
@@ -52,7 +57,7 @@ public class CardServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter(ParametersNames.ID);
-        boolean delete = cardService.delete(id);
+        boolean delete = cardCheckService.delete(id);
         try (PrintWriter writer = resp.getWriter()) {
             if (delete) {
                 writer.write(CARD_DELETE_BY_ID + id);
@@ -72,7 +77,7 @@ public class CardServlet extends HttpServlet {
         String offset = req.getParameter(ParametersNames.PAGE_OFFSET);
         String id = req.getParameter(ParametersNames.ID);
         if (id != null) {
-            byId = cardService.findById(id);
+            byId = cardCheckService.findById(id);
             try (PrintWriter writer = resp.getWriter()) {
                 if (byId.isPresent()) {
                     writer.write(new Gson().toJson(byId.get()));
@@ -83,7 +88,7 @@ public class CardServlet extends HttpServlet {
                 }
             }
         } else {
-            allPage = cardService.findAll(limit, offset);
+            allPage = cardCheckService.findAll(limit, offset);
             try (PrintWriter writer = resp.getWriter()) {
                 writer.write(new Gson().toJson(allPage));
                 resp.setStatus(HttpServletResponse.SC_OK);
@@ -94,7 +99,7 @@ public class CardServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Card card = new Gson().fromJson(req.getReader(), Card.class);
-        Optional<Card> updateCard = cardService.update(card);
+        Optional<Card> updateCard = cardCheckService.update(card);
         try (PrintWriter writer = resp.getWriter()) {
             if (updateCard.isPresent()) {
                 writer.write(new Gson().toJson(updateCard.get()));
