@@ -19,7 +19,7 @@ class CheckItemsDBImplTest {
 
 
     Map<Long,Integer> mapParam = new HashMap<>();
-    CheckItemsInterface parseArgs = CheckItemsDBImpl.getINSTANCE();
+    CheckItemsInterface parseArgs;
     CustomList<Long> errorsItem = new CustomArrayList<>();
 
 

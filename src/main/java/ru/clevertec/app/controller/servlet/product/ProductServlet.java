@@ -6,13 +6,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import ru.clevertec.app.configuration.ApplicationConfig;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.impl.ProductService;
+import ru.clevertec.app.service.CheckService;
+import ru.clevertec.app.service.impl.ProductCheckService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 import java.util.Optional;
 
 @WebServlet("/products")
@@ -22,7 +28,16 @@ public class ProductServlet extends HttpServlet {
     private static final String PRODUCT_NOT_EDIT = "Продукт не изменен";
     private static final String PRODUCT_DELETE_BY_ID = "Удален Продукт с id = ";
     private static final String PRODUCT_NOT_FOUND = "Продукт не найден";
-    private final ProductService productService = ProductService.getInstance();
+    private CheckService<Product> productService;
+
+    private MessageSource messageSource;
+
+    @Override
+    public void init() throws ServletException {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        productService = context.getBean(ProductCheckService.class);
+        messageSource = context.getBean(ResourceBundleMessageSource.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

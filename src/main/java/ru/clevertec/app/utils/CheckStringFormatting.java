@@ -1,5 +1,6 @@
 package ru.clevertec.app.utils;
 
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.entity.Cashier;
@@ -9,11 +10,11 @@ import ru.clevertec.app.entity.Shop;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+@Component
 public class CheckStringFormatting {
 
     private static final int LENGTH_CHECK = 50;
     private StringBuilder checkResult;
-
     private static int center(int i) {
         return (LENGTH_CHECK - i) / 2 + i;
     }

@@ -1,15 +1,18 @@
 package ru.clevertec.app.repository.product.dbimpl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class ProductRepositoryImpl implements Repository<Product> {
+@Repository
+public class ProductCheckRepositoryImpl implements CheckRepository<Product> {
 
     public static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
     public static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";

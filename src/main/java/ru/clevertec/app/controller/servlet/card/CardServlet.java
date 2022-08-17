@@ -6,10 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.clevertec.app.configuration.ApplicationConfig;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.service.impl.CardService;
+import ru.clevertec.app.service.CheckService;
+import ru.clevertec.app.service.impl.CardCheckService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +26,13 @@ public class CardServlet extends HttpServlet {
     private static final String CARD_DELETE_BY_ID = "Удалена карта с id = ";
     private static final String CARD_NOT_EDIT = "Карта не изменена";
 
-    private final CardService cardService = CardService.getInstance();
+    private CheckService<Card> cardService;
+
+    @Override
+    public void init() throws ServletException {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        cardService = context.getBean(CardCheckService.class);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

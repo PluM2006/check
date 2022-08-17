@@ -1,13 +1,14 @@
 package ru.clevertec.app.check.impl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import ru.clevertec.app.annatation.Logger;
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.repository.shop.CashierRepositoryImpl;
-import ru.clevertec.app.repository.shop.ShopRepositoryImpl;
+import ru.clevertec.app.repository.CheckRepository;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
 import ru.clevertec.app.utils.YamlUtils;
@@ -20,22 +21,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class CheckBuilderImpl implements CheckBuilderInterface {
 
-    private final Repository<Cashier> cashierRepository = new CashierRepositoryImpl();
-    private final Repository<Shop> shopRepository = new ShopRepositoryImpl();
-    private final CheckItemsInterface checkItemsDB = CheckItemsDBImpl.getINSTANCE();
-    private final CheckErrorsStringFormatting checkErrorsStringFormatting = new CheckErrorsStringFormatting();
-    private final CheckStringFormatting checkStringFormatting = new CheckStringFormatting();
+    private final CheckRepository<Cashier> cashierCheckRepository;
+    private final CheckRepository<Shop> shopCheckRepository;
+    private final CheckItemsInterface checkItemsDBImpl;
+    private final CheckErrorsStringFormatting checkErrorsStringFormatting;
+    private final CheckStringFormatting checkStringFormatting;
 
+    @Logger
     @Override
     public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
         StringBuilder stringBuilderError = new StringBuilder();
         StringBuilder stringBuilderCheck = new StringBuilder();
-        Cashier cashier = cashierRepository.findById(1L).orElse(null);
-        Shop shop = shopRepository.findById(1L).orElse(null);
+        Cashier cashier = cashierCheckRepository.findById(1L).orElse(null);
+        Shop shop = shopCheckRepository.findById(1L).orElse(null);
         CustomList<Long> errorsItem = new CustomArrayList<>();
-        CustomList<CheckItem> checkItems = checkItemsDB.getCheckItem(mapCheckItems, errorsItem);
+        CustomList<CheckItem> checkItems = checkItemsDBImpl.getCheckItem(mapCheckItems, errorsItem);
         if (checkItems.size() > 0) {
             stringBuilderCheck.append(buildHead(shop, cashier));
             getDiscount(checkItems, card);

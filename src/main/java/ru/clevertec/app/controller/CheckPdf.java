@@ -8,10 +8,13 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.impl.CheckBuilderImpl;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.repository.card.dbimpl.CardRepositoryImpl;
+import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.card.dbimpl.CardCheckRepositoryImpl;
 import ru.clevertec.app.validator.ValidationProduct;
 import ru.clevertec.app.validator.ValidatorCard;
 
@@ -21,13 +24,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Component
+@RequiredArgsConstructor
 public class CheckPdf {
 
     private static final String FONT_COUR = "assets/fonts/cour.ttf";
-    private final CheckBuilderImpl checkBuilder = new CheckBuilderImpl();
-    private final ValidationProduct validationProduct = new ValidationProduct();
-    private final ValidatorCard validatorCard = new ValidatorCard();
-    private final Repository<Card> repository = new CardRepositoryImpl();
+    private final CheckBuilderInterface checkBuilder;
+    private final ValidationProduct validationProduct;
+    private final ValidatorCard validatorCard;
+    private final CheckRepository<Card> cardCheckRepositoryImpl;
     private Map<Long, Integer> mapResult;
 
     public void printPdf(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -68,7 +73,7 @@ public class CheckPdf {
         String[] cards = mapParameters.get("card");
         if (cards != null && validatorCard.isValidIdCard(cards[0])) {
             Long id = Long.parseLong(cards[0]);
-            byId = repository.findById(id);
+            byId = cardCheckRepositoryImpl.findById(id);
         }
         return byId;
     }

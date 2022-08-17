@@ -1,15 +1,17 @@
 package ru.clevertec.app.repository.shop;
 
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class ShopRepositoryImpl implements Repository<Shop> {
+@Repository
+public class ShopCheckRepositoryImpl implements CheckRepository<Shop> {
 
     private static final String ADD_SHOP = "INSERT INTO shop(name, adress) VALUES (?, ?)";
     private static final String UPDATE_SHOP = "UPDATE shop SET name=?, adress=? WHERE id=?";

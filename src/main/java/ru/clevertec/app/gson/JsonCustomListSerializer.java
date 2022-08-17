@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.customlist.CustomList;
 
 import java.lang.reflect.Type;

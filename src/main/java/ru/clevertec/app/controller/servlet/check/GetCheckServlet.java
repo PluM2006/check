@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.clevertec.app.configuration.ApplicationConfig;
 import ru.clevertec.app.controller.CheckPdf;
 
 import java.io.IOException;
@@ -13,7 +15,13 @@ import java.time.LocalDateTime;
 @WebServlet("/check")
 public class GetCheckServlet extends HttpServlet {
 
-    private final CheckPdf checkPDF = new CheckPdf();
+    private CheckPdf checkPDF;
+
+    @Override
+    public void init() throws ServletException {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        checkPDF = context.getBean(CheckPdf.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
