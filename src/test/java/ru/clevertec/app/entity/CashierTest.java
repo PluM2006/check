@@ -58,7 +58,7 @@ public class CashierTest {
 
     @Test
     public void testToString() {
-        String expected = "Cashier{name='Luke', number='007'}";
+        String expected = "Cashier(id=null, name=Luke, number=007)";
         assertEquals(cashier.toString(), expected);
     }
 }

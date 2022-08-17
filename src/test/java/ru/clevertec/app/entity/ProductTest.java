@@ -97,7 +97,7 @@ public class ProductTest {
 
     @Test
     public void testToString() {
-        String expection = "Product [id=15, name=Яблоко, price=12, count=20, sale=true]";
-        assertEquals(product.toString(), expection);
+        String exception = "Product(id=15, name=Яблоко, price=12, count=20, sale=true)";
+        assertEquals(product.toString(), exception);
     }
 }

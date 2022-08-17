@@ -1,34 +1,34 @@
 package ru.clevertec.app;
 
+import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.check.PrintInterface;
+import ru.clevertec.app.check.impl.PrintToConsoleImpl;
+import ru.clevertec.app.check.impl.PrintToFileImpl;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.entity.Cashier;
-import ru.clevertec.app.entity.CheckItem;
-import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.service.CheckInterface;
-import ru.clevertec.app.service.CustomList;
-import ru.clevertec.app.service.ParseArgsInterface;
-import ru.clevertec.app.service.PrintInterface;
-import ru.clevertec.app.service.impl.ParseArgsImpl;
-import ru.clevertec.app.service.impl.PrintToConsoleImpl;
-import ru.clevertec.app.service.impl.PrintToFileImpl;
-import ru.clevertec.app.service.proxies.service.CheckImplProxy;
+import ru.clevertec.app.proxies.service.CheckBuilderImplProxy;
+import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.card.dbimpl.CardRepositoryImpl;
+import ru.clevertec.app.utils.ArgsUtil;
+
+import java.util.Map;
 
 public class CheckRunner {
 
     public static void main(String[] args) {
-
         PrintInterface print;
-        CheckInterface checkImpl = new CheckImplProxy();
-        ParseArgsInterface parseArgsInterface = new ParseArgsImpl();
+        CheckBuilderInterface checkImpl = new CheckBuilderImplProxy();
+//        //***If product and card in files
+//
+////        CheckItemsInterface checkItemsInterface = new CheckItemsFilesImpl();
+////        Repository<Card> repository = new CardFileRepositoryImpl();
+//
+        Map<Long, Integer> mapCheckItems = ArgsUtil.getInstance(args).getMapCheckItems();
+        Repository<Card> repository = new CardRepositoryImpl();
+        Card card = repository.findById(ArgsUtil.getInstance(args).getIdCard()).orElse(null);
 
-        CustomList<CheckItem> checkItems = parseArgsInterface.getCheckItem(args);
-        Card card = parseArgsInterface.getCard(args).orElse(null);
-        int printTo = parseArgsInterface.getPrintTo(args);
+        int printTo = ArgsUtil.getInstance(args).getPrintTo();
 
-        Shop shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
-        Cashier cashier = new Cashier("Luke Skywalker", "007");
-
-        String check = checkImpl.getCheck(checkItems, card, shop, cashier);
+        String check = checkImpl.getCheck(mapCheckItems, card);
 
         switch (printTo) {
             case 0 -> {

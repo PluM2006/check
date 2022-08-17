@@ -53,14 +53,14 @@ public class CheckItemTest {
 
     @Test
     public void getSumm() {
-        assertEquals(checkItem.getSumm(), summ);
+        assertEquals(checkItem.getSumma(), summ);
     }
 
     @Test
     public void setSumm() {
         BigDecimal summExpected = new BigDecimal("158");
-        checkItem.setSumm(summExpected);
-        assertEquals(checkItem.getSumm(), summExpected);
+        checkItem.setSumma(summExpected);
+        assertEquals(checkItem.getSumma(), summExpected);
     }
 
     @Test

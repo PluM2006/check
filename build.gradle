@@ -3,8 +3,7 @@
  */
 
 plugins {
-    id 'java'
-    id 'maven-publish'
+    id 'war'
 }
 
 repositories {
@@ -12,15 +11,26 @@ repositories {
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
+    mavenCentral()
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
-    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.2'
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0'
+    implementation group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.18.0'
     implementation 'com.google.code.gson:gson:2.9.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.4.0'
+    implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.14.0'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation 'com.itextpdf:itext7-core:7.2.3'
+    implementation 'com.itextpdf:io:7.2.3'
+    implementation 'org.yaml:snakeyaml:1.24'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testImplementation('org.junit.jupiter:junit-jupiter-params:5.9.0')
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
 }
 test {
     useJUnitPlatform()
@@ -28,17 +38,11 @@ test {
 }
 
 group = 'ru.cleverteck.app'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 description = 'check'
 java.sourceCompatibility = JavaVersion.VERSION_14
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
+
 task downloadCheck(type: DownloadFile) {
     sourceUrl = 'https://github.com/PluM2006/file/blob/main/check.jpg?raw=true'
     target new File('src/main/resources/check.jpg')
@@ -65,5 +69,3 @@ class DownloadFile extends DefaultTask {
     }
 
 }
-
-targetCompatibility = JavaVersion.VERSION_14
