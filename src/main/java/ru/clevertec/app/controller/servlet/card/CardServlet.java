@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.clevertec.app.configuration.ApplicationConfig;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
@@ -30,12 +31,12 @@ public class CardServlet extends HttpServlet {
     private static final String CARD_DELETE_BY_ID = "Удалена карта с id = ";
     private static final String CARD_NOT_EDIT = "Карта не изменена";
 
-    CheckService<Card> cardCheckService;
+    @Autowired
+    private CheckService<Card> cardCheckService;
 
     @Override
     public void init() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-        cardCheckService = context.getBean(CardCheckService.class);
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
 

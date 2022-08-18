@@ -1,8 +1,6 @@
 package ru.clevertec.app.controller.servlet.product;
 
 import com.google.gson.Gson;
-
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,20 +8,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.CheckService;
-
+import ru.clevertec.app.service.impl.ProductCheckService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
 @WebServlet("/products")
-@Configurable
 public class ProductServlet extends HttpServlet {
 
     private static final String PRODUCT_NOT_ADD = "Продукт не добавлен";
@@ -32,31 +27,12 @@ public class ProductServlet extends HttpServlet {
     private static final String PRODUCT_NOT_FOUND = "Продукт не найден";
 
     @Autowired
-    private CheckService<Product> productCheckService;
+    private ProductCheckService productCheckService;
 
-//    @Override
-//    public void init(ServletConfig config) throws ServletException {
-//        super.init(config);
-//    }
-
-        @Override
-    public void init(ServletConfig config) throws ServletException{
-        super.init(config);
+    @Override
+    public void init() {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-
     }
-//    @PostConstruct
-//    public void init(){
-//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-//        productCheckService = context.getBean(ProductCheckService.class);
-//
-//    }
-//    @Override
-//    public void init() throws ServletException {
-//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-//        productCheckService = context.getBean(ProductCheckService.class);
-////        messageSource = context.getBean(ResourceBundleMessageSource.class);
-//    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
