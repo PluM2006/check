@@ -2,6 +2,7 @@ package ru.clevertec.app.check.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.clevertec.app.annatation.Log;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
@@ -20,6 +21,7 @@ public class CheckItemsDBImpl implements CheckItemsInterface {
 
     private final CheckRepository<Product> productCheckRepositoryImpl;
 
+    @Log
     @Override
     public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems, CustomList<Long> errorsItem) {
         CustomList<CheckItem> listCheckItem = new CustomArrayList<>();

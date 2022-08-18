@@ -8,12 +8,10 @@ import org.springframework.stereotype.Component;
 import ru.clevertec.app.annatation.Log;
 import ru.clevertec.app.proxies.heandler.LogImplHandler;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 @Component
 @RequiredArgsConstructor
@@ -39,7 +37,7 @@ public class LoggerBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = beansMap.get(beanName);
         if (beanClass != null) {
-            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new LogImplHandler(bean, gson));
+            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new LogImplHandler(gson, bean));
         }
         return bean;
     }
