@@ -21,7 +21,6 @@ public class CheckItemsDBImpl implements CheckItemsInterface {
 
     private final CheckRepository<Product> productCheckRepositoryImpl;
 
-    @Log
     @Override
     public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems, CustomList<Long> errorsItem) {
         CustomList<CheckItem> listCheckItem = new CustomArrayList<>();

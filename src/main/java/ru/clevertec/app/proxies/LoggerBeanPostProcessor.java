@@ -1,8 +1,7 @@
 package ru.clevertec.app.proxies;
 
-import com.google.gson.Gson;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import ru.clevertec.app.annatation.Log;
@@ -14,11 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class LoggerBeanPostProcessor implements BeanPostProcessor {
 
     private final Map<String, Class<?>> beansMap = new HashMap<>();
-    private final Gson gson;
+    @Lookup
+    public LogImplHandler getLogImplHandler() {
+        return null;
+    }
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -37,7 +38,9 @@ public class LoggerBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = beansMap.get(beanName);
         if (beanClass != null) {
-            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new LogImplHandler(gson, bean));
+            LogImplHandler logImplHandler = getLogImplHandler();
+            logImplHandler.setLofImplHandler(bean);
+            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), logImplHandler);
         }
         return bean;
     }
