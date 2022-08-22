@@ -14,12 +14,12 @@ import java.util.Optional;
 @Repository
 public class ProductCheckRepositoryImpl implements CheckRepository<Product> {
 
-    public static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
-    public static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";
-    public static final String FIND_ALL = "SELECT id, name, price, count, sale FROM product";
-    public static final String FIND_ALL_PAGINATOR = "SELECT id, name, price, count, sale FROM product LIMIT ? OFFSET ?";
-    public static final String UPDATE_PRODUCT = "UPDATE product SET name=?, price=?, count=?, sale=? WHERE id=?";
-    public static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE id=?";
+    private static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
+    private static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";
+    private static final String FIND_ALL = "SELECT id, name, price, count, sale FROM product";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, name, price, count, sale FROM product LIMIT ? OFFSET ?";
+    private static final String UPDATE_PRODUCT = "UPDATE product SET name=?, price=?, count=?, sale=? WHERE id=?";
+    private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE id=?";
 
 
     @Override
