@@ -39,7 +39,7 @@ public class LoggerBeanPostProcessor implements BeanPostProcessor {
         Class<?> beanClass = beansMap.get(beanName);
         if (beanClass != null) {
             LogImplHandler logImplHandler = getLogImplHandler();
-            logImplHandler.setLofImplHandler(bean);
+            logImplHandler.setLogImplHandler(bean);
             return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), logImplHandler);
         }
         return bean;

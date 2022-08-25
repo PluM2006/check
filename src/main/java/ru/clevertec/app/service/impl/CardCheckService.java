@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.repository.CheckRepository;
-import ru.clevertec.app.repository.card.dbimpl.CardCheckRepositoryImpl;
 import ru.clevertec.app.service.CheckService;
 import ru.clevertec.app.validator.ValidatorCard;
 
@@ -31,7 +30,10 @@ public class CardCheckService implements CheckService<Card> {
 
     @Override
     public Optional<Card> update(Card card) {
-        return Optional.empty();
+        if (!validatorCard.isValidParametersCard(card)) {
+            return Optional.empty();
+        }
+        return Optional.of(cardCheckRepositoryImpl.update(card));
     }
 
     @Override
@@ -40,6 +42,11 @@ public class CardCheckService implements CheckService<Card> {
             return Optional.empty();
         }
         return cardCheckRepositoryImpl.findById(Long.parseLong(id));
+    }
+
+    @Override
+    public CustomList<Card> findAll() {
+        return cardCheckRepositoryImpl.findAll();
     }
 
     @Override
@@ -56,4 +63,5 @@ public class CardCheckService implements CheckService<Card> {
         }
         return cardCheckRepositoryImpl.delete(Long.parseLong(id));
     }
+
 }

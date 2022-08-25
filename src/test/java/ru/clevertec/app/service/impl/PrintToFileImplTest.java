@@ -15,6 +15,7 @@ import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.check.PrintInterface;
 import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.service.CheckService;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
 
@@ -43,7 +44,7 @@ class PrintToFileImplTest {
     @Mock
     private CheckRepository<Shop> shopRepository;
     @Mock
-    private CheckRepository<Product> productRepository;
+    private CheckService<Product> productRepository;
 
     private final Map<Long,Integer> mapParam = new HashMap<>();
 

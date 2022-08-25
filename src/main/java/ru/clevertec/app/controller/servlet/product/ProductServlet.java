@@ -11,7 +11,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.service.impl.ProductCheckService;
+import ru.clevertec.app.service.CheckService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +26,7 @@ public class ProductServlet extends HttpServlet {
     private static final String PRODUCT_NOT_FOUND = "Продукт не найден";
 
     @Autowired
-    private ProductCheckService productCheckService;
+    private CheckService<Product> productCheckService;
 
     @Override
     public void init() {

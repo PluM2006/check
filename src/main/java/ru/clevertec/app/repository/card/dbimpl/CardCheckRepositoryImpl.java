@@ -18,6 +18,7 @@ public class CardCheckRepositoryImpl implements CheckRepository<Card> {
     private static final String FIND_BY_ID = "SELECT id, numbercard, discount FROM card WHERE id=?";
     private static final String FIND_ALL = "SELECT id, numbercard, discount FROM card";
     private static final String DELETE_CARD_BY_ID = "DELETE FROM card WHERE id=?";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, numbercard, discount FROM card LIMIT ? OFFSET ?";
 
     @Override
     public Card add(Card card) {
@@ -68,6 +69,24 @@ public class CardCheckRepositoryImpl implements CheckRepository<Card> {
 
     @Override
     public CustomList<Card> findAll(Integer limit, Integer offset) {
+        CustomList<Card> cardCustomList = new CustomArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Card card = createCardFromResultSet(resultSet);
+                cardCustomList.add(card);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cardCustomList;
+    }
+
+    @Override
+    public CustomList<Card> findAll() {
         CustomList<Card> cardCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {

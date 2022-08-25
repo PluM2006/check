@@ -92,6 +92,17 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
     public CustomList<Card> findAll(Integer limit, Integer offset) {
         CustomList<Card> allCard;
         try (Stream<String> stream = Files.lines(pathCard)) {
+            allCard = stream.limit(limit).skip(offset).collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return allCard;
+    }
+
+    @Override
+    public CustomList<Card> findAll() {
+        CustomList<Card> allCard;
+        try (Stream<String> stream = Files.lines(pathCard)) {
             allCard = stream.collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
 public class CheckItem {
 
     private Product product;
@@ -17,11 +18,4 @@ public class CheckItem {
     private BigDecimal discount = BigDecimal.ZERO;
     private Boolean promDiscount = false;
 
-    public CheckItem(Product product, Integer qty, BigDecimal summa, BigDecimal discount, Boolean promDiscount) {
-        this.product = product;
-        this.qty = qty;
-        this.summa = summa;
-        this.discount = discount;
-        this.promDiscount = promDiscount;
-    }
 }

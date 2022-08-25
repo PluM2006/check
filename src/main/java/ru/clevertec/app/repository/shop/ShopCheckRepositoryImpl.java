@@ -15,9 +15,10 @@ public class ShopCheckRepositoryImpl implements CheckRepository<Shop> {
 
     private static final String ADD_SHOP = "INSERT INTO shop(name, adress) VALUES (?, ?)";
     private static final String UPDATE_SHOP = "UPDATE shop SET name=?, adress=? WHERE id=?";
-    private static final String FIND_BY_ID = "SELECT * FROM shop WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM shop";
+    private static final String FIND_BY_ID = "SELECT id, name, adress FROM shop WHERE id=?";
+    private static final String FIND_ALL = "SELECT id, name, adress FROM shop";
     private static final String DELETE_SHOP_BY_ID = "DELETE FROM shop WHERE id=?";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, name, adress FROM shop LIMIT ? OFFSET ?";
 
     @Override
     public Shop add(Shop shop) {
@@ -71,6 +72,24 @@ public class ShopCheckRepositoryImpl implements CheckRepository<Shop> {
 
     @Override
     public CustomList<Shop> findAll(Integer limit, Integer offset) {
+        CustomList<Shop> shopCustomList = new CustomArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Shop shop = createShopFromResultSet(resultSet);
+                shopCustomList.add(shop);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return shopCustomList;
+    }
+
+    @Override
+    public CustomList<Shop> findAll() {
         CustomList<Shop> shopCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {

@@ -13,6 +13,8 @@ public interface CheckRepository<T> {
 
     CustomList<T> findAll(Integer limit, Integer offset);
 
+    CustomList<T> findAll();
+
     boolean delete(Long id);
 
 }

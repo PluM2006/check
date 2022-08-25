@@ -11,6 +11,8 @@ public interface CheckService<T> {
 
     Optional<T> findById(String id);
 
+    CustomList<T> findAll();
+
     CustomList<T> findAll(String limit, String offset);
 
     boolean delete(String id);

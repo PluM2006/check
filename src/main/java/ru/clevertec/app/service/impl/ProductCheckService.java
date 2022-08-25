@@ -44,6 +44,11 @@ public class ProductCheckService implements CheckService<Product> {
     }
 
     @Override
+    public CustomList<Product> findAll() {
+        return productCheckRepositoryImpl.findAll();
+    }
+
+    @Override
     public CustomList<Product> findAll(String limit, String offset) {
         if (limit == null) limit = PAGE_SIZE_DEFAULT;
         if (offset == null) offset = OFFSET_DEFAULT;

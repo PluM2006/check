@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Shop {
 
     private @Id Long id;
@@ -19,9 +20,4 @@ public class Shop {
         this.address = address;
     }
 
-    public Shop(Long id, String name, String address) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-    }
 }

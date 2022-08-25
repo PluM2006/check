@@ -1,6 +1,5 @@
 package ru.clevertec.app.repository.product.dbimpl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
@@ -81,6 +80,21 @@ public class ProductCheckRepositoryImpl implements CheckRepository<Product> {
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
             statement.setInt(1, limit);
             statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                customList.add(createProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return customList;
+    }
+
+    @Override
+    public CustomList<Product> findAll() {
+        var customList = new CustomArrayList<Product>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 customList.add(createProductFromResultSet(resultSet));

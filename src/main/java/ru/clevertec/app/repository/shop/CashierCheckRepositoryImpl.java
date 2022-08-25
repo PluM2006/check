@@ -15,13 +15,14 @@ public class CashierCheckRepositoryImpl implements CheckRepository<Cashier> {
 
     private static final String ADD_CASHIER = "INSERT INTO cashier(name, number) VALUES (?, ?)";
     private static final String UPDATE_CASHIER = "UPDATE cashier SET name=?, number=? WHERE id=?";
-    private static final String FIND_BY_ID = "SELECT * FROM cashier WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM cashier";
+    private static final String FIND_BY_ID = "SELECT id, name, number FROM cashier WHERE id=?";
+    private static final String FIND_ALL = "SELECT id, name, number FROM cashier";
     private static final String DELETE_CASHIER_BY_ID = "DELETE FROM cashier WHERE id=?";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, name, number FROM cashier LIMIT ? OFFSET ?";
 
     @Override
     public Cashier add(Cashier cashier) {
-        try (Connection connection =  ConnectionPool.getInstance().getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_CASHIER, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, cashier.getName());
             statement.setString(2, cashier.getNumber());
@@ -68,6 +69,23 @@ public class CashierCheckRepositoryImpl implements CheckRepository<Cashier> {
 
     @Override
     public CustomList<Cashier> findAll(Integer limit, Integer offset) {
+        CustomList<Cashier> cashierCustomList = new CustomArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                cashierCustomList.add(createCashierFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cashierCustomList;
+    }
+
+    @Override
+    public CustomList<Cashier> findAll() {
         CustomList<Cashier> cashierCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
