@@ -1,10 +1,12 @@
 package ru.clevertec.app.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.CardRepository;
 import ru.clevertec.app.service.CheckService;
 import ru.clevertec.app.validator.ValidatorCard;
 
@@ -17,7 +19,7 @@ import static ru.clevertec.app.constant.Constants.PAGE_SIZE_DEFAULT;
 @RequiredArgsConstructor
 public class CardCheckService implements CheckService<Card> {
 
-    private final CheckRepository<Card> cardCheckRepositoryImpl;
+    private final CardRepository cardRepository;
     private final ValidatorCard validatorCard;
 
     @Override
@@ -25,7 +27,7 @@ public class CardCheckService implements CheckService<Card> {
         if (!validatorCard.isValidParametersCard(card)) {
             return Optional.empty();
         }
-        return Optional.of(cardCheckRepositoryImpl.add(card));
+        return Optional.of(cardRepository.save(card));
     }
 
     @Override
@@ -33,7 +35,7 @@ public class CardCheckService implements CheckService<Card> {
         if (!validatorCard.isValidParametersCard(card)) {
             return Optional.empty();
         }
-        return Optional.of(cardCheckRepositoryImpl.update(card));
+        return Optional.of(cardRepository.save(card));
     }
 
     @Override
@@ -41,19 +43,24 @@ public class CardCheckService implements CheckService<Card> {
         if (!validatorCard.isValidIdCard(id)) {
             return Optional.empty();
         }
-        return cardCheckRepositoryImpl.findById(Long.parseLong(id));
+        return cardRepository.findById(Long.parseLong(id));
     }
 
     @Override
     public CustomList<Card> findAll() {
-        return cardCheckRepositoryImpl.findAll();
+        CustomList<Card> cards = new CustomArrayList<>();
+        cardRepository.findAll().forEach(cards::add);
+        return cards;
     }
 
     @Override
     public CustomList<Card> findAll(String limit, String offset) {
+        CustomList<Card> cards = new CustomArrayList<>();
         if (limit == null) limit = PAGE_SIZE_DEFAULT;
         if (offset == null) offset = OFFSET_DEFAULT;
-        return cardCheckRepositoryImpl.findAll(Integer.parseInt(limit), Integer.parseInt(offset));
+        cardRepository.findAll(PageRequest.of(Integer.parseInt(offset), Integer.parseInt(limit)))
+                .forEach(cards::add);
+        return cards;
     }
 
     @Override
@@ -61,7 +68,13 @@ public class CardCheckService implements CheckService<Card> {
         if (!validatorCard.isValidNumberCard(id)) {
             return false;
         }
-        return cardCheckRepositoryImpl.delete(Long.parseLong(id));
+        Optional<Card> card = findById(id);
+        if (card.isPresent()) {
+            cardRepository.delete(card.get());
+            return true;
+        }
+        return false;
+
     }
 
 }

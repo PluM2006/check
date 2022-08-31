@@ -1,9 +1,9 @@
-package ru.clevertec.app.repository.card.fileimpl;
+package ru.clevertec.app.repository.fileRepositoryImpl.card;
 
 import org.springframework.stereotype.Repository;
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.FileRepository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.YamlUtils;
@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository
-public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
+public class CardFileRepositoryImpl implements FileRepository<Card> {
 
     private static final String SEPARATOR = ";";
     private final Path pathCard = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathCard());

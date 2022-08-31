@@ -2,7 +2,6 @@ package ru.clevertec.app.controller.filters;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import ru.clevertec.app.connection.ConnectionPool;
 
 import java.io.IOException;
 

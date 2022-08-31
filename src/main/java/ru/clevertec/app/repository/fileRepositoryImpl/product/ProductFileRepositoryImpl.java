@@ -1,4 +1,4 @@
-package ru.clevertec.app.repository.product.fileimpl;
+package ru.clevertec.app.repository.fileRepositoryImpl.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -6,7 +6,7 @@ import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.FileRepository;
 import ru.clevertec.app.utils.YamlUtils;
 import ru.clevertec.app.validator.ValidationProduct;
 
@@ -26,12 +26,11 @@ import java.util.stream.Stream;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> {
+public class ProductFileRepositoryImpl implements FileRepository<Product> {
 
     private static final String SEPARATOR = ";";
     private final Path pathProduct = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathProduct());
     private final ValidationProduct validationProduct;
-
 
     @Override
     public Product add(Product product) {
