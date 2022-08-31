@@ -3,13 +3,21 @@ package ru.clevertec.app.service.impl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.app.check.impl.CheckBuilderImpl;
+import ru.clevertec.app.check.impl.CheckItemsDBImpl;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.check.impl.PrintToFileImpl;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.check.PrintInterface;
+import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.service.CheckService;
+import ru.clevertec.app.utils.CheckErrorsStringFormatting;
+import ru.clevertec.app.utils.CheckStringFormatting;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -22,20 +30,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@ExtendWith(MockitoExtension.class)
 class PrintToFileImplTest {
 
-    PrintInterface printInterface = new PrintToFileImpl();
-    CheckBuilderInterface checkBuilderInterface = new CheckBuilderImpl();
-    Shop shop;
-    Cashier cashier;
+    private final PrintInterface printInterface = new PrintToFileImpl();
+    private CheckBuilderInterface checkBuilder;
+    private Shop shop;
+    private Cashier cashier;
+    private Card card;
+    private final CustomList<CheckItem> checkItems = new CustomArrayList<>();
+    @Mock
+    private CheckRepository<Cashier> cashierRepository;
+    @Mock
+    private CheckRepository<Shop> shopRepository;
+    @Mock
+    private CheckService<Product> productRepository;
 
-    Card card;
-    CustomList<CheckItem> checkItems = new CustomArrayList<>();
-
-    Map<Long,Integer> mapParam = new HashMap<>();
+    private final Map<Long,Integer> mapParam = new HashMap<>();
 
     @BeforeEach
     void setUp() {
+        checkBuilder = new CheckBuilderImpl(
+                cashierRepository,
+                shopRepository,
+                new CheckItemsDBImpl(productRepository),
+                new CheckErrorsStringFormatting(),
+                new CheckStringFormatting()
+                );
         shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
         cashier = new Cashier("Luke Skywalker", "007");
         card = new Card(1L, "1-1-1-1", new BigDecimal("7"));
@@ -51,13 +72,13 @@ class PrintToFileImplTest {
 
     @Test
     void print() throws IOException {
-        String check = checkBuilderInterface.getCheck(mapParam, card);
+        String check = checkBuilder.getCheck(mapParam, card);
         printInterface.print(check);
         Path file = Paths.get("check.txt");
         String allLine;
         try (Stream<String> stream = Files.lines(file)) {
             allLine = stream.collect(Collectors.joining("\n"));
         }
-//        Assertions.assertEquals(allLine+"\n", check);
+        Assertions.assertEquals(allLine, check);
     }
 }

@@ -1,10 +1,12 @@
 package ru.clevertec.app.repository.product.fileimpl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.constant.Constants;
-import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.Repository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.entity.Product;
+import ru.clevertec.app.repository.CheckRepository;
 import ru.clevertec.app.utils.YamlUtils;
 import ru.clevertec.app.validator.ValidationProduct;
 
@@ -16,14 +18,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public class ProductFileRepositoryImpl implements Repository<Product> {
+@Repository
+@RequiredArgsConstructor
+public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> {
 
     private static final String SEPARATOR = ";";
     private final Path pathProduct = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathProduct());
-    private final ValidationProduct validationProduct = new ValidationProduct();
+    private final ValidationProduct validationProduct;
 
 
     @Override
@@ -80,7 +87,7 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
                     .findAny();
             if (productString.isPresent()) {
                 String correctProduct = validationProduct.getCorrectProduct(productString.get());
-                if (correctProduct.length()>0) {
+                if (correctProduct.length() > 0) {
                     Product product = createProduct(correctProduct);
                     productOptional = Optional.of(product);
                 } else {
@@ -96,13 +103,23 @@ public class ProductFileRepositoryImpl implements Repository<Product> {
     @Override
     public CustomList<Product> findAll(Integer limit, Integer offset) {
         CustomList<Product> allProduct = new CustomArrayList<>();
+        try (Stream<String> stream = Files.lines(pathProduct)) {
+            stream.map(validationProduct::getCorrectProduct).limit(limit)
+                    .skip(offset)
+                    .forEach(s -> allProduct.add(createProduct(s)));
+        } catch (IOException e) {
 
-        try {
-            List<String> lines = Files.readAllLines(pathProduct);
-            List<String> correctProducts = validationProduct.getCorrectProducts(lines);
-            for (String correctProduct: correctProducts) {
-                allProduct.add(createProduct(correctProduct));
-            }
+            throw new RuntimeException(e);
+        }
+        return allProduct;
+    }
+
+    public CustomList<Product> findAll() {
+        CustomList<Product> allProduct = new CustomArrayList<>();
+        try (Stream<String> stream = Files.lines(pathProduct)) {
+            stream.map(validationProduct::getCorrectProduct)
+                    .filter(s -> !s.equals(""))
+                    .forEach(s -> allProduct.add(createProduct(s)));
         } catch (IOException e) {
 
             throw new RuntimeException(e);

@@ -1,21 +1,24 @@
 package ru.clevertec.app.repository.shop;
 
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Shop;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class ShopRepositoryImpl implements Repository<Shop> {
+@Repository
+public class ShopCheckRepositoryImpl implements CheckRepository<Shop> {
 
     private static final String ADD_SHOP = "INSERT INTO shop(name, adress) VALUES (?, ?)";
     private static final String UPDATE_SHOP = "UPDATE shop SET name=?, adress=? WHERE id=?";
-    private static final String FIND_BY_ID = "SELECT * FROM shop WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM shop";
+    private static final String FIND_BY_ID = "SELECT id, name, adress FROM shop WHERE id=?";
+    private static final String FIND_ALL = "SELECT id, name, adress FROM shop";
     private static final String DELETE_SHOP_BY_ID = "DELETE FROM shop WHERE id=?";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, name, adress FROM shop LIMIT ? OFFSET ?";
 
     @Override
     public Shop add(Shop shop) {
@@ -69,6 +72,24 @@ public class ShopRepositoryImpl implements Repository<Shop> {
 
     @Override
     public CustomList<Shop> findAll(Integer limit, Integer offset) {
+        CustomList<Shop> shopCustomList = new CustomArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Shop shop = createShopFromResultSet(resultSet);
+                shopCustomList.add(shop);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return shopCustomList;
+    }
+
+    @Override
+    public CustomList<Shop> findAll() {
         CustomList<Shop> shopCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {

@@ -9,16 +9,11 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Card {
 
     private Long id;
     private String numberCard;
     private BigDecimal discount;
 
-
-    public Card(Long id, String numberCard, BigDecimal discount) {
-        this.id = id;
-        this.numberCard = numberCard;
-        this.discount = discount;
-    }
 }

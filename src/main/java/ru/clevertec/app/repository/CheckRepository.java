@@ -4,7 +4,7 @@ import ru.clevertec.app.customlist.CustomList;
 
 import java.util.Optional;
 
-public interface Repository<T> {
+public interface CheckRepository<T> {
     T add(T t);
 
     T update(T t);
@@ -12,6 +12,8 @@ public interface Repository<T> {
     Optional<T> findById(Long id);
 
     CustomList<T> findAll(Integer limit, Integer offset);
+
+    CustomList<T> findAll();
 
     boolean delete(Long id);
 

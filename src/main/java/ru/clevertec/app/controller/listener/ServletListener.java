@@ -19,14 +19,14 @@ import java.sql.Connection;
 @WebListener
 public class ServletListener implements ServletContextListener{
 
-    public static final String PATH_CHANGE_XML = "changeLog/changelog.xml";
-
+    private static final String PATH_CHANGE_XML = "changeLog/changelog.xml";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
              Liquibase liquibase = new Liquibase(PATH_CHANGE_XML, new ClassLoaderResourceAccessor(), database)){
+            liquibase.clearCheckSums();
             liquibase.update(new Contexts(), new LabelExpression());
         } catch (LiquibaseException e) {
             throw new RuntimeException(e);

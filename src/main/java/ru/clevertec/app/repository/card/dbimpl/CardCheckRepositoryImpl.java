@@ -1,21 +1,24 @@
 package ru.clevertec.app.repository.card.dbimpl;
 
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class CardRepositoryImpl implements Repository<Card> {
+@Repository
+public class CardCheckRepositoryImpl implements CheckRepository<Card> {
 
     private static final String ADD_CARD = "INSERT INTO card(numbercard, discount) VALUES (?, ?)";
     private static final String UPDATE_CARD = "UPDATE card SET numbercard=?, discount=? WHERE id=?";
     private static final String FIND_BY_ID = "SELECT id, numbercard, discount FROM card WHERE id=?";
     private static final String FIND_ALL = "SELECT id, numbercard, discount FROM card";
     private static final String DELETE_CARD_BY_ID = "DELETE FROM card WHERE id=?";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, numbercard, discount FROM card LIMIT ? OFFSET ?";
 
     @Override
     public Card add(Card card) {
@@ -66,6 +69,24 @@ public class CardRepositoryImpl implements Repository<Card> {
 
     @Override
     public CustomList<Card> findAll(Integer limit, Integer offset) {
+        CustomList<Card> cardCustomList = new CustomArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Card card = createCardFromResultSet(resultSet);
+                cardCustomList.add(card);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cardCustomList;
+    }
+
+    @Override
+    public CustomList<Card> findAll() {
         CustomList<Card> cardCustomList = new CustomArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {

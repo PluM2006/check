@@ -1,22 +1,24 @@
 package ru.clevertec.app.repository.product.dbimpl;
 
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.connection.ConnectionPool;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 
 import java.sql.*;
 import java.util.Optional;
 
-public class ProductRepositoryImpl implements Repository<Product> {
+@Repository
+public class ProductCheckRepositoryImpl implements CheckRepository<Product> {
 
-    public static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
-    public static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";
-    public static final String FIND_ALL = "SELECT id, name, price, count, sale FROM product";
-    public static final String FIND_ALL_PAGINATOR = "SELECT id, name, price, count, sale FROM product LIMIT ? OFFSET ?";
-    public static final String UPDATE_PRODUCT = "UPDATE product SET name=?, price=?, count=?, sale=? WHERE id=?";
-    public static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE id=?";
+    private static final String ADD_PRODUCT = "INSERT INTO product (name, price, count, sale) VALUES (?,?,?,?)";
+    private static final String FIND_BY_ID = "SELECT id, name, price, count, sale FROM product WHERE id=?";
+    private static final String FIND_ALL = "SELECT id, name, price, count, sale FROM product";
+    private static final String FIND_ALL_PAGINATOR = "SELECT id, name, price, count, sale FROM product LIMIT ? OFFSET ?";
+    private static final String UPDATE_PRODUCT = "UPDATE product SET name=?, price=?, count=?, sale=? WHERE id=?";
+    private static final String DELETE_PRODUCT_BY_ID = "DELETE FROM product WHERE id=?";
 
 
     @Override
@@ -78,6 +80,21 @@ public class ProductRepositoryImpl implements Repository<Product> {
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_PAGINATOR)) {
             statement.setInt(1, limit);
             statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                customList.add(createProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return customList;
+    }
+
+    @Override
+    public CustomList<Product> findAll() {
+        var customList = new CustomArrayList<Product>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 customList.add(createProductFromResultSet(resultSet));

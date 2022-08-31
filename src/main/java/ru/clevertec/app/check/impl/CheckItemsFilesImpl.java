@@ -1,25 +1,28 @@
 package ru.clevertec.app.check.impl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.Repository;
-import ru.clevertec.app.repository.product.fileimpl.ProductFileRepositoryImpl;
+import ru.clevertec.app.repository.product.fileimpl.ProductFileCheckRepositoryImpl;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
+@Component
+@RequiredArgsConstructor
 public class CheckItemsFilesImpl implements CheckItemsInterface {
 
-    Repository<Product> repository = new ProductFileRepositoryImpl();
-    CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
+    private final ProductFileCheckRepositoryImpl productFileCheckRepository;
 
     @Override
     public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems, CustomList<Long> errorsItem) {
-        CustomList<Product> allProduct = repository.findAll(null, null);
+        CustomList<CheckItem> listCheckItem = new CustomArrayList<>();
+        CustomList<Product> allProduct = productFileCheckRepository.findAll();
         for (var map : mapCheckItems.entrySet()) {
             Optional<Product> product = allProduct
                     .stream()

@@ -1,8 +1,9 @@
 package ru.clevertec.app.repository.card.fileimpl;
 
+import org.springframework.stereotype.Repository;
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.Repository;
+import ru.clevertec.app.repository.CheckRepository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.utils.YamlUtils;
@@ -20,7 +21,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class CardFileRepositoryImpl implements Repository<Card> {
+@Repository
+public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
 
     private static final String SEPARATOR = ";";
     private final Path pathCard = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathCard());
@@ -88,6 +90,17 @@ public class CardFileRepositoryImpl implements Repository<Card> {
 
     @Override
     public CustomList<Card> findAll(Integer limit, Integer offset) {
+        CustomList<Card> allCard;
+        try (Stream<String> stream = Files.lines(pathCard)) {
+            allCard = stream.limit(limit).skip(offset).collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return allCard;
+    }
+
+    @Override
+    public CustomList<Card> findAll() {
         CustomList<Card> allCard;
         try (Stream<String> stream = Files.lines(pathCard)) {
             allCard = stream.collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);

@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Product {
 
     private Long id;
@@ -17,11 +18,4 @@ public class Product {
     private Integer count;
     private Boolean sale = false;
 
-    public Product(Long id, String name, BigDecimal price, Integer count, Boolean sale) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.count = count;
-        this.sale = sale;
-    }
 }
