@@ -6,15 +6,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.check.PrintInterface;
 import ru.clevertec.app.check.impl.CheckBuilderImpl;
 import ru.clevertec.app.check.impl.CheckItemsDBImpl;
-import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.check.impl.PrintToFileImpl;
-import ru.clevertec.app.entity.*;
-import ru.clevertec.app.check.CheckBuilderInterface;
+import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
-import ru.clevertec.app.check.PrintInterface;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.entity.*;
+import ru.clevertec.app.repository.CashierRepository;
+import ru.clevertec.app.repository.ShopRepository;
 import ru.clevertec.app.service.CheckService;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
@@ -40,13 +41,13 @@ class PrintToFileImplTest {
     private Card card;
     private final CustomList<CheckItem> checkItems = new CustomArrayList<>();
     @Mock
-    private CheckRepository<Cashier> cashierRepository;
+    private CashierRepository cashierRepository;
     @Mock
-    private CheckRepository<Shop> shopRepository;
+    private ShopRepository shopRepository;
     @Mock
     private CheckService<Product> productRepository;
 
-    private final Map<Long,Integer> mapParam = new HashMap<>();
+    private final Map<Long, Integer> mapParam = new HashMap<>();
 
     @BeforeEach
     void setUp() {
@@ -56,7 +57,7 @@ class PrintToFileImplTest {
                 new CheckItemsDBImpl(productRepository),
                 new CheckErrorsStringFormatting(),
                 new CheckStringFormatting()
-                );
+        );
         shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
         cashier = new Cashier("Luke Skywalker", "007");
         card = new Card(1L, "1-1-1-1", new BigDecimal("7"));

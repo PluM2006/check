@@ -5,6 +5,11 @@ database:
   password: 18011984
   pollSize: 5
 
+hibernate:
+  showSql: true
+  formatSql: true
+  dialect: org.hibernate.dialect.PostgreSQL10Dialect
+
 constants:
   pathProduct: product.csv
   pathCard: card.csv

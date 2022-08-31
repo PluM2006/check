@@ -8,7 +8,8 @@ import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.CashierRepository;
+import ru.clevertec.app.repository.ShopRepository;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
 import ru.clevertec.app.utils.YamlUtils;
@@ -25,8 +26,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CheckBuilderImpl implements CheckBuilderInterface {
 
-    private final CheckRepository<Cashier> cashierCheckRepository;
-    private final CheckRepository<Shop> shopCheckRepository;
+    private final CashierRepository cashierRepository;
+    private final ShopRepository shopRepository;
     private final CheckItemsInterface checkItemsDBImpl;
     private final CheckErrorsStringFormatting checkErrorsStringFormatting;
     private final CheckStringFormatting checkStringFormatting;
@@ -36,8 +37,8 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
     public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
         StringBuilder stringBuilderError = new StringBuilder();
         StringBuilder stringBuilderCheck = new StringBuilder();
-        Cashier cashier = cashierCheckRepository.findById(1L).orElse(null);
-        Shop shop = shopCheckRepository.findById(1L).orElse(null);
+        Cashier cashier = cashierRepository.findById(1L).orElse(null);
+        Shop shop = shopRepository.findById(1L).orElse(null);
         CustomList<Long> errorsItem = new CustomArrayList<>();
         CustomList<CheckItem> checkItems = checkItemsDBImpl.getCheckItem(mapCheckItems, errorsItem);
         if (checkItems.size() > 0) {

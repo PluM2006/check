@@ -4,7 +4,7 @@ import ru.clevertec.app.customlist.CustomList;
 
 import java.util.Optional;
 
-public interface CheckRepository<T> {
+public interface FileRepository<T> {
     T add(T t);
 
     T update(T t);
