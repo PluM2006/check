@@ -7,7 +7,7 @@ import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.CheckItem;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.product.fileimpl.ProductFileCheckRepositoryImpl;
+import ru.clevertec.app.repository.FileRepository;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CheckItemsFilesImpl implements CheckItemsInterface {
 
-    private final ProductFileCheckRepositoryImpl productFileCheckRepository;
+    private final FileRepository<Product> productFileCheckRepository;
 
     @Override
     public CustomList<CheckItem> getCheckItem(Map<Long, Integer> mapCheckItems, CustomList<Long> errorsItem) {

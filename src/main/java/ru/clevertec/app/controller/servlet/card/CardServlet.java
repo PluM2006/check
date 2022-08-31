@@ -1,23 +1,17 @@
 package ru.clevertec.app.controller.servlet.card;
 
 import com.google.gson.Gson;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ru.clevertec.app.configuration.ApplicationConfig;
 import ru.clevertec.app.constant.ParametersNames;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.service.CheckService;
-import ru.clevertec.app.service.impl.CardCheckService;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -10,5 +10,6 @@ public class YamlProperties {
 
     private DataBaseProperties database;
     private ConstantsProperties constants;
+    private HibernateProperties hibernate;
 
 }

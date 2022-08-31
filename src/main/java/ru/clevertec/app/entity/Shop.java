@@ -1,18 +1,20 @@
 package ru.clevertec.app.entity;
 
-import jakarta.persistence.Id;
 import lombok.*;
 
-@ToString
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode
+import javax.persistence.*;
+
+@Entity
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Shop {
 
-    private @Id Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    @Column(name = "adress")
     private String address;
 
     public Shop(String name, String address) {

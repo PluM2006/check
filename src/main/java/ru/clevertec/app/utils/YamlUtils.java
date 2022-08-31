@@ -1,9 +1,11 @@
 package ru.clevertec.app.utils;
 
+import org.hibernate.cfg.Environment;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.InputStream;
+import java.util.Properties;
 
 public class YamlUtils {
 
@@ -20,6 +22,14 @@ public class YamlUtils {
 
     public static YamlProperties getYamlProperties() {
         return YAML_PROPERTIES;
+    }
+
+    public static Properties getHibernateProperties(){
+        Properties properties = new Properties();
+        properties.put(Environment.SHOW_SQL, getYamlProperties().getHibernate().getFormatSql());
+        properties.put(Environment.DIALECT, getYamlProperties().getHibernate().getDialect());
+        properties.put(Environment.FORMAT_SQL, getYamlProperties().getHibernate().getFormatSql());
+        return properties;
     }
 
 
