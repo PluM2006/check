@@ -1,6 +1,7 @@
 package ru.clevertec.app.check.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.clevertec.app.annatation.Log;
 import ru.clevertec.app.check.CheckBuilderInterface;
@@ -12,7 +13,6 @@ import ru.clevertec.app.repository.CashierRepository;
 import ru.clevertec.app.repository.ShopRepository;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
-import ru.clevertec.app.utils.YamlUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CheckBuilderImpl implements CheckBuilderInterface {
 
+    @Value("${constants.allDiscount}")
+    private String allDiscount;
     private final CashierRepository cashierRepository;
     private final ShopRepository shopRepository;
     private final CheckItemsInterface checkItemsDBImpl;
@@ -77,7 +79,7 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
             // Скидка 10% если товара больше 5
             Integer quantity = productQty.get(checkItem.getProduct());
             if (checkItem.getProduct().getSale() && quantity >= 5) {
-                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(YamlUtils.getYamlProperties().getConstants().getAllDiscount())));
+                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(allDiscount)));
                 checkItem.setPromDiscount(true);
             } else {
                 //Скидка на остальные товары если предъявлена дисконтная карта

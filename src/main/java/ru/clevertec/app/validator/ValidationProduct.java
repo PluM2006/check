@@ -1,10 +1,12 @@
 package ru.clevertec.app.validator;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.clevertec.app.configuration.ConstantsConfiguration;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.utils.YamlUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ValidationProduct {
 
+    private final ConstantsConfiguration configuration;
     private static final String INCORRECT_INDEX = "некорректный индекс";
     private static final String INCORRECT_NAME = "некорректное название";
     private static final String INCORRECT_PRICE = "некорректная цена";
@@ -26,7 +30,6 @@ public class ValidationProduct {
     private static final String REGEX_NAME = "[A-Z]([a-z]|\\s){2,29}|[А-Я]([а-я]|\\s){2,29}";
     private static final String REGEX_PRICE = "([1-9][0-9]?)[.,][0-9]{2}|100.00";
     private static final String REGEX_COUNT = "[1-9]|1[0-9]?|20";
-    private final File file = new File(YamlUtils.getYamlProperties().getConstants().getPathInvalidFileName());
     private StringBuilder invalidDate = new StringBuilder();
 
 
@@ -80,7 +83,7 @@ public class ValidationProduct {
             } else {
                 buildInvalidMessage(line, listErrorMessage);
             }
-            try (FileWriter writer = new FileWriter(file)) {
+            try (FileWriter writer = new FileWriter(configuration.getPathInvalidFileName())) {
                 writer.write(invalidDate.toString());
             } catch (IOException e) {
                 e.printStackTrace();
