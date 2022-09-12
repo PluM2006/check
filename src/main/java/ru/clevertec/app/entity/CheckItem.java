@@ -1,6 +1,7 @@
 package ru.clevertec.app.entity;
 
 import lombok.*;
+import ru.clevertec.app.dto.ProductDTO;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CheckItem {
 
-    private Product product;
+    private ProductDTO product;
     private Integer qty;
     private BigDecimal summa = BigDecimal.ZERO;
     private BigDecimal discount = BigDecimal.ZERO;

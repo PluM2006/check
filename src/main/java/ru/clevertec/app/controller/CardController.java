@@ -1,28 +1,50 @@
 package ru.clevertec.app.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.dto.CardDTO;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.service.CheckService;
 
 import java.util.Optional;
 
-@RestController("cards")
+@RestController
+@RequestMapping("/cards")
 @RequiredArgsConstructor
 public class CardController {
 
-    private final CheckService<Card> cardCheckService;
+    private final CheckService<CardDTO, Card> cardCheckService;
 
-    @GetMapping("/{id})")
-    public ResponseEntity<Card> getCard(@PathVariable String id){
-        Optional<Card> byId = cardCheckService.findById(id);
-        return ResponseEntity.ok(new Card());
+    @GetMapping("/{id}")
+    public ResponseEntity<CardDTO> getCard(@PathVariable String id) {
+        return ResponseEntity.ok(cardCheckService.findById(id));
     }
 
+    @GetMapping
+    public ResponseEntity<CustomList<CardDTO>> getAllCard(Pageable pageable) {
+        return ResponseEntity.ok(cardCheckService.findAll(pageable));
+    }
+
+    @PostMapping
+    public ResponseEntity<CardDTO> saveCard(@RequestBody Card card){
+        return ResponseEntity.ok(cardCheckService.add(card));
+    }
+
+    @PutMapping
+    public ResponseEntity<CardDTO> update(@RequestBody Card card){
+        return ResponseEntity.ok(cardCheckService.update(card));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable String id){
+        boolean delete = cardCheckService.delete(id);
+        return ResponseEntity.ok(delete);
+    }
 
 
 }

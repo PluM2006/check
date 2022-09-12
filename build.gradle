@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '3.0.0-SNAPSHOT'
     id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id "io.freefair.lombok" version "6.5.1"
     id 'java'
 }
 
@@ -24,9 +25,12 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.5.0'
+
+    implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
     implementation 'com.google.code.gson:gson'
 
@@ -37,8 +41,7 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter-params')
     testImplementation 'org.mockito:mockito-junit-jupiter'
 
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

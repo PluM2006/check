@@ -1,19 +1,18 @@
 package ru.clevertec.app.service;
 
+import org.springframework.data.domain.Pageable;
 import ru.clevertec.app.customlist.CustomList;
 
-import java.util.Optional;
+public interface CheckService<T, S> {
+    T add(S s);
 
-public interface CheckService<T> {
-    Optional<T> add(T t);
+    T update(S s);
 
-    Optional<T> update(T t);
-
-    Optional<T> findById(String id);
+    T findById(String id);
 
     CustomList<T> findAll();
 
-    CustomList<T> findAll(String limit, String offset);
+    CustomList<T> findAll(Pageable pageable);
 
     boolean delete(String id);
 

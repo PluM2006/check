@@ -8,6 +8,7 @@ import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.dto.ProductDTO;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.repository.CashierRepository;
 import ru.clevertec.app.repository.ShopRepository;
@@ -73,7 +74,7 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
 
     private void getDiscount(CustomList<CheckItem> checkItems, Card card) {
         //Количество купленного товара
-        Map<Product, Integer> productQty = checkItems.stream().collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
+        Map<ProductDTO, Integer> productQty = checkItems.stream().collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
         // Расчет скидок
         for (CheckItem checkItem : checkItems) {
             // Скидка 10% если товара больше 5

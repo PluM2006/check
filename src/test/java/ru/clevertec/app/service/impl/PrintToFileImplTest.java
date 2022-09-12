@@ -1,6 +1,5 @@
 package ru.clevertec.app.service.impl;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +12,7 @@ import ru.clevertec.app.check.impl.CheckItemsDBImpl;
 import ru.clevertec.app.check.impl.PrintToFileImpl;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.dto.ProductDTO;
 import ru.clevertec.app.entity.*;
 import ru.clevertec.app.repository.CashierRepository;
 import ru.clevertec.app.repository.ShopRepository;
@@ -22,32 +22,26 @@ import ru.clevertec.app.utils.CheckStringFormatting;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
 class PrintToFileImplTest {
 
     private final PrintInterface printInterface = new PrintToFileImpl();
+    private final CustomList<CheckItem> checkItems = new CustomArrayList<>();
+    private final Map<Long, Integer> mapParam = new HashMap<>();
     private CheckBuilderInterface checkBuilder;
     private Shop shop;
     private Cashier cashier;
     private Card card;
-    private final CustomList<CheckItem> checkItems = new CustomArrayList<>();
     @Mock
     private CashierRepository cashierRepository;
     @Mock
     private ShopRepository shopRepository;
     @Mock
-    private CheckService<Product> productRepository;
-
-    private final Map<Long, Integer> mapParam = new HashMap<>();
+    private CheckService<ProductDTO, Product> productRepository;
 
     @BeforeEach
     void setUp() {
@@ -61,10 +55,28 @@ class PrintToFileImplTest {
         shop = new Shop("Krama N646", "3-я ул. Строителей, 25");
         cashier = new Cashier("Luke Skywalker", "007");
         card = new Card(1L, "1-1-1-1", new BigDecimal("7"));
-        List<Product> productList = List.of(
-                new Product(1L, "banana", new BigDecimal("32.0"), 23, false),
-                new Product(2L, "tomato", new BigDecimal("10.0"), 23, true),
-                new Product(3L, "malina", new BigDecimal("11.0"), 23, false)
+
+
+        List<ProductDTO> productList = List.of(
+                ProductDTO.builder()
+                        .id(1L)
+                        .name("banana")
+                        .price(new BigDecimal("32.0"))
+                        .count(23)
+                        .sale(false).build(),
+                ProductDTO.builder()
+                        .id(1L)
+                        .name("banana")
+                        .price(new BigDecimal("32.0"))
+                        .count(23)
+                        .sale(false).build(),
+                ProductDTO.builder()
+                        .id(1L)
+                        .name("banana")
+                        .price(new BigDecimal("20.0"))
+                        .count(23)
+                        .sale(false).build()
+
         );
         checkItems.add(new CheckItem(productList.get(0), 12, new BigDecimal("10"), new BigDecimal("1"), false));
         checkItems.add(new CheckItem(productList.get(2), 5, new BigDecimal("30"), new BigDecimal("3"), true));
