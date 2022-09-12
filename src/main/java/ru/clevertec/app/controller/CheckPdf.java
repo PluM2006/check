@@ -33,7 +33,7 @@ public class CheckPdf {
     private final CardRepository cardRepository;
     private Map<Long, Integer> mapResult;
 
-    public void printPdf(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void printPdf(HttpServletRequest request, HttpServletResponse response) {
         mapResult = new HashMap<>();
         Map<Long, Integer> parameters = getCheckItemsFromParameters(request.getParameterMap());
         Optional<Card> cardIdFromParameters = getCardIdFromParameters(request.getParameterMap());
@@ -52,6 +52,8 @@ public class CheckPdf {
             }
             document.add(paragraph);
             document.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -2,16 +2,12 @@ package ru.clevertec.app.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.dto.CardDTO;
 import ru.clevertec.app.entity.Card;
 import ru.clevertec.app.service.CheckService;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cards")
@@ -31,17 +27,17 @@ public class CardController {
     }
 
     @PostMapping
-    public ResponseEntity<CardDTO> saveCard(@RequestBody Card card){
+    public ResponseEntity<CardDTO> saveCard(@RequestBody Card card) {
         return ResponseEntity.ok(cardCheckService.add(card));
     }
 
     @PutMapping
-    public ResponseEntity<CardDTO> update(@RequestBody Card card){
+    public ResponseEntity<CardDTO> update(@RequestBody Card card) {
         return ResponseEntity.ok(cardCheckService.update(card));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable String id){
+    public ResponseEntity<Boolean> delete(@PathVariable String id) {
         boolean delete = cardCheckService.delete(id);
         return ResponseEntity.ok(delete);
     }

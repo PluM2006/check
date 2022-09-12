@@ -25,7 +25,7 @@ http://localhost:8080/check?id=1&value=5&id=2&value=6
 **Продукты по id (GET)**
 
 ```
-http://localhost:8080/products?id=25
+http://localhost:8080/products/id=25
 ```
 
 **Получить все продукты (GET)**
@@ -36,8 +36,8 @@ http://localhost:8080/products?id=25
 
 ```
 http://localhost:8080/products
-http://localhost:8080/products?pagesize=5&offset=3
-http://localhost:8080/products?offset=3
+http://localhost:8080/products?page=0&size=5
+http://localhost:8080/products?size=3
 ```
 
 **Добавить продукты (POST)**
@@ -55,7 +55,7 @@ http://localhost:8080/products
 **Удалить продукт по id (DELETE)**
 
 ```
-http://localhost:8080/products?id=25
+http://localhost:8080/products/id=25
 ```
 
 **Обновить продукт (PUT)**
@@ -76,7 +76,7 @@ http://localhost:8080/products
 **Карта по id (GET)**
 
 ```
-http://localhost:8080/cards?id=1
+http://localhost:8080/cards/id=1
 ```
 
 **Получить все карты (GET)**
@@ -87,7 +87,7 @@ http://localhost:8080/cards?id=1
 
 ```
 http://localhost:8080/cards
-http://localhost:8080/cards?pagesize=5&offset=3
+http://localhost:8080/cards?page=0&size=5
 http://localhost:8080/cards?offset=3
 ```
 
@@ -104,7 +104,7 @@ http://localhost:8080/cards
 **Удалить карту по id (DELETE)**
 
 ```
-http://localhost:8080/cards?id=3
+http://localhost:8080/cards/id=3
 ```
 
 **Обновить карту (PUT)**
