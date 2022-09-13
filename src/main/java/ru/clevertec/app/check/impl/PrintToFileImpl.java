@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.clevertec.app.check.PrintInterface;
-import ru.clevertec.app.utils.YamlUtils;
 
 @Component
 public class PrintToFileImpl implements PrintInterface {
 
+	@Value("${constants.fileName}")
+	private String fileName;
 	@Override
 	public void print(String check) {
-		File file = new File(YamlUtils.getYamlProperties().getConstants().getFileName());
+		File file = new File(fileName);
 		try (FileWriter myWriter = new FileWriter(file)) {
 			myWriter.write(check);
 		} catch (IOException e) {

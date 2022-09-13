@@ -2,6 +2,7 @@ package ru.clevertec.app.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.clevertec.app.dto.ProductDTO;
 
 import java.math.BigDecimal;
 
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckItemTest {
 
-    Product product;
+    ProductDTO product;
     Integer qty;
     BigDecimal summ;
     BigDecimal discount;
@@ -19,7 +20,12 @@ public class CheckItemTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        product = new Product(1L, "Banana", new BigDecimal("100"), 46, true);
+        product = ProductDTO.builder()
+                .id(1L)
+                .name("banana")
+                .price(new BigDecimal("32.0"))
+                .count(23)
+                .sale(false).build();
         qty = 5;
         summ = new BigDecimal("500");
         discount = new BigDecimal("10");
@@ -34,7 +40,12 @@ public class CheckItemTest {
 
     @Test
     public void setProduct() {
-        Product productExpected = new Product(1L, "Banana", new BigDecimal("100"), 46, true);
+        ProductDTO productExpected = ProductDTO.builder()
+                .id(1L)
+                .name("banana")
+                .price(new BigDecimal("32.0"))
+                .count(23)
+                .sale(false).build();
         checkItem.setProduct(productExpected);
         assertEquals(checkItem.getProduct(), productExpected);
     }

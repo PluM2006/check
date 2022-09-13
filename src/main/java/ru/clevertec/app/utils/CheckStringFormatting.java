@@ -1,5 +1,6 @@
 package ru.clevertec.app.utils;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Card;
@@ -13,6 +14,8 @@ import java.math.RoundingMode;
 @Component
 public class CheckStringFormatting {
 
+    @Value("${constants.allDiscount}")
+    private String allDiscount;
     private static final int LENGTH_CHECK = 50;
     private StringBuilder checkResult;
     private static int center(int i) {
@@ -53,7 +56,7 @@ public class CheckStringFormatting {
                 checkResult.append(String.format("%9s", ci.getSumma() + "$")).append("\n");
                 if (!ci.getDiscount().equals(BigDecimal.ZERO)) {
                     checkResult.append(String.format("%3s", " "));
-                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", YamlUtils.getYamlProperties().getConstants().getAllDiscount()) : "карта ") + "скидка:"));
+                    checkResult.append(String.format("%-37s ", (ci.getPromDiscount() ? String.format("акция %s%% ", allDiscount) : "карта ") + "скидка:"));
                     checkResult.append(String.format("%10s", "-" + ci.getDiscount() + "$" + "\n"));
                     checkResult.append(String.format("%3s", " "));
                     checkResult.append(String.format("%-38s", "цена со скидкой:"));

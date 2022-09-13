@@ -1,18 +1,24 @@
 package ru.clevertec.app.entity;
 
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 
-@ToString
+import java.util.Objects;
+
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@EqualsAndHashCode
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Shop {
 
-    private @Id Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    @Column(name = "adress")
     private String address;
 
     public Shop(String name, String address) {
@@ -20,4 +26,16 @@ public class Shop {
         this.address = address;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Shop shop = (Shop) o;
+        return id != null && Objects.equals(id, shop.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

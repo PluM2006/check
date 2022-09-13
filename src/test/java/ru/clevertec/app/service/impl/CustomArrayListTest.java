@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CustomArrayListTest {
 
     int sizeListA;
-    ;
     int sizeListB;
     private Random random;
     private CustomArrayList<Integer> listA;

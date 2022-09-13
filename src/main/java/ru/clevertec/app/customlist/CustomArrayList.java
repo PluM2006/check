@@ -156,7 +156,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void trim() {
-		CustomList<E> list = new CustomArrayList<E>();
+		CustomList<E> list = new CustomArrayList<>();
 		for (int i = 0; i < size; i++) {
 			if (arrays[i] != null)
 				list.add(arrays[i]);

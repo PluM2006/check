@@ -1,12 +1,14 @@
-package ru.clevertec.app.repository.card.fileimpl;
+package ru.clevertec.app.repository.fileRepositoryImpl.card;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import ru.clevertec.app.configuration.ConstantsConfiguration;
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.entity.Card;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.FileRepository;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
-import ru.clevertec.app.utils.YamlUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,15 +24,17 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository
-public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
+@RequiredArgsConstructor
+public class CardFileRepositoryImpl implements FileRepository<Card> {
 
     private static final String SEPARATOR = ";";
-    private final Path pathCard = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathCard());
+    private final ConstantsConfiguration configuration;
+
 
     @Override
     public Card add(Card card) {
         Optional<String> max;
-        try (Stream<String> stream = Files.lines(pathCard)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathCard()))) {
             max = stream.map(line -> line.split(SEPARATOR))
                     .map(strings -> strings[0])
                     .filter(s -> s.matches(Constants.REG_ONLY_NUMBERS))
@@ -41,7 +45,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
         card.setId(Long.parseLong(max.orElse(Constants.ZERO_STRING)) + 1L);
         String lineCsv = (card.getId().equals(1L) ? "" : System.lineSeparator()) + createLineCsv(card);
         try {
-            Files.write(pathCard, lineCsv.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(configuration.getPathCard()), lineCsv.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +56,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
     public Card update(Card card) {
         List<String> result = new ArrayList<>();
         try {
-            List<String> lines = Files.readAllLines(pathCard);
+            List<String> lines = Files.readAllLines(Paths.get(configuration.getPathCard()));
             for (String line : lines) {
                 if (line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(card.getId()))) {
                     String lineCsv = createLineCsv(card);
@@ -64,7 +68,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (FileWriter fileWriter = new FileWriter(pathCard.toString())) {
+        try (FileWriter fileWriter = new FileWriter(Paths.get(configuration.getPathCard()).toString())) {
             fileWriter.write(String.join(System.lineSeparator(), result));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -75,7 +79,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
     @Override
     public Optional<Card> findById(Long id) {
         Optional<Card> cardOptional = Optional.empty();
-        try (Stream<String> stream = Files.lines(pathCard)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathCard()))) {
             Optional<String> cardString = stream
                     .filter(r -> r.substring(0, r.indexOf(SEPARATOR)).contains(id.toString()))
                     .findAny();
@@ -91,7 +95,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
     @Override
     public CustomList<Card> findAll(Integer limit, Integer offset) {
         CustomList<Card> allCard;
-        try (Stream<String> stream = Files.lines(pathCard)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathCard()))) {
             allCard = stream.limit(limit).skip(offset).collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -102,7 +106,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
     @Override
     public CustomList<Card> findAll() {
         CustomList<Card> allCard;
-        try (Stream<String> stream = Files.lines(pathCard)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathCard()))) {
             allCard = stream.collect(CustomArrayList::new, (l, s) -> l.add(createCard(s)), CustomArrayList::addAll);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,7 +119,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
         List<String> result = new ArrayList<>();
         List<String> lines;
         try {
-            lines = Files.readAllLines(pathCard);
+            lines = Files.readAllLines(Paths.get(configuration.getPathCard()));
             for (String line : lines) {
                 if (!line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(id))) {
                     result.add(line);
@@ -124,7 +128,7 @@ public class CardFileCheckRepositoryImpl implements CheckRepository<Card> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (FileWriter fileWriter = new FileWriter(pathCard.toString())) {
+        try (FileWriter fileWriter = new FileWriter(Paths.get(configuration.getPathCard()).toString())) {
             fileWriter.write(String.join(System.lineSeparator(), result));
         } catch (IOException e) {
             throw new RuntimeException(e);

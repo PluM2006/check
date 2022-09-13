@@ -1,13 +1,13 @@
-package ru.clevertec.app.repository.product.fileimpl;
+package ru.clevertec.app.repository.fileRepositoryImpl.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import ru.clevertec.app.configuration.ConstantsConfiguration;
 import ru.clevertec.app.constant.Constants;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
 import ru.clevertec.app.entity.Product;
-import ru.clevertec.app.repository.CheckRepository;
-import ru.clevertec.app.utils.YamlUtils;
+import ru.clevertec.app.repository.FileRepository;
 import ru.clevertec.app.validator.ValidationProduct;
 
 import java.io.FileWriter;
@@ -26,17 +26,16 @@ import java.util.stream.Stream;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> {
+public class ProductFileRepositoryImpl implements FileRepository<Product> {
 
+    private final ConstantsConfiguration configuration;
     private static final String SEPARATOR = ";";
-    private final Path pathProduct = Paths.get(YamlUtils.getYamlProperties().getConstants().getPathProduct());
     private final ValidationProduct validationProduct;
-
 
     @Override
     public Product add(Product product) {
         Optional<String> max;
-        try (Stream<String> stream = Files.lines(pathProduct)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathProduct()))) {
             max = stream.map(line -> line.split(SEPARATOR))
                     .map(arr -> arr[0])
                     .filter(s -> s.matches(Constants.REG_ONLY_NUMBERS))
@@ -47,7 +46,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
         product.setId(Long.parseLong(max.orElse(Constants.ZERO_STRING)) + 1L);
         String lineCsv = (product.getId().equals(1L) ? "" : System.lineSeparator()) + createLineCsv(product);
         try {
-            Files.write(pathProduct, lineCsv.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(configuration.getPathProduct()), lineCsv.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +57,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
     public Product update(Product product) {
         List<String> resultProduct = new ArrayList<>();
         try {
-            List<String> lines = Files.readAllLines(pathProduct);
+            List<String> lines = Files.readAllLines(Paths.get(configuration.getPathProduct()));
             for (String line : lines) {
                 if (line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(product.getId()))) {
                     String lineCsv = createLineCsv(product);
@@ -70,7 +69,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (FileWriter fileWriter = new FileWriter(pathProduct.toString())) {
+        try (FileWriter fileWriter = new FileWriter(Paths.get(configuration.getPathProduct()).toString())) {
             fileWriter.write(String.join(System.lineSeparator(), resultProduct));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -81,7 +80,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
     @Override
     public Optional<Product> findById(Long id) {
         Optional<Product> productOptional = Optional.empty();
-        try (Stream<String> stream = Files.lines(pathProduct)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathProduct()))) {
             Optional<String> productString = stream
                     .filter(r -> r.substring(0, r.indexOf(SEPARATOR)).contains(id.toString()))
                     .findAny();
@@ -103,7 +102,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
     @Override
     public CustomList<Product> findAll(Integer limit, Integer offset) {
         CustomList<Product> allProduct = new CustomArrayList<>();
-        try (Stream<String> stream = Files.lines(pathProduct)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathProduct()))) {
             stream.map(validationProduct::getCorrectProduct).limit(limit)
                     .skip(offset)
                     .forEach(s -> allProduct.add(createProduct(s)));
@@ -116,7 +115,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
 
     public CustomList<Product> findAll() {
         CustomList<Product> allProduct = new CustomArrayList<>();
-        try (Stream<String> stream = Files.lines(pathProduct)) {
+        try (Stream<String> stream = Files.lines(Paths.get(configuration.getPathProduct()))) {
             stream.map(validationProduct::getCorrectProduct)
                     .filter(s -> !s.equals(""))
                     .forEach(s -> allProduct.add(createProduct(s)));
@@ -132,7 +131,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
         List<String> result = new ArrayList<>();
         List<String> lines;
         try {
-            lines = Files.readAllLines(pathProduct);
+            lines = Files.readAllLines(Paths.get(configuration.getPathProduct()));
             for (String line : lines) {
                 if (!line.substring(0, line.indexOf(SEPARATOR)).equals(String.valueOf(id))) {
                     result.add(line);
@@ -141,7 +140,7 @@ public class ProductFileCheckRepositoryImpl implements CheckRepository<Product> 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (FileWriter fileWriter = new FileWriter(pathProduct.toString())) {
+        try (FileWriter fileWriter = new FileWriter(Paths.get(configuration.getPathProduct()).toString())) {
             fileWriter.write(String.join(System.lineSeparator(), result));
         } catch (IOException e) {
             throw new RuntimeException(e);

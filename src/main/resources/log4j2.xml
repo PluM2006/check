@@ -1,25 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+
+    <Properties>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%clr{%d{${sys:LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${sys:LOG_LEVEL_PATTERN}} %clr{%pid}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+        <Property name="FILE_LOG_PATTERN">%d{${LOG_DATEFORMAT_PATTERN}} ${LOG_LEVEL_PATTERN} %pid --- [%t] %-40.40c{1.} : %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+    </Properties>
     <Appenders>
-        <Console name="LogToConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${sys:CONSOLE_LOG_PATTERN}"/>
         </Console>
-        <File name="LogToFile" fileName="logs/app.log"  append= "true">
+        <File name="LogToFile" fileName="c:/logs/app.log"  append= "true">
+            <MarkerFilter marker="LOG_PROXY" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>
     <Loggers>
-        <!-- avoid duplicated logs with additivity=false -->
-        <Logger name="ru.clevertec.app" level="DEBUG" additivity="false">
-            <AppenderRef ref="LogToConsole"/>
-        </Logger>
+        <Logger name="org.apache.catalina.startup.DigesterFactory" level="error" />
+        <Logger name="org.apache.catalina.util.LifecycleBase" level="error" />
+        <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />
+        <Logger name="org.apache.sshd.common.util.SecurityUtils" level="warn"/>
+        <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn" />
+        <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error" />
+        <Logger name="org.hibernate.validator.internal.util.Version" level="warn" />
+        <Logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
         <Logger name="ru.clevertec.app" level="TRACE" additivity="false">
             <AppenderRef ref="LogToFile"/>
         </Logger>
-        <Root level="error">
-            <AppenderRef ref="LogToConsole"/>
+        <Root level="info">
+            <AppenderRef ref="Console" />
         </Root>
     </Loggers>
 </Configuration>
+
+<!--        <?xml version="1.0" encoding="UTF-8"?>-->
+<!--<Configuration status="WARN" monitorInterval="30">-->
+<!--<Properties>-->
+<!--    <Property name="LOG_PATTERN">-->
+<!--        %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} -&#45;&#45; [%15.15t] %-40.40c{1.} : %m%n%ex-->
+<!--    </Property>-->
+<!--</Properties>-->
+<!--<Appenders>-->
+<!--    <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">-->
+<!--        <PatternLayout pattern="${LOG_PATTERN}"/>-->
+<!--    </Console>-->
+<!--    <File name="LogToFile" fileName="c:/logs/app.log"  append= "true">-->
+<!--        <PatternLayout>-->
+<!--            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>-->
+<!--        </PatternLayout>-->
+<!--    </File>-->
+<!--</Appenders>-->
+<!--<Loggers>-->
+<!--    <Logger name="ru.clevertec.app" level="debug" additivity="false">-->
+<!--        <AppenderRef ref="ConsoleAppender" />-->
+<!--    </Logger>-->
+<!--    <Logger name="ru.clevertec.app" level="INFO" additivity="false">-->
+<!--        <AppenderRef ref="LogToFile"/>-->
+<!--    </Logger>-->
+
+<!--    <Root level="info">-->
+<!--        <AppenderRef ref="ConsoleAppender" />-->
+<!--    </Root>-->
+<!--</Loggers>-->
+<!--</Configuration>-->

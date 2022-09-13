@@ -1,17 +1,19 @@
 package ru.clevertec.app.check.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.clevertec.app.annatation.Log;
 import ru.clevertec.app.check.CheckBuilderInterface;
 import ru.clevertec.app.check.CheckItemsInterface;
 import ru.clevertec.app.customlist.CustomArrayList;
 import ru.clevertec.app.customlist.CustomList;
+import ru.clevertec.app.dto.ProductDTO;
 import ru.clevertec.app.entity.*;
-import ru.clevertec.app.repository.CheckRepository;
+import ru.clevertec.app.repository.CashierRepository;
+import ru.clevertec.app.repository.ShopRepository;
 import ru.clevertec.app.utils.CheckErrorsStringFormatting;
 import ru.clevertec.app.utils.CheckStringFormatting;
-import ru.clevertec.app.utils.YamlUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,8 +27,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CheckBuilderImpl implements CheckBuilderInterface {
 
-    private final CheckRepository<Cashier> cashierCheckRepository;
-    private final CheckRepository<Shop> shopCheckRepository;
+    @Value("${constants.allDiscount}")
+    private String allDiscount;
+    private final CashierRepository cashierRepository;
+    private final ShopRepository shopRepository;
     private final CheckItemsInterface checkItemsDBImpl;
     private final CheckErrorsStringFormatting checkErrorsStringFormatting;
     private final CheckStringFormatting checkStringFormatting;
@@ -36,8 +40,8 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
     public String getCheck(Map<Long, Integer> mapCheckItems, Card card) {
         StringBuilder stringBuilderError = new StringBuilder();
         StringBuilder stringBuilderCheck = new StringBuilder();
-        Cashier cashier = cashierCheckRepository.findById(1L).orElse(null);
-        Shop shop = shopCheckRepository.findById(1L).orElse(null);
+        Cashier cashier = cashierRepository.findById(1L).orElse(null);
+        Shop shop = shopRepository.findById(1L).orElse(null);
         CustomList<Long> errorsItem = new CustomArrayList<>();
         CustomList<CheckItem> checkItems = checkItemsDBImpl.getCheckItem(mapCheckItems, errorsItem);
         if (checkItems.size() > 0) {
@@ -70,13 +74,13 @@ public class CheckBuilderImpl implements CheckBuilderInterface {
 
     private void getDiscount(CustomList<CheckItem> checkItems, Card card) {
         //Количество купленного товара
-        Map<Product, Integer> productQty = checkItems.stream().collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
+        Map<ProductDTO, Integer> productQty = checkItems.stream().collect(Collectors.groupingBy(CheckItem::getProduct, Collectors.summingInt(CheckItem::getQty)));
         // Расчет скидок
         for (CheckItem checkItem : checkItems) {
             // Скидка 10% если товара больше 5
             Integer quantity = productQty.get(checkItem.getProduct());
             if (checkItem.getProduct().getSale() && quantity >= 5) {
-                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(YamlUtils.getYamlProperties().getConstants().getAllDiscount())));
+                checkItem.setDiscount(calculateDiscount(checkItem.getSumma(), new BigDecimal(allDiscount)));
                 checkItem.setPromDiscount(true);
             } else {
                 //Скидка на остальные товары если предъявлена дисконтная карта
